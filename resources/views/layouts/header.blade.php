@@ -7,8 +7,7 @@
     <!-- Logo -->
     <span class="logo pull-left">
         <a href="{{ url('/') }}">
-            
-            <img src="{{ asset('assets/images/logo_light.png') }}" alt="admin panel" height="30" />
+            <!-- <img src="{{ asset('assets/images/logo_light.png') }}" alt="admin panel" height="30" /> -->
         </a>
     </span>
     <form method="get" action="page-search.html" class="search pull-left hidden-xs">

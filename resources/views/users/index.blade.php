@@ -47,7 +47,7 @@
               <th>No</th>
               <th>Name</th>
               <th>Email</th>
-              <th>Permissions</th>
+              <th>Role</th>
               <th width="20%">Action</th>
             </tr>
           </thead>

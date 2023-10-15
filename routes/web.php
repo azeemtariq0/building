@@ -9,6 +9,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ResearchController;
 use App\Http\Controllers\AnalystController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProjectController;
   
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
     Route::resource('permissions', PermissionController::class);
+    Route::resource('projects', ProjectController::class);
     Route::resource('research', ResearchController::class);
     Route::resource('analyst', AnalystController::class);
     Route::resource('products', ProductController::class);

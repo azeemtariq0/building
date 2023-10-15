@@ -19,7 +19,7 @@ if(!empty($data)){
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-        <title>{{ config('app.name', 'BMA Portal') }} - {{$page_title}}</title>
+        <title>{{ config('app.name', 'Construction Portal') }} - {{$page_title}}</title>
         <meta name="description" content="" />
         <meta name="Author" content="Ghulam Rasool [imgrasool@gmail.com]" />
 

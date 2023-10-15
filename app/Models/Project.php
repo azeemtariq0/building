@@ -15,10 +15,19 @@ class Project extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'location',
-        'introduction',
-        'cost',
+        'project_code',
+        'project_name',
+        'description',
+        'union_name',
+        'union_president',
+        'union_voice_president',
+        'union_secretary',
+        'union_joint_secretary',
+        'union_accountant',
+        'union_other_1',
+        'union_other_2',
+        'union_other_3',
+        'union_other_4'
     ];
 
 
@@ -27,7 +36,5 @@ class Project extends Model
      *
      * @var array
      */
-    protected $casts = [
-        'cost' => 'int',
-    ];
+   
 }
