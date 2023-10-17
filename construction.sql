@@ -24,7 +24,7 @@ CREATE TABLE `as_blocks` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 /*Table structure for table `as_expense_categories` */
 
@@ -34,10 +34,11 @@ CREATE TABLE `as_expense_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `exp_code` char(40) DEFAULT NULL,
   `exp_name` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 /*Table structure for table `as_projects` */
 
@@ -69,12 +70,13 @@ DROP TABLE IF EXISTS `as_receipt_types`;
 
 CREATE TABLE `as_receipt_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` char(40) DEFAULT NULL,
+  `receipt_code` char(40) DEFAULT NULL,
   `receipt_name` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 /*Table structure for table `as_staff_type` */
 
@@ -94,9 +96,43 @@ DROP TABLE IF EXISTS `as_unit_categories`;
 
 CREATE TABLE `as_unit_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `code` char(40) DEFAULT NULL,
-  `description` text DEFAULT NULL,
+  `unit_cat_code` char(40) DEFAULT NULL,
+  `unit_cat_name` varchar(255) DEFAULT NULL,
   `monthly_amount` varchar(255) DEFAULT '0',
+  `description` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+/*Table structure for table `as_unit_owners` */
+
+DROP TABLE IF EXISTS `as_unit_owners`;
+
+CREATE TABLE `as_unit_owners` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `unit_id` int(11) DEFAULT NULL,
+  `owner_name` varchar(255) DEFAULT NULL,
+  `owner_cnic` varchar(255) DEFAULT NULL,
+  `owner_address` varchar(255) DEFAULT NULL,
+  `owner_contact` varchar(255) DEFAULT NULL,
+  `owner_email` varchar(255) DEFAULT NULL,
+  `owner_since` date DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+/*Table structure for table `as_unit_residents` */
+
+DROP TABLE IF EXISTS `as_unit_residents`;
+
+CREATE TABLE `as_unit_residents` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `unit_id` int(11) DEFAULT NULL,
+  `resident_name` varchar(255) DEFAULT NULL,
+  `resident_cnic` varchar(255) DEFAULT NULL,
+  `resident_mobile` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
@@ -109,9 +145,10 @@ DROP TABLE IF EXISTS `as_units`;
 CREATE TABLE `as_units` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `unit_code` varchar(255) DEFAULT NULL,
+  `unit_name` varchar(255) DEFAULT NULL,
   `project_id` int(11) DEFAULT NULL,
   `block_id` int(11) DEFAULT NULL,
-  `unit_category` int(11) DEFAULT NULL,
+  `unit_category_id` int(11) DEFAULT NULL,
   `unit_size` char(40) DEFAULT NULL,
   `out_standing_balance` varchar(255) DEFAULT NULL,
   `ob_date` varchar(255) DEFAULT NULL,
@@ -120,7 +157,7 @@ CREATE TABLE `as_units` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 /*Table structure for table `failed_jobs` */
 

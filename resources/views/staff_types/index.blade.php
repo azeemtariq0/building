@@ -39,10 +39,8 @@
                   <table class="table table-striped table-bordered table-hover table-responsive data-table">
                     <thead>
                       <tr>
-                        <th>No</th>
-                        <th>Receipt Type Code</th>
-                        <th>Receipt Type Name</th>
-                        <th>Description</th>
+                        <th>Staff Name</th>
+                        <th>created Date</th>
                         <th width="20%">Action</th>
                       </tr>
                     </thead>
@@ -112,12 +110,10 @@
               var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('receipt_types.index') }}",
+                ajax: "{{ route('staff_types.index') }}",
                 columns: [
-                {data: 'id', receipt_code: 'id'},
-                {data: 'receipt_code', receipt_code: 'name'},
-                {data: 'receipt_name', receipt_name: 'name'},
-                {data: 'description', description: 'name'},
+                {data: 'staff_name', staff_name: 'name'},
+                {data: 'created_at', created_at: 'name'},
                 {data: 'action', description: 'action', orderable: false, searchable: false},
                 ]
               });
