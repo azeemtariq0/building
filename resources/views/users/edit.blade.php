@@ -84,24 +84,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="form-group">
-                                    <div class="col-md-12 col-sm-12">
-                                        <label>Role *</label>
-                                        {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
-<!--                                         <select name="contact[position]" class="form-control pointer required">
-                                            <option value="">--- Select ---</option>
-                                            <option value="Marketing">PR &amp; Marketing</option>
-                                            <option value="Developer">Web Developer</option>
-                                            <option value="php">PHP Programmer</option>
-                                            <option value="Javascript">Javascript Programmer</option>
-                                        </select> -->
-                                    </div>
-                                </div>
-                            </div>
-
-
-
+                        
                         </fieldset>
 
                         <div class="row">

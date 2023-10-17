@@ -64,6 +64,7 @@
   <div class="modal-dialog">
 
     <!-- Modal content-->
+    <form id="form1" method="post">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -80,8 +81,9 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Staff Type</label>
-                                            {!! Form::text('staff_type_name', null, array('placeholder' => 'Staff_type','class' => 'form-control' , 'required'=>'true')) !!}
+                                            {!! Form::text('staff_name', null, array('placeholder' => 'Staff Name','class' => 'form-control','id'=>'staff_name' , 'required'=>'true')) !!}
                                         </div>
+                                        <input type="hidden" id="id" value="">
 
                                     </div>
                                 </div>
@@ -95,8 +97,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success" data-dismiss="modal">Submit</button>
+        <button type="submit" class="btn btn-success">Submit</button>
       </div>
+    </form>
     </div>
 
   </div>
@@ -118,9 +121,41 @@
                 ]
               });
 
-              $('.add_staff').on('click',function(){
+              $(document).on('click','.add_staff',function(){
+                $('#id').val('');
+                $('#staff_name').val('');
                   $('#myModal').modal('show');
+                  $('#id').val($(this).attr('data-id'));
+                  if($('#id').val()){
+                    $("#staff_name").val($(this).closest('tr td:eq(0)').text());
+                  }
               });
+
+
+               $("#form1").submit(function (event) {
+                    var formData = {
+                      staff_name: $("#staff_name").val(),
+                      id: $("#id").val(),
+                      _token: $("input[name=_token").val()
+                    };
+
+                    $.ajax({
+                        type: "POST",
+                        url: "{{url('add_or_update_staff_type')}}",
+                        data: formData,
+                        dataType: "json",
+                        encode: true,
+                      }).done(function (data) {
+
+                         $('input[type="search"]').val(' ').trigger('keyup');
+                          $('#myModal').modal('hide');
+                          table.ajax.reload();
+                          toastr.success(data.msg);
+                     
+                      });
+                    event.preventDefault();
+                  });
+
             });
           </script>
           @endsection

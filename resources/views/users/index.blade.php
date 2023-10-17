@@ -54,8 +54,6 @@
           </tbody>
         </table>
 
-
-
       </div>
       <!-- /panel content -->
 
@@ -72,39 +70,46 @@
   <div class="modal-dialog">
 
     <!-- Modal content-->
+     <form id="form1" method="post">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Staff Type Form</h4>
+        <h4 class="modal-title">Assign Role</h4>
       </div>
       <div class="modal-body">
           <fieldset>
-                        <!-- required [php action request] -->
-                        <input type="hidden" name="action" value="contact_send" />
-                         <div class="col-md-12">
-
-
-                                 <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-md-10 col-sm-10">
-                                            <label>Staff Type</label>
-                                            {!! Form::text('staff_type_name', null, array('placeholder' => 'Staff_type','class' => 'form-control' , 'required'=>'true')) !!}
-                                        </div>
-
-                                    </div>
+            <input type="hidden" name="action" value="contact_send" />
+                 <div class="col-md-12">
+                         <div class="row">
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-10">
+                                    <label>Current Role</label>
+                                    {!! Form::text('current_role', null, array('placeholder' => 'current_role','id'=>'current_role','class' => 'form-control' , 'readonly'=>'true')) !!}
                                 </div>
-
-
+                                <div class="col-md-6 col-sm-10">
+                                    <label class="col-md-12">New Role</label>
+                                    <select required name="role_id" id="role_id" class=" form-control col-md-12">
+                                      <option value=""></option>
+                                      @foreach($role_list as $value)
+                                       <option value="{{$value->id}}">{{$value->name}}</option>
+                                      @endforeach
+                                     
+                                    </select>
+                                </div>
+                                <input type="hidden" id="id" value="">
 
                             </div>
-                        </fieldset>
+                        </div>
+                    </div>
+            </fieldset>
                        
                      
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success" data-dismiss="modal">Submit</button>
+        <button type="submit" class="btn btn-success" >Submit</button>
       </div>
+       </form>
     </div>
 
   </div>
@@ -127,9 +132,40 @@
       ]
     });
 
-     $('.add_staff').on('click',function(){
+   
+              $(document).on('click','.assign_role',function(){
+                $('#id').val('');
+                $('#role_id').val('');
                   $('#myModal').modal('show');
+                  $('#id').val($(this).attr('data-id'));
+                  $('#current_role').val($(this).closest('tr').find('.current_role').text());
+                  
               });
+
+
+               $("#form1").submit(function (event) {
+                    var formData = {
+                      role_id: $("#role_id").val(),
+                      id: $("#id").val(),
+                      _token: $("input[name=_token").val()
+                    };
+
+                    $.ajax({
+                        type: "POST",
+                        url: "{{url('assign_role')}}",
+                        data: formData,
+                        dataType: "json",
+                        encode: true,
+                      }).done(function (data) {
+
+                         $('input[type="search"]').val(' ').trigger('keyup');
+                          $('#myModal').modal('hide');
+                          table.ajax.reload();
+                          toastr.success(data.msg);
+                     
+                      });
+                    event.preventDefault();
+                  });
 
   });
 </script>

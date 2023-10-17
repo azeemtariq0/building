@@ -35,11 +35,13 @@ if(!empty($data)){
         <!-- THEME CSS -->
         <link href="{{ asset('assets/css/essentials.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/css/layout.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/plugins/toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/css/color_scheme/green.css') }}" rel="stylesheet" type="text/css" id="color_scheme" />
 
 
         <!-- Call Jquery -->
         <script type="text/javascript" src="{{ asset('assets/plugins/jquery/jquery-2.1.4.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('assets/plugins/toastr/toastr.js')}}"></script>
 
 
         @yield('pagelevelstyle')

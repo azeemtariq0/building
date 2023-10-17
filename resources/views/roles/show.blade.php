@@ -30,7 +30,7 @@
 
                                     @foreach($rolePermissions as $v)
                                     <div class="col-sm-4 margin-top-10">
-                                        <label class="label label-success">{{ $v->name }}</label>
+                                        <label class="label label-info" style="font-size: 14px !important;">{{ $v->name }}</label>
                                     </div>
                                     @endforeach
                                     @endif

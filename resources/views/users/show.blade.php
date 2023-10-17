@@ -33,7 +33,7 @@
                                 <strong>Roles:</strong>
                                 @if(!empty($user->getRoleNames()))
                                 @foreach($user->getRoleNames() as $v)
-                                <span class="label label-success">{{ $v }}</span>
+                                <span class="label label-info" style="font-size: 14px !important;">{{ $v }}</span>
                                 <!-- <label class="badge badge-success">{{ $v }}</label> -->
                                 @endforeach
                                 @endif
