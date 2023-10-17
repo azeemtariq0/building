@@ -16,7 +16,7 @@ class StaffType extends Model
      * @var array
      */
     protected $fillable = [
-        'staff_type_name',
+        'staff_name',
     ];
 
 

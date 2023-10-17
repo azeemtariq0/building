@@ -52,6 +52,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('analyst', AnalystController::class);
     Route::resource('products', ProductController::class);
     Route::resource('unit_owners', UnitOwnerController::class);
+
+    Route::post('add_or_update_staff_type', [StaffTypeController::class, 'staffTypeSaveOrUpdate']);
+    Route::post('assign_role', [UserController::class, 'assignRoleToUser']);
 });
 
 // Route::get('users', [UserController::class, 'index'])->name('users.index');

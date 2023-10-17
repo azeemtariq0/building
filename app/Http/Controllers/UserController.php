@@ -28,6 +28,7 @@ class UserController extends Controller
 
         public function index(Request $request)
         {
+                $role_list = Role::select('*')->get();
             if ($request->ajax()) {
                 $data = User::select('*');
                 return Datatables::of($data)
@@ -36,8 +37,8 @@ class UserController extends Controller
                  $roles = "";
                  if(!empty($row->getRoleNames())){
                     foreach($row->getRoleNames() as $v){
-                        $roles.= '<span class="label label-success label-role"> '.$v.' </span>';
-                        $roles.= '<span class="label label-info label-role"> Assign Role <i class="fa fa-edit"></> </span>';
+                        $roles.= '<span class="label label-success label-role current_role"> '.$v.' </span> ';
+                        $roles.= ' &nbsp <span class="label label-info label-role assign_role" data-id='.$row->id.'>  Assign Role <i class="fa fa-edit"></> </span>';
                     }
                 }
 
@@ -66,7 +67,7 @@ class UserController extends Controller
                 'slug' => ''
             );
             
-            return view('users.index', compact('data'));
+            return view('users.index', compact('data','role_list'));
         }
 
         
@@ -75,6 +76,20 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    
+    public function assignRoleToUser(Request $request)
+    {
+            $_return = ['msg'=>'Staff Type Updated Successfully!'];
+            $role = Role::where('id',$request->role_id)->first();
+            $user = User::find($request->id);
+            DB::table('model_has_roles')->where('model_id',$request->id)->delete();
+            $user->assignRole($role->name);
+         $_return = ['success'=>true,'msg'=>'Assign Role Successfully!'];
+        echo json_encode($_return);
+        exit;
+    }
+
     public function create()
     {
         $data['page_management'] = array(
@@ -97,14 +112,14 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
-            'roles' => 'required'
+            // 'roles' => 'required'
         ]);
         
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
         
         $user = User::create($input);
-        $user->assignRole($request->input('roles'));
+        $user->assignRole('View Only');
         
         return redirect()->route('users.index')
         ->with('success','User created successfully');
@@ -159,7 +174,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'same:confirm-password',
-            'roles' => 'required'
+            // 'roles' => 'required'
         ]);
         
         $input = $request->all();
@@ -171,9 +186,9 @@ class UserController extends Controller
         
         $user = User::find($id);
         $user->update($input);
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
+        // DB::table('model_has_roles')->where('model_id',$id)->delete();
         
-        $user->assignRole($request->input('roles'));
+        // $user->assignRole('View Only');
         
         return redirect()->route('users.index')
         ->with('success','User updated successfully');
