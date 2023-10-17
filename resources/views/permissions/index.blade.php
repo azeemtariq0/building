@@ -51,7 +51,6 @@
                   <table class="table table-striped table-bordered table-hover table-responsive data-table">
                     <thead>
                       <tr>
-                        <th>No</th>
                         <th>Name</th>
                         <th width="20%">Action</th>
                       </tr>
@@ -78,7 +77,6 @@
                 serverSide: true,
                 ajax: "{{ route('permissions.index') }}",
                 columns: [
-                {data: 'id', name: 'id'},
                 {data: 'name', name: 'name'},
                 {data: 'action', name: 'action', orderable: false, searchable: false},
                 ]

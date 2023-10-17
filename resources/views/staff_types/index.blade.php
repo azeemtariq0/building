@@ -6,18 +6,6 @@
 
   <div id="content" class="padding-20">
 
-          <!-- 
-            PANEL CLASSES:
-              panel-default
-              panel-danger
-              panel-warning
-              panel-info
-              panel-success
-
-            INFO:   panel collapse - stored on user localStorage (handled by app.js _panels() function).
-                All pannels should have an unique ID or the panel collapse status will not be stored!
-              -->
-
               @if ($message = Session::get('success'))
               <div class="alert alert-success">
                 <p>{{ $message }}</p>
@@ -32,7 +20,7 @@
                   <!-- right options -->
                   <ul class="options pull-right list-inline">
                     <li>
-                      <a href="{{ route('projects.create')}}" class="btn btn-sm btn-success btn_create_new_user">
+                      <a href="#" class="btn btn-sm btn-success btn_create_new_user add_staff">
                         <!-- <i class="et-megaphone"></i> -->
                         <span>{{ $data['page_management']['add'] ?? "" }}</span>
                       </a>
@@ -52,8 +40,8 @@
                     <thead>
                       <tr>
                         <th>No</th>
-                        <th>Project Code</th>
-                        <th>Project Name</th>
+                        <th>Receipt Type Code</th>
+                        <th>Receipt Type Name</th>
                         <th>Description</th>
                         <th width="20%">Action</th>
                       </tr>
@@ -71,6 +59,52 @@
             </div>
           @endsection
 
+
+
+          <!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Staff Type Form</h4>
+      </div>
+      <div class="modal-body">
+          <fieldset>
+                        <!-- required [php action request] -->
+                        <input type="hidden" name="action" value="contact_send" />
+                         <div class="col-md-12">
+
+
+                                 <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-10 col-sm-10">
+                                            <label>Staff Type</label>
+                                            {!! Form::text('staff_type_name', null, array('placeholder' => 'Staff_type','class' => 'form-control' , 'required'=>'true')) !!}
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </fieldset>
+                       
+                     
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal">Submit</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
           @section('pagelevelscript')
           <script type="text/javascript">
             $(function () {
@@ -78,16 +112,19 @@
               var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('projects.index') }}",
+                ajax: "{{ route('receipt_types.index') }}",
                 columns: [
-                {data: 'id', project_code: 'id'},
-                {data: 'project_code', project_name: 'name'},
-                {data: 'project_name', project_name: 'name'},
+                {data: 'id', receipt_code: 'id'},
+                {data: 'receipt_code', receipt_code: 'name'},
+                {data: 'receipt_name', receipt_name: 'name'},
                 {data: 'description', description: 'name'},
                 {data: 'action', description: 'action', orderable: false, searchable: false},
                 ]
               });
 
+              $('.add_staff').on('click',function(){
+                  $('#myModal').modal('show');
+              });
             });
           </script>
           @endsection

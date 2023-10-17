@@ -37,6 +37,7 @@ class UserController extends Controller
                  if(!empty($row->getRoleNames())){
                     foreach($row->getRoleNames() as $v){
                         $roles.= '<span class="label label-success label-role"> '.$v.' </span>';
+                        $roles.= '<span class="label label-info label-role"> Assign Role <i class="fa fa-edit"></> </span>';
                     }
                 }
 

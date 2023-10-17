@@ -10,6 +10,13 @@ use App\Http\Controllers\ResearchController;
 use App\Http\Controllers\AnalystController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\BlockController;
+use App\Http\Controllers\ExpenseCategoryController;
+use App\Http\Controllers\ReceiptTypeController;
+use App\Http\Controllers\UnitCategoryController;
+use App\Http\Controllers\StaffTypeController;
+use App\Http\Controllers\UnitController;
+use App\Http\Controllers\UnitOwnerController;
   
 /*
 |--------------------------------------------------------------------------
@@ -35,9 +42,16 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('users', UserController::class);
     Route::resource('permissions', PermissionController::class);
     Route::resource('projects', ProjectController::class);
+    Route::resource('blocks', BlockController::class);
+    Route::resource('expense_categories', ExpenseCategoryController::class);
+    Route::resource('unit_categories', UnitCategoryController::class);
+    Route::resource('staff_types', StaffTypeController::class);
+    Route::resource('receipt_types', ReceiptTypeController::class);
+    Route::resource('units', UnitController::class);
     Route::resource('research', ResearchController::class);
     Route::resource('analyst', AnalystController::class);
     Route::resource('products', ProductController::class);
+    Route::resource('unit_owners', UnitOwnerController::class);
 });
 
 // Route::get('users', [UserController::class, 'index'])->name('users.index');

@@ -26,12 +26,15 @@
             <!-- ------ -->
             <div class="panel panel-default">
                 <div class="panel-heading panel-heading-transparent">
-                    <strong>FORM VALIDATION</strong>
+                    <strong>{{ $data['page_management']['title'] ?? "" }}</strong>
                 </div>
 
                 <div class="panel-body">
-
-                   {!! Form::open(array('route' => 'projects.store','method'=>'POST')) !!}
+                  @if(!isset($unit->id))
+                   {!! Form::open(array('route' => 'units.store','method'=>'POST')) !!}
+                   @else
+                     {!! Form::model($unit, ['method' => 'PATCH','route' => ['units.update', $unit->id]]) !!}
+                    @endif
                    <!-- <form class="validate" action="{{ route('users.store')}}" method="post" data-success="Sent! Thank you!" data-toastr-position="top-right"> -->
                     <fieldset>
                         <!-- required [php action request] -->
@@ -42,8 +45,8 @@
                                  <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Project Code</label>
-                                            {!! Form::text('project_code', null, array('placeholder' => 'Project Code','class' => 'form-control' , 'readonly'=>'true')) !!}
+                                            <label>Unit Code </label>
+                                            {!! Form::text('unit_code', null, array('placeholder' => 'Unit Cat Code','class' => 'form-control','readonly'=>true )) !!}
                                         </div>
 
                                     </div>
@@ -53,8 +56,23 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Project Name *</label>
-                                            {!! Form::text('project_name', null, array('placeholder' => 'Project Name','class' => 'form-control')) !!}
+                                            <label>Unit Name *</label>
+                                            {!! Form::text('unit_name', null, array('placeholder' => 'Unit Name','class' => 'form-control')) !!}
+                                        </div>
+
+                                    </div>
+                                </div> 
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-10 col-sm-10">
+                                            <label>Project </label>
+                                           <select class="select2 form-control" required name="project_id">
+                                            <option value=""></option>
+                                            @foreach($projects as $value)
+                                               <option {{  $value->id== @$unit->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
+                                               @endforeach
+                                           </select>
                                         </div>
 
                                     </div>
@@ -63,122 +81,90 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Description </label>
-                                            {!! Form::textarea('description', null, array('placeholder' => 'Descreption','class' => 'form-control','rows'=>2)) !!}
+                                            <label>Block </label>
+                                           <select class="select2 form-control" required name="block_id">
+                                               <option ></option>
+                                                @foreach($blocks as $value)
+                                               <option {{  $value->id== @$unit->block_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->block_name}}</option>
+                                               @endforeach
+                                           </select>
                                         </div>
 
                                     </div>
                                 </div>
-
-
-                                     <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-md-10 col-sm-10">
-                                            <label>Union Name *</label>
-                                            {!! Form::text('union_name', null, array('placeholder' => 'Union Name','class' => 'form-control')) !!}
-                                        </div>
-
-                                    </div>
-                                </div>
-
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Union President </label>
-                                            {!! Form::text('union_president', null, array('placeholder' => 'Union President','class' => 'form-control')) !!}
+                                            <label>Unit Category </label>
+                                           <select class="select2 form-control" required name="unit_category_id">
+                                            <option ></option>
+                                                @foreach($unit_categories as $value)
+                                               <option {{  $value->id== @$unit->unit_category_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->unit_cat_name}}</option>
+                                               @endforeach
+                                           </select>
                                         </div>
 
                                     </div>
                                 </div>
-                                     <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-md-10 col-sm-10">
-                                            <label>Union Voice President </label>
-                                            {!! Form::text('union_voice_president', null, array('placeholder' => 'Union Voice President','class' => 'form-control')) !!}
-                                        </div>
 
-                                    </div>
-                                </div>
+                            </div>
+                               <div class="col-md-6">
+
 
                                  <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Union Secretary </label>
-                                            {!! Form::text('union_secretary', null, array('placeholder' => 'Union Secretary','class' => 'form-control')) !!}
+                                            <label>Unit Size </label>
+                                            {!! Form::number('unit_size', null, array('placeholder' => '','class' => 'form-control' , 'required'=>'true','type'=>'number')) !!}
                                         </div>
 
                                     </div>
                                 </div>
-
-                                 <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-md-10 col-sm-10">
-                                            <label>Union Joint Secretary </label>
-                                            {!! Form::text('union_joint_secretary', null, array('placeholder' => 'Union Joint Secretary','class' => 'form-control')) !!}
-                                        </div>
-
-                                    </div>
-                                </div>
-
-
-
-                            </div>
-
-
-                            <div class="col-md-6">
-
-                           
-
-                            
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-md-10 col-sm-10">
-                                            <label>Union Accountant </label>
-                                            {!! Form::text('union_accountant', null, array('placeholder' => 'Union Accountant','class' => 'form-control')) !!}
-                                        </div>
-
-                                    </div>
-                                </div>
-
 
 
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Union Other 1</label>
-                                            {!! Form::text('union_other_1', null, array('placeholder' => 'Union Other 1','class' => 'form-control')) !!}
+                                            <label>Out Standing Balance</label>
+                                            {!! Form::number('out_standing_balance',null, array('placeholder' => '','class' => 'form-control')) !!}
                                         </div>
 
                                     </div>
-                                </div>
+                                </div> 
+
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Union Other 1</label>
-                                            {!! Form::text('union_other_2', null, array('placeholder' => 'Union Other 2','class' => 'form-control')) !!}
+                                            <label>OB Date</label>
+                                            {!! Form::date('ob_date', null, array('type'=>'date','placeholder' => '','class' => 'form-control')) !!}
                                         </div>
 
                                     </div>
                                 </div>
-                                <div class="row">
+
+                                   <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Union Other 3</label>
-                                            {!! Form::text('union_other_3', null, array('placeholder' => 'Union Other 3','class' => 'form-control')) !!}
+                                            <label>Current Owner</label>
+                                            {!! Form::text('current_owner', null, array('placeholder' => 'Current Owner','class' => 'form-control')) !!}
                                         </div>
 
                                     </div>
                                 </div>
-                                <div class="row">
+
+                                   <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Union Other 4</label>
-                                            {!! Form::text('union_other_4', null, array('placeholder' => 'Union Other 4','class' => 'form-control')) !!}
+                                            <label>Current Tenant</label>
+                                            {!! Form::text('current_tenant', null, array('placeholder' => 'Current Tenant','class' => 'form-control')) !!}
                                         </div>
 
                                     </div>
                                 </div>
-                            </div>
+
+                               </div>
+
+
 
 
                         </fieldset>

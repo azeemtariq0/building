@@ -6,18 +6,6 @@
 
   <div id="content" class="padding-20">
 
-          <!-- 
-            PANEL CLASSES:
-              panel-default
-              panel-danger
-              panel-warning
-              panel-info
-              panel-success
-
-            INFO:   panel collapse - stored on user localStorage (handled by app.js _panels() function).
-                All pannels should have an unique ID or the panel collapse status will not be stored!
-              -->
-
               @if ($message = Session::get('success'))
               <div class="alert alert-success">
                 <p>{{ $message }}</p>
@@ -26,15 +14,15 @@
               <div id="panel-1" class="panel panel-default">
                 <div class="panel-heading">
                   <span class="title elipsis">
-                    <strong>MANAGE ROLES</strong> <!-- panel title -->
+                    <strong>{{ $data['page_management']['title'] ?? "" }}</strong> <!-- panel title -->
                   </span>
 
                   <!-- right options -->
                   <ul class="options pull-right list-inline">
                     <li>
-                      <a href="{{ route('roles.create')}}" class="btn btn-sm btn-success btn_create_new_user">
+                      <a href="{{ route('units.create')}}" class="btn btn-sm btn-success btn_create_new_user">
                         <!-- <i class="et-megaphone"></i> -->
-                        <span>Create New Role</span>
+                        <span>{{ $data['page_management']['add'] ?? "" }}</span>
                       </a>
                     </li>
                     <li><a href="#" class="opt panel_colapse" data-toggle="tooltip" title="Colapse" data-placement="bottom"></a></li>
@@ -51,7 +39,15 @@
                   <table class="table table-striped table-bordered table-hover table-responsive data-table">
                     <thead>
                       <tr>
-                        <th>Name</th>
+                        <th>No</th>
+                        <th width="100">Unit Code</th>
+                        <th>Unit</th>
+                        <th>Project</th>
+                        <th>Block</th>
+                        <th width="120">Unit Category</th>
+            
+                        <th width="150">out Standing Balance</th>
+                      
                         <th width="20%">Action</th>
                       </tr>
                     </thead>
@@ -75,12 +71,20 @@
               var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('roles.index') }}",
+                ajax: "{{ route('units.index') }}",
                 columns: [
-                {data: 'name', name: 'name'},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
+                {data: 'id', unit_code: 'id'},
+                {data: 'unit_code', unit_code: 'name'},
+                {data: 'unit_name', unit_name: 'name'},
+                {data: 'project.project_name', project_name: 'name'},
+                {data: 'block.block_name', block_id: 'name'},
+                {data: 'unit_category.unit_cat_name', unit_category_id: 'name'},
+                {data: 'out_standing_balance', out_standing_balance: 'name'},
+                {data: 'action', description: 'action', orderable: false, searchable: false},
                 ]
               });
+
+
 
             });
           </script>

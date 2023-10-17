@@ -40,14 +40,31 @@
                             <!-- @endcan -->
 
 
-                             <li class="{{ in_array(\Request::segment(1),array('projects', 'blocks')) ? 'active' : '' }}">
+                             <li class="{{ in_array(\Request::segment(1),array(
+                             'projects',
+                              'blocks',
+                              'expense_categories',
+                              'receipt_types',
+                              'unit_categories',
+                              'staff_types',
+                              'units',
+                              'unit_owners'
+                              )) ? 'active' : '' }}">
                                 <a href="#">
                                     <i class="fa fa-menu-arrow pull-right"></i>
                                     <i class="main-icon fa fa-users"></i> <span>General Setup</span>
                                 </a>
                                 <ul><!-- submenus -->
                                     <li class="{{ \Request::segment(1) == 'project' ? 'active' : '' }}"><a href="{{ route('projects.index') }}">Projects</a></li>
-                                    <!-- <li class="{{ \Request::segment(1) == 'roles' ? 'active' : '' }}"><a href="{{ route('roles.index') }}">Blocks</a></li> -->
+                                    <li class="{{ \Request::segment(1) == 'block' ? 'active' : '' }}"><a href="{{ route('blocks.index') }}">Blocks</a></li>
+                                    <li class="{{ \Request::segment(1) == 'expense_categories' ? 'active' : '' }}"><a href="{{ route('expense_categories.index') }}">Expense Categories</a></li>
+
+                                      <li class="{{ \Request::segment(1) == 'receipt_types' ? 'active' : '' }}"><a href="{{ route('receipt_types.index') }}">Receipt Types</a></li>   
+
+                                      <li class="{{ \Request::segment(1) == 'staff_types' ? 'active' : '' }}"><a href="{{ route('staff_types.index') }}">Staff Types</a></li>
+                                      <li class="{{ \Request::segment(1) == 'unit_categories' ? 'active' : '' }}"><a href="{{ route('unit_categories.index') }}">Unit Categories</a></li>
+                                      <li class="{{ \Request::segment(1) == 'units' ? 'active' : '' }}"><a href="{{ route('units.index') }}">Units</a></li>
+                                      <li class="{{ \Request::segment(1) == 'unit_owners' ? 'active' : '' }}"><a href="{{ route('unit_owners.index') }}">unit Owners</a></li>
                                     
                                 </ul>
                             </li>

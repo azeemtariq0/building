@@ -39,9 +39,9 @@ class ProjectController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function($row){
 
-               $btn = "<a href='".route('projects.show',$row->id)."' class='btn btn-success btn-sm'><span>Show</span></a>";
+               // $btn = "<a href='".route('projects.show',$row->id)."' class='btn btn-success btn-sm'><span>Show</span></a>";
 
-               $btn.= "<a href='".route('projects.edit',$row->id)."' class='btn btn-info btn-sm'> <span>Edit</span></a>";
+               $btn= "<a href='".route('projects.edit',$row->id)."' class='btn btn-info btn-sm'> <span>Edit</span></a>";
 
                $btn.= Form::open(['method' => 'DELETE','route' => ['projects.destroy', $row->id],'style'=>'display:inline']);
                $btn.= Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']);
@@ -53,10 +53,13 @@ class ProjectController extends Controller
             ->make(true);
         }
 
-        $data['page_management'] = array(
+         $data['page_management'] = array(
             'page_title' => 'Project',
-            'slug' => ''
+            'slug' => 'General Setup',
+            'title' => 'Manage Project',
+            'add' => 'Add Project',
         );
+
         return view('projects.index', compact('data'));
     }
 
@@ -86,7 +89,7 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'project_name' => 'required|unique:projects,project_name',
+            'project_name' => 'required|unique:as_projects,project_name',
         ]);
 
         $role = Project::create(

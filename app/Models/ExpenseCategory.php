@@ -5,30 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Project extends Model
+class ExpenseCategory extends Model
 {
     use HasFactory;
 
-  protected $table = 'as_projects';
+    protected $table = 'as_expense_categories';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'project_code',
-        'project_name',
+        'exp_code',
+        'exp_name',
         'description',
-        'union_name',
-        'union_president',
-        'union_voice_president',
-        'union_secretary',
-        'union_joint_secretary',
-        'union_accountant',
-        'union_other_1',
-        'union_other_2',
-        'union_other_3',
-        'union_other_4'
     ];
 
 

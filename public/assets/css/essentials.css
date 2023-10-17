@@ -96,7 +96,9 @@ select {
 }
 
 label {
-	font-weight:400;
+	font-weight:600 !important;
+	font-size: 14px;
+    font-family: sans-serif;
 }
 
 iframe,
@@ -9843,4 +9845,12 @@ section.dark h2.owl-featured {
 .sky-form .checkbox.state-disabled:hover i,
 .sky-form .toggle.state-disabled:hover i {
 	border-color: #e5e5e5;
+}
+table.dataTable tbody td {
+    padding: 1px 10px !important;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+ 
+     vertical-align: unset !important; 
+
 }
