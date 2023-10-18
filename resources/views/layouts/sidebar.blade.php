@@ -25,7 +25,7 @@
                                     </span>
                                 </a>
                             </li>
-                            <!-- @can(['role-list','role-create','role-edit','role-delete']) -->
+                           
                             <li class="{{ in_array(\Request::segment(1),array('users', 'roles', 'permissions')) ? 'active' : '' }}">
                                 <a href="#">
                                     <i class="fa fa-menu-arrow pull-right"></i>
@@ -37,7 +37,7 @@
                                     <li class="{{ \Request::segment(1) == 'users' ? 'active' : '' }}"><a href="{{ route('users.index') }}">Manage Users</a></li>
                                 </ul>
                             </li>
-                            <!-- @endcan -->
+                           
 
 
                              <li class="{{ in_array(\Request::segment(1),array(
