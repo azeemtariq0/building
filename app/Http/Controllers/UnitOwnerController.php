@@ -25,6 +25,10 @@ class UnitOwnerController extends Controller
             $data = UnitOwner::with('unit')->get();
             return Datatables::of($data)
             ->addIndexColumn()
+            ->editColumn('created_at', function($model){
+            $formatDate = date('d-m-Y H:i:s',strtotime($model->created_at));
+            return $formatDate;
+        })
             ->addColumn('action', function($row){
                $btn= "<a href='".route('unit_owners.edit',$row->id)."' class='btn btn-info btn-sm'> <span>Edit</span></a>";
                $btn.= Form::open(['method' => 'DELETE','route' => ['unit_owners.destroy', $row->id],'style'=>'display:inline']);

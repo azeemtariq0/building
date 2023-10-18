@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\Block;
+use App\Models\Project;
 use DB;
 use DataTables, Form;       
 
@@ -34,9 +35,13 @@ class BlockController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Block::select('*');
+            $data = Block::with('project')->select('*');
             return Datatables::of($data)
             ->addIndexColumn()
+            ->editColumn('created_at', function($model){
+            $formatDate = date('d-m-Y H:i:s',strtotime($model->created_at));
+            return $formatDate;
+        })
             ->addColumn('action', function($row){
 
                // $btn = "<a href='".route('blocks.show',$row->id)."' class='btn btn-success btn-sm'><span>Show</span></a>";
@@ -72,11 +77,12 @@ class BlockController extends Controller
 
         // $permission = Permission::get();
         // return view('permissions.create',compact('permission'));
+         $projects  =  Project::get();
         $data['page_management'] = array(
             'page_title' => 'Create New Block',
             'slug' => 'Create'
         );
-        return view('blocks.create', compact('data'));
+        return view('blocks.create', compact('data','projects'));
     }
     
     /**
@@ -89,11 +95,13 @@ class BlockController extends Controller
     {
         $this->validate($request, [
             'block_name' => 'required|unique:as_blocks,block_name',
+            'project_id' => 'required',
         ]);
 
         $role = Block::create(
             [
                 'block_code' => $request->input('block_code'),
+                'project_id' => $request->input('project_id'),
                 'block_name' => $request->input('block_name'),
                 'description' => $request->input('description')
             ]
@@ -133,11 +141,12 @@ class BlockController extends Controller
     public function edit($id)
     {
         $block = block::find($id);
+         $projects  =  Project::get();
         $data['page_management'] = array(
             'page_title' => 'Edit Project',
             'slug' => 'Edit'
         );
-        return view('blocks.create',compact('block', 'data'));
+        return view('blocks.create',compact('block','projects', 'data'));
     }
     
     /**
@@ -151,11 +160,13 @@ class BlockController extends Controller
     {
         $this->validate($request, [
             'block_name' => 'required',
+            'project_id' => 'required',
             // 'permission' => 'required',
         ]);
         
         $block = block::find($id);
         $block->block_code = $request->input('block_code');
+        $block->project_id = $request->input('project_id');
         $block->block_name = $request->input('block_name');
         $block->description = $request->input('description');
         $block->save();
@@ -173,8 +184,8 @@ class BlockController extends Controller
      */
     public function destroy($id)
     {
-        DB::table("blocks")->where('id',$id)->delete();
+        DB::table("as_blocks")->where('id',$id)->delete();
         return redirect()->route('blocks.index')
-        ->with('success','block deleted successfully');
+        ->with('success','Block deleted successfully');
     }
 }

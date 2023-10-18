@@ -14,9 +14,10 @@ class ProjectController extends Controller
 {
    function __construct()
    {
-     // $this->middleware('projects:role-create', ['only' => ['create','store']]);
-     // $this->middleware('projects:role-edit', ['only' => ['edit','update']]);
-     // $this->middleware('projects:role-delete', ['only' => ['destroy']]);
+     $this->middleware('permission:project-list|project-create|project-edit|project-delete', ['only' => ['index','store']]);
+     $this->middleware('permission:project-create', ['only' => ['create','store']]);
+     $this->middleware('permission:project-edit', ['only' => ['edit','update']]);
+     $this->middleware('permission:project-delete', ['only' => ['destroy']]);
  }
 
     /**
@@ -37,6 +38,10 @@ class ProjectController extends Controller
             $data = Project::select('*');
             return Datatables::of($data)
             ->addIndexColumn()
+            ->editColumn('created_at', function($model){
+            $formatDate = date('d-m-Y H:i:s',strtotime($model->created_at));
+            return $formatDate;
+        })
             ->addColumn('action', function($row){
 
                // $btn = "<a href='".route('projects.show',$row->id)."' class='btn btn-success btn-sm'><span>Show</span></a>";
@@ -200,8 +205,8 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        DB::table("permissions")->where('id',$id)->delete();
-        return redirect()->route('permissions.index')
-        ->with('success','Role deleted successfully');
+        DB::table("as_projects")->where('id',$id)->delete();
+        return redirect()->route('projects.index')
+        ->with('success','Project deleted successfully');
     }
 }

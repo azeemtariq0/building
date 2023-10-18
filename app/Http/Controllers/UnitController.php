@@ -27,6 +27,10 @@ class UnitController extends Controller
             $data = Unit::with('project','block','unit_category')->get();
             return Datatables::of($data)
             ->addIndexColumn()
+            ->editColumn('created_at', function($model){
+            $formatDate = date('d-m-Y H:i:s',strtotime($model->created_at));
+            return $formatDate;
+        })
             ->addColumn('action', function($row){
                $btn= "<a href='".route('units.edit',$row->id)."' class='btn btn-info btn-sm'> <span>Edit</span></a>";
                $btn.= Form::open(['method' => 'DELETE','route' => ['units.destroy', $row->id],'style'=>'display:inline']);

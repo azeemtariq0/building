@@ -55,7 +55,14 @@
                                     <i class="main-icon fa fa-users"></i> <span>General Setup</span>
                                 </a>
                                 <ul><!-- submenus -->
+                                    <!-- @can('project') -->
+
+
+                                  
+                                    <!-- @endcan  -->
+                           
                                     <li class="{{ \Request::segment(1) == 'project' ? 'active' : '' }}"><a href="{{ route('projects.index') }}">Projects</a></li>
+                        
                                     <li class="{{ \Request::segment(1) == 'block' ? 'active' : '' }}"><a href="{{ route('blocks.index') }}">Blocks</a></li>
                                     <li class="{{ \Request::segment(1) == 'expense_categories' ? 'active' : '' }}"><a href="{{ route('expense_categories.index') }}">Expense Categories</a></li>
 
@@ -70,8 +77,19 @@
                             </li>
 
 
-                           
 
+                            <li><!-- logout -->
+                                    
+                              
+
+
+                           
+                                <a href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i> {{ __('Logout') }}</span>
+                                </a>
+
+                                  </li>
                         </ul>
 
                     </nav>

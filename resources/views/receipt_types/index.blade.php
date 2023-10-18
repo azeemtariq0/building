@@ -39,10 +39,10 @@
                   <table class="table table-striped table-bordered table-hover table-responsive data-table">
                     <thead>
                       <tr>
-                        <th>No</th>
                         <th>Receipt Type Code</th>
                         <th>Receipt Type Name</th>
                         <th>Description</th>
+                        <th>Created Date</th>
                         <th width="20%">Action</th>
                       </tr>
                     </thead>
@@ -68,10 +68,10 @@
                 serverSide: true,
                 ajax: "{{ route('receipt_types.index') }}",
                 columns: [
-                {data: 'id', receipt_code: 'id'},
                 {data: 'receipt_code', receipt_code: 'name'},
                 {data: 'receipt_name', receipt_name: 'name'},
                 {data: 'description', description: 'name'},
+                {data: 'created_at', created: 'name'},
                 {data: 'action', description: 'action', orderable: false, searchable: false},
                 ]
               });

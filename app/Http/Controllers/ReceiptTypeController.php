@@ -24,6 +24,10 @@ class ReceiptTypeController extends Controller
             $data = ReceiptType::select('*');
             return Datatables::of($data)
             ->addIndexColumn()
+            ->editColumn('created_at', function($model){
+            $formatDate = date('d-m-Y H:i:s',strtotime($model->created_at));
+            return $formatDate;
+        })
             ->addColumn('action', function($row){
                $btn= "<a href='".route('receipt_types.edit',$row->id)."' class='btn btn-info btn-sm'> <span>Edit</span></a>";
                $btn.= Form::open(['method' => 'DELETE','route' => ['receipt_types.destroy', $row->id],'style'=>'display:inline']);
@@ -107,8 +111,8 @@ class ReceiptTypeController extends Controller
     }
 
     public function destroy($id){
-        DB::table("as_expense_categories")->where('id',$id)->delete();
-        return redirect()->route('expense_categories.index')
+        DB::table("as_receipt_types")->where('id',$id)->delete();
+        return redirect()->route('receipt_types.index')
         ->with('success','Receipt Type deleted successfully');
     }
 }

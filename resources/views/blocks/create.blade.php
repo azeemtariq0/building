@@ -46,7 +46,22 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Block Code</label>
-                                            {!! Form::text('block_code', null, array('placeholder' => 'Block Code','class' => 'form-control' , 'readonly'=>'true')) !!}
+                                            {!! Form::text('block_code', null, array('placeholder' => 'AUTO','class' => 'form-control' , 'readonly'=>'true')) !!}
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-10 col-sm-10">
+                                            <label>Project </label>
+                                           <select class="select2 form-control" required name="project_id">
+                                            <option value=""></option>
+                                            @foreach($projects as $value)
+                                               <option {{  $value->id== @$unit->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
+                                               @endforeach
+                                           </select>
                                         </div>
 
                                     </div>

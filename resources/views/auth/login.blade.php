@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="padding-15">
+<div class="padding-15" style="background: #dddddd;">
     <div class="login-box">
         <!-- login form -->
         <form method="POST" action="{{ route('login') }}" class="sky-form boxed">

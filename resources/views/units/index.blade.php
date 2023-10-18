@@ -39,7 +39,6 @@
                   <table class="table table-striped table-bordered table-hover table-responsive data-table">
                     <thead>
                       <tr>
-                        <th>No</th>
                         <th width="100">Unit Code</th>
                         <th>Unit</th>
                         <th>Project</th>
@@ -47,6 +46,7 @@
                         <th width="120">Unit Category</th>
             
                         <th width="150">out Standing Balance</th>
+                        <th width="150">Created Date</th>
                       
                         <th width="20%">Action</th>
                       </tr>
@@ -73,13 +73,13 @@
                 serverSide: true,
                 ajax: "{{ route('units.index') }}",
                 columns: [
-                {data: 'id', unit_code: 'id'},
                 {data: 'unit_code', unit_code: 'name'},
                 {data: 'unit_name', unit_name: 'name'},
                 {data: 'project.project_name', project_name: 'name'},
                 {data: 'block.block_name', block_id: 'name'},
                 {data: 'unit_category.unit_cat_name', unit_category_id: 'name'},
                 {data: 'out_standing_balance', out_standing_balance: 'name'},
+                {data: 'created_at', created_at: 'name'},
                 {data: 'action', description: 'action', orderable: false, searchable: false},
                 ]
               });

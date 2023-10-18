@@ -44,6 +44,7 @@
                         <th>Unit Category Name</th>
                         <th>Monthly Amount</th>
                         <th>Description</th>
+                        <th>Created Date</th>
                         <th width="20%">Action</th>
                       </tr>
                     </thead>
@@ -74,6 +75,7 @@
                 {data: 'unit_cat_name', unit_cat_name: 'name'},
                 {data: 'monthly_amount', monthly_amount: 'name'},
                 {data: 'description', description: 'name'},
+                {data: 'created_at', created_at: 'name'},
                 {data: 'action', description: 'action', orderable: false, searchable: false},
                 ]
               });

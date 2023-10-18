@@ -24,6 +24,10 @@ class UnitCategoryController extends Controller
             $data = UnitCategory::select('*');
             return Datatables::of($data)
             ->addIndexColumn()
+            ->editColumn('created_at', function($model){
+            $formatDate = date('d-m-Y H:i:s',strtotime($model->created_at));
+            return $formatDate;
+        })
             ->addColumn('action', function($row){
                $btn= "<a href='".route('unit_categories.edit',$row->id)."' class='btn btn-info btn-sm'> <span>Edit</span></a>";
                $btn.= Form::open(['method' => 'DELETE','route' => ['unit_categories.destroy', $row->id],'style'=>'display:inline']);

@@ -46,7 +46,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Exp Category Code</label>
-                                            {!! Form::text('exp_code', null, array('placeholder' => 'Exp Category Code','class' => 'form-control' , 'readonly'=>'true')) !!}
+                                            {!! Form::text('exp_code', null, array('placeholder' => 'AUTO','class' => 'form-control' , 'readonly'=>'true')) !!}
                                         </div>
 
                                     </div>

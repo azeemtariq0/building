@@ -25,7 +25,7 @@
             <!-- ------ -->
             <div class="panel panel-default">
                 <div class="panel-heading panel-heading-transparent">
-                    <strong>Permissions</strong>
+                    <strong>Permission</strong>
                 </div>
 
                 <div class="panel-body">

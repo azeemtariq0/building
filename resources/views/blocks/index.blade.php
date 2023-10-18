@@ -39,10 +39,11 @@
                   <table class="table table-striped table-bordered table-hover table-responsive data-table">
                     <thead>
                       <tr>
-                        <th>No</th>
                         <th>Block Code</th>
                         <th>Block Name</th>
+                        <th>Project Name</th>
                         <th>Description</th>
+                        <th>Created Date</th>
                         <th width="20%">Action</th>
                       </tr>
                     </thead>
@@ -68,10 +69,11 @@
                 serverSide: true,
                 ajax: "{{ route('blocks.index') }}",
                 columns: [
-                {data: 'id', project_code: 'id'},
                 {data: 'block_code', block_name: 'name'},
                 {data: 'block_name', block_name: 'name'},
+                {data: 'project.project_name', project_name: 'name'},
                 {data: 'description', description: 'name'},
+                {data: 'created_at', description: 'name'},
                 {data: 'action', description: 'action', orderable: false, searchable: false},
                 ]
               });

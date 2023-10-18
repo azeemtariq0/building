@@ -46,7 +46,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Receipt Code</label>
-                                            {!! Form::text('receipt_code', null, array('placeholder' => 'Receipt Code','class' => 'form-control' , 'readonly'=>'true')) !!}
+                                            {!! Form::text('receipt_code', null, array('placeholder' => 'AUTO','class' => 'form-control' , 'readonly'=>'true')) !!}
                                         </div>
 
                                     </div>

@@ -43,7 +43,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Project Code</label>
-                                            {!! Form::text('project_code', null, array('placeholder' => 'Project Code','class' => 'form-control' , 'readonly'=>'true')) !!}
+                                            {!! Form::text('project_code', null, array('placeholder' => 'AUTO','class' => 'form-control' , 'readonly'=>'true')) !!}
                                         </div>
 
                                     </div>

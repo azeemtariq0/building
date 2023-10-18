@@ -51,10 +51,10 @@
                   <table class="table table-striped table-bordered table-hover table-responsive data-table">
                     <thead>
                       <tr>
-                        <th>No</th>
                         <th>Project Code</th>
                         <th>Project Name</th>
                         <th>Description</th>
+                        <th>Created Date</th>
                         <th width="20%">Action</th>
                       </tr>
                     </thead>
@@ -80,10 +80,10 @@
                 serverSide: true,
                 ajax: "{{ route('projects.index') }}",
                 columns: [
-                {data: 'id', project_code: 'id'},
                 {data: 'project_code', project_name: 'name'},
                 {data: 'project_name', project_name: 'name'},
                 {data: 'description', description: 'name'},
+                {data: 'created_at', created: 'name'},
                 {data: 'action', description: 'action', orderable: false, searchable: false},
                 ]
               });

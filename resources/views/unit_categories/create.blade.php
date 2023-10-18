@@ -45,8 +45,8 @@
                                  <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Unit Cat Code *</label>
-                                            {!! Form::text('unit_cat_code', null, array('placeholder' => 'Unit Cat Code','class' => 'form-control' , 'required'=>'true')) !!}
+                                            <label>Unit Cat Code</label>
+                                            {!! Form::text('unit_cat_code', null, array('placeholder' => 'AUTO','class' => 'form-control' , 'readonly'=>'true')) !!}
                                         </div>
 
                                     </div>

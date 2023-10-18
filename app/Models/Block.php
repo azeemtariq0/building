@@ -22,6 +22,10 @@ class Block extends Model
         'description',
     ];
 
+    public function project(){
+      return $this->hasOne(Project::class, 'id', 'project_id');
+   }
+
 
     /**
      * The attributes that should be cast to native types.
