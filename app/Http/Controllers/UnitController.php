@@ -83,7 +83,7 @@ class UnitController extends Controller
                 'block_id' => $request->input('block_id'),
                 'unit_category_id' => $request->input('unit_category_id'),
                 'unit_size' => $request->input('unit_size'),
-                'out_standing_balance' => $request->input('out_standing_balance'),
+                'out_standing_amount' => $request->input('out_standing_amount'),
                 'ob_date' => $request->input('ob_date'),
                 'current_owner' => $request->input('current_owner'),
                 'current_tenant' => $request->input('current_tenant')
@@ -130,7 +130,7 @@ class UnitController extends Controller
         $unitCategory->block_id = $request->input('block_id');
         $unitCategory->unit_category_id = $request->input('unit_category_id');
         $unitCategory->unit_size = $request->input('unit_size');
-        $unitCategory->out_standing_balance = $request->input('out_standing_balance');
+        $unitCategory->out_standing_amount = $request->input('out_standing_amount');
         $unitCategory->ob_date = $request->input('ob_date');
         $unitCategory->current_owner = $request->input('current_owner');
         $unitCategory->current_tenant = $request->input('current_tenant');

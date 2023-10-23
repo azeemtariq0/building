@@ -77,7 +77,8 @@ class UnitOwnerController extends Controller
                 'owner_name' => $request->input('owner_name'),
                 'owner_cnic' => $request->input('owner_cnic'),
                 'owner_email' => $request->input('owner_email'),
-                'owner_contact' => $request->input('owner_contact'),
+                'mobile_no' => $request->input('mobile_no'),
+                'ptcl_no' => $request->input('ptcl_no'),
                 'owner_since' => $request->input('owner_since'),
                 'owner_address' => $request->input('owner_address'),
             ]
@@ -119,7 +120,8 @@ class UnitOwnerController extends Controller
         $unitOwner->owner_name = $request->input('owner_name');
         $unitOwner->owner_cnic = $request->input('owner_cnic');
         $unitOwner->owner_email = $request->input('owner_email');
-        $unitOwner->owner_contact = $request->input('owner_contact');
+        $unitOwner->mobile_no = $request->input('mobile_no');
+        $unitOwner->ptcl_no = $request->input('ptcl_no');
         $unitOwner->owner_since = $request->input('owner_since');
         $unitOwner->owner_address = $request->input('owner_address');
 

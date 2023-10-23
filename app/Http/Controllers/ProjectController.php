@@ -12,6 +12,8 @@ use DataTables, Form;
 
 class ProjectController extends Controller
 {
+
+    
    function __construct()
    {
      $this->middleware('permission:project-list|project-create|project-edit|project-delete', ['only' => ['index','store']]);
