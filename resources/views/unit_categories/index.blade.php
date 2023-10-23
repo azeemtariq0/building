@@ -41,7 +41,7 @@
                       <tr>
                         <th>No</th>
                         <th>Unit Category Code</th>
-                        <th>Unit Category Name</th>
+                        <th>Unit Category</th>
                         <th>Monthly Amount</th>
                         <th>Description</th>
                         <th>Created Date</th>

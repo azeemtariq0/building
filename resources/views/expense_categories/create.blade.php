@@ -31,9 +31,9 @@
 
                 <div class="panel-body">
                   @if(!isset($expenseCategory->id))
-                   {!! Form::open(array('route' => 'expense_categories.store','method'=>'POST')) !!}
+                   {!! Form::open(array('route' => 'expense_categories.store','method'=>'POST' , 'id' => 'expense_form')) !!}
                    @else
-                     {!! Form::model($expenseCategory, ['method' => 'PATCH','route' => ['expense_categories.update', $expenseCategory->id]]) !!}
+                     {!! Form::model($expenseCategory, ['method' => 'PATCH','route' => ['expense_categories.update', $expenseCategory->id ]]) !!}
                     @endif
                    <!-- <form class="validate" action="{{ route('users.store')}}" method="post" data-success="Sent! Thank you!" data-toastr-position="top-right"> -->
                     <fieldset>
@@ -57,7 +57,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Exp Category Name *</label>
-                                            {!! Form::text('exp_name', null, array('placeholder' => 'Exp Category Name','class' => 'form-control')) !!}
+                                            {!! Form::text('exp_name', null, array('placeholder' => 'Exp Category Name','class' => 'form-control', 'id' => 'exp_name')) !!}
                                         </div>
 
                                     </div>
@@ -93,4 +93,5 @@
        </div>
    </div>
 </div>
+@include('expense_categories/validate')
 @endsection

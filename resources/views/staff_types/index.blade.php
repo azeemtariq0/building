@@ -1,4 +1,4 @@
-@extends('layouts.app')
+  @extends('layouts.app')
 
 
 @section('content')
@@ -81,7 +81,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Staff Type</label>
-                                            {!! Form::text('staff_name', null, array('placeholder' => 'Staff Name','class' => 'form-control','id'=>'staff_name' , 'required'=>'true')) !!}
+                                            {!! Form::text('staff_name', null, array('placeholder' => 'Staff Type','class' => 'form-control','id'=>'staff_name' , 'required'=>'true')) !!}
                                         </div>
                                         <input type="hidden" id="id" value="">
 
@@ -126,8 +126,8 @@
                 $('#staff_name').val('');
                   $('#myModal').modal('show');
                   $('#id').val($(this).attr('data-id'));
-                  if($('#id').val()){
-                    $("#staff_name").val($(this).closest('tr td:eq(0)').text());
+                  if($(this).attr('data-id')){
+                    $("#staff_name").val($(this).closest('tr').find('td:eq(0)').text());
                   }
               });
 

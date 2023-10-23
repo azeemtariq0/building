@@ -45,7 +45,7 @@
                         <th>Block</th>
                         <th width="120">Unit Category</th>
             
-                        <th width="150">out Standing Balance</th>
+                        <th width="150">Outstanding Amount</th>
                         <th width="150">Created Date</th>
                       
                         <th width="20%">Action</th>

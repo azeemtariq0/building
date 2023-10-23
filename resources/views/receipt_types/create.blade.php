@@ -31,7 +31,7 @@
 
                 <div class="panel-body">
                   @if(!isset($receiptType->id))
-                   {!! Form::open(array('route' => 'receipt_types.store','method'=>'POST')) !!}
+                   {!! Form::open(array('route' => 'receipt_types.store','method'=>'POST' , 'id' => 'reciept_form')) !!}
                    @else
                      {!! Form::model($receiptType, ['method' => 'PATCH','route' => ['receipt_types.update', $receiptType->id]]) !!}
                     @endif
@@ -57,7 +57,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Receipt Name *</label>
-                                            {!! Form::text('receipt_name', null, array('placeholder' => 'Receipt Name','class' => 'form-control')) !!}
+                                            {!! Form::text('receipt_name', null, array('placeholder' => 'Receipt Name','class' => 'form-control' , 'id' => 'receipt_name')) !!}
                                         </div>
 
                                     </div>
@@ -93,4 +93,5 @@
        </div>
    </div>
 </div>
+@include('receipt_types/validate')
 @endsection

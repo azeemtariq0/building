@@ -31,7 +31,7 @@
 
                 <div class="panel-body">
                   @if(!isset($unit->id))
-                   {!! Form::open(array('route' => 'units.store','method'=>'POST')) !!}
+                   {!! Form::open(array('route' => 'units.store','method'=>'POST', 'id' => 'units_form')) !!}
                    @else
                      {!! Form::model($unit, ['method' => 'PATCH','route' => ['units.update', $unit->id]]) !!}
                     @endif
@@ -57,7 +57,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Unit Name *</label>
-                                            {!! Form::text('unit_name', null, array('placeholder' => 'Unit Name','class' => 'form-control')) !!}
+                                            {!! Form::text('unit_name', null, array('placeholder' => 'Unit Name','class' => 'form-control' , 'id' => 'unit_name')) !!}
                                         </div>
 
                                     </div>
@@ -125,8 +125,8 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Out Standing Balance</label>
-                                            {!! Form::number('out_standing_balance',null, array('placeholder' => '','class' => 'form-control')) !!}
+                                            <label>Outstanding Amount</label>
+                                            {!! Form::number('out_standing_amount',null, array('placeholder' => '','class' => 'form-control')) !!}
                                         </div>
 
                                     </div>
@@ -183,4 +183,5 @@
        </div>
    </div>
 </div>
+@include('units/validate')
 @endsection

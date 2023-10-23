@@ -31,7 +31,7 @@
 
                 <div class="panel-body">
                   @if(!isset($block->id))
-                   {!! Form::open(array('route' => 'blocks.store','method'=>'POST')) !!}
+                   {!! Form::open(array('route' => 'blocks.store','method'=>'POST', 'id' => 'block_form')) !!}
                    @else
                      {!! Form::model($block, ['method' => 'PATCH','route' => ['blocks.update', $block->id]]) !!}
                     @endif
@@ -56,7 +56,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Project </label>
-                                           <select class="select2 form-control" required name="project_id">
+                                           <select class="select2 form-control" id="project_id"  required name="project_id">
                                             <option value=""></option>
                                             @foreach($projects as $value)
                                                <option {{  $value->id== @$unit->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
@@ -72,7 +72,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Block Name *</label>
-                                            {!! Form::text('block_name', null, array('placeholder' => 'Block Name','class' => 'form-control')) !!}
+                                            {!! Form::text('block_name', null, array('placeholder' => 'Block Name','class' => 'form-control', 'id' => 'block_name')) !!}
                                         </div>
 
                                     </div>
@@ -108,4 +108,5 @@
        </div>
    </div>
 </div>
+@include('blocks/validate')
 @endsection

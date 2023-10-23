@@ -16,6 +16,26 @@
    </div>
    @endif
 
+   <style>
+form label {
+  display: inline-block;
+  width: 100px;
+}
+
+form div {
+  margin-bottom: 10px;
+}
+
+.error {
+  color: red;
+  margin-left: 5px;
+}
+
+label.error {
+  display: inline;
+}
+    </style>
+
 
    <div id="content" class="padding-20">
 
@@ -31,7 +51,7 @@
 
                 <div class="panel-body">
 
-                   {!! Form::open(array('route' => 'projects.store','method'=>'POST')) !!}
+                   {!! Form::open(array('route' => 'projects.store','method'=>'POST' , 'id' => 'first_form')) !!}
                    <!-- <form class="validate" action="{{ route('users.store')}}" method="post" data-success="Sent! Thank you!" data-toastr-position="top-right"> -->
                     <fieldset>
                         <!-- required [php action request] -->
@@ -53,8 +73,8 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Project Name *</label>
-                                            {!! Form::text('project_name', null, array('placeholder' => 'Project Name','class' => 'form-control')) !!}
+                                            <label>Project Name </label>
+                                            {!! Form::text('project_name', null, array('placeholder' => 'Project Name','class' => 'form-control' , 'id' => 'project_name')) !!}
                                         </div>
 
                                     </div>
@@ -75,7 +95,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Union Name *</label>
-                                            {!! Form::text('union_name', null, array('placeholder' => 'Union Name','class' => 'form-control')) !!}
+                                            <input type="text" id="union_name" name="union_name" placeholder="Union Name" class="form-control">
                                         </div>
 
                                     </div>
@@ -134,7 +154,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Union Accountant </label>
-                                            {!! Form::text('union_accountant', null, array('placeholder' => 'Union Accountant','class' => 'form-control')) !!}
+                                            {!! Form::text('union_accountant', null, array('placeholder' => 'Union Accountant','class' => 'form-control' , 'id' => 'union_accountant')) !!}
                                         </div>
 
                                     </div>
@@ -184,14 +204,15 @@
                         </fieldset>
                         <div class="row">
                             <div class="col-md-2">
-                                <button type="submit" class="btn btn-3d btn-teal btn-sm btn-block margin-top-30">
+                                <button type="submit" value="submit" class="btn btn-3d btn-teal btn-sm btn-block margin-top-30">
                                    Submit
                                </button>
                            </div>
                        </div>
                        {!! Form::close() !!}
-                   </div>
+                   </div>                 
                </div>
+               @include('projects/validate')
                <!-- /----- -->
            </div>
        </div>

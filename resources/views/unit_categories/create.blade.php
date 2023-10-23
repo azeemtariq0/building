@@ -31,7 +31,7 @@
 
                 <div class="panel-body">
                   @if(!isset($unitCategory->id))
-                   {!! Form::open(array('route' => 'unit_categories.store','method'=>'POST')) !!}
+                   {!! Form::open(array('route' => 'unit_categories.store','method'=>'POST', 'id' => 'unit_form')) !!}
                    @else
                      {!! Form::model($unitCategory, ['method' => 'PATCH','route' => ['unit_categories.update', $unitCategory->id]]) !!}
                     @endif
@@ -45,7 +45,7 @@
                                  <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Unit Cat Code</label>
+                                            <label>Unit Category Code</label>
                                             {!! Form::text('unit_cat_code', null, array('placeholder' => 'AUTO','class' => 'form-control' , 'readonly'=>'true')) !!}
                                         </div>
 
@@ -56,8 +56,8 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Unit Cat Name *</label>
-                                            {!! Form::text('unit_cat_name', null, array('placeholder' => 'Unit Cat Name','class' => 'form-control')) !!}
+                                            <label>Unit Category *</label>
+                                            {!! Form::text('unit_cat_name', null, array('placeholder' => 'Unit Cat Name','class' => 'form-control' , 'id' => 'unit_cat_name')) !!}
                                         </div>
 
                                     </div>
@@ -67,7 +67,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Monthly Amount *</label>
-                                            {!! Form::text('monthly_amount', null, array('placeholder' => 'Monthly Amount','class' => 'form-control')) !!}
+                                            {!! Form::text('monthly_amount', null, array('placeholder' => 'Monthly Amount','class' => 'form-control', 'id' => 'monthly_amount')) !!}
                                         </div>
 
                                     </div>
@@ -103,4 +103,5 @@
        </div>
    </div>
 </div>
+@include('unit_categories/validate');
 @endsection

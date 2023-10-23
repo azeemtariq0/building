@@ -31,7 +31,7 @@
 
                 <div class="panel-body">
                   @if(!isset($unit_owner->id))
-                   {!! Form::open(array('route' => 'unit_owners.store','method'=>'POST')) !!}
+                   {!! Form::open(array('route' => 'unit_owners.store','method'=>'POST', 'id' => 'unit_owners')) !!}
                    @else
                      {!! Form::model($unit_owner, ['method' => 'PATCH','route' => ['unit_owners.update', $unit_owner->id]]) !!}
                     @endif
@@ -60,7 +60,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Unit Owner Name *</label>
-                                            {!! Form::text('owner_name', null, array('placeholder' => 'Owner Name','class' => 'form-control')) !!}
+                                            {!! Form::text('owner_name', null, array('placeholder' => 'Owner Name','class' => 'form-control' ,'id' => 'owner_name')) !!}
                                         </div>
 
                                     </div>
@@ -69,8 +69,8 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>CNIC *</label>
-                                            {!! Form::text('owner_cnic', null, array('placeholder' => 'Owner CNIC','class' => 'form-control')) !!}
+                                            <label>CNIC / NICOP / Passport *</label>
+                                            {!! Form::text('owner_cnic', null, array('placeholder' => 'Owner CNIC','class' => 'form-control' ,'id' => 'owner_cnic','required'=>true)) !!}
                                         </div>
 
                                     </div>
@@ -80,12 +80,26 @@
                                   <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Contact *</label>
-                                            {!! Form::text('owner_contact', null, array('placeholder' => 'Owner Contact','class' => 'form-control')) !!}
+                                            <label>Mobile no *</label>
+                                            {!! Form::text('mobile_no', null, array('placeholder' => 'Mobile no','class' => 'form-control')) !!}
                                         </div>
 
                                     </div>
                                 </div>
+
+
+
+                                
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-10 col-sm-10">
+                                            <label>PTCL no *</label>
+                                            {!! Form::text('ptcl_no', null, array('placeholder' => 'PTCL no','class' => 'form-control')) !!}
+                                        </div>
+
+                                    </div>
+                                </div>
+
 
 
 
@@ -104,7 +118,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Owner Since *</label>
-                                            {!! Form::text('owner_since', null, array('placeholder' => 'Owner Since','class' => 'form-control')) !!}
+                                            {!! Form::date('owner_since', null, array('placeholder' => 'Owner Since','class' => 'form-control')) !!}
                                         </div>
 
                                     </div>
@@ -114,7 +128,7 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Address *</label>
+                                            <label>Address </label>
                                             {!! Form::text('owner_address', null, array('placeholder' => 'Address','class' => 'form-control')) !!}
                                         </div>
 
@@ -143,4 +157,5 @@
        </div>
    </div>
 </div>
+@include('unit_owners/validate')
 @endsection
