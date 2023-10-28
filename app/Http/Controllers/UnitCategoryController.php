@@ -14,9 +14,10 @@ class UnitCategoryController extends Controller
 {
    function __construct()
    {
-     // $this->middleware('projects:role-create', ['only' => ['create','store']]);
-     // $this->middleware('projects:role-edit', ['only' => ['edit','update']]);
-     // $this->middleware('projects:role-delete', ['only' => ['destroy']]);
+    $this->middleware('permission:unit-category-list|unit-category-create|unit-category-edit|unit-category-delete', ['only' => ['index','store']]);
+    $this->middleware('permission:unit-category-create', ['only' => ['create','store']]);
+    $this->middleware('permission:unit-category-edit', ['only' => ['edit','update']]);
+    $this->middleware('permission:unit-category-delete', ['only' => ['destroy']]);
    }
 
     public function index(Request $request){

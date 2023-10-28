@@ -15,9 +15,10 @@ class BlockController extends Controller
 {
    function __construct()
    {
-     // $this->middleware('projects:role-create', ['only' => ['create','store']]);
-     // $this->middleware('projects:role-edit', ['only' => ['edit','update']]);
-     // $this->middleware('projects:role-delete', ['only' => ['destroy']]);
+    $this->middleware('permission:block-list|block-create|block-edit|block-delete', ['only' => ['index','store']]);
+    $this->middleware('permission:block-create', ['only' => ['create','store']]);
+    $this->middleware('permission:block-edit', ['only' => ['edit','update']]);
+    $this->middleware('permission:block-delete', ['only' => ['destroy']]);
  }
 
     /**

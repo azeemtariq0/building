@@ -43,7 +43,6 @@
                         <th>Block Name</th>
                         <th>Project Name</th>
                         <th>Description</th>
-                        <th>Created Date</th>
                         <th width="20%">Action</th>
                       </tr>
                     </thead>
@@ -73,7 +72,6 @@
                 {data: 'block_name', block_name: 'name'},
                 {data: 'project.project_name', project_name: 'name'},
                 {data: 'description', description: 'name'},
-                {data: 'created_at', description: 'name'},
                 {data: 'action', description: 'action', orderable: false, searchable: false},
                 ]
               });

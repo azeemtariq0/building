@@ -44,7 +44,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Unit *</label>
-                                        <select class="select2 form-control" required name="unit_id">
+                                        <select class=" form-control" required name="unit_id" id="unit_id">
                                             <option value=""></option>
                                             @foreach($units as $value)
                                                <option {{  $value->id== @$unit_owner->unit_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->unit_name}}</option>
@@ -81,7 +81,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Mobile no *</label>
-                                            {!! Form::text('mobile_no', null, array('placeholder' => 'Mobile no','class' => 'form-control')) !!}
+                                            {!! Form::text('mobile_no', null, array('placeholder' => 'Mobile no','class' => 'form-control', 'id' => 'mobile_no')) !!}
                                         </div>
 
                                     </div>
@@ -94,7 +94,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>PTCL no *</label>
-                                            {!! Form::text('ptcl_no', null, array('placeholder' => 'PTCL no','class' => 'form-control')) !!}
+                                            {!! Form::text('ptcl_no', null, array('placeholder' => 'PTCL no','class' => 'form-control' , 'id' => 'ptcl_no')) !!}
                                         </div>
 
                                     </div>
@@ -108,7 +108,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Email *</label>
-                                            {!! Form::text('owner_email', null, array('placeholder' => 'Owner Email','class' => 'form-control')) !!}
+                                            {!! Form::text('owner_email', null, array('placeholder' => 'Owner Email','class' => 'form-control', 'id' => 'owner_email')) !!}
                                         </div>
 
                                     </div>
@@ -118,7 +118,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Owner Since *</label>
-                                            {!! Form::date('owner_since', null, array('placeholder' => 'Owner Since','class' => 'form-control')) !!}
+                                            {!! Form::date('owner_since', null, array('placeholder' => 'Owner Since','class' => 'form-control', 'id' => 'owner_since')) !!}
                                         </div>
 
                                     </div>

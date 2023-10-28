@@ -11,6 +11,15 @@
           required: true,
           noSpace: true // Use the custom rule
         },
+        block_id: {
+          required: true,
+        },
+        unit_category_id: {
+          required: true,
+        },
+        project_id: {
+          required: true,
+        },
         monthly_amount:{
           required: true,
           noSpace: true // Use the custom rule
@@ -27,7 +36,7 @@
       },
       submitHandler: function(form) {
         // Handle the form submission if it's valid
-        alert("Form submitted!");
+        $('#units_form' ).submit();
       }
     });
   });

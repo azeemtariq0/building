@@ -45,7 +45,7 @@
                                  <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Exp Category Code</label>
+                                            <label>Expense Category Code</label>
                                             {!! Form::text('exp_code', null, array('placeholder' => 'AUTO','class' => 'form-control' , 'readonly'=>'true')) !!}
                                         </div>
 
@@ -56,7 +56,7 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Exp Category Name *</label>
+                                            <label>Expense Category  *</label>
                                             {!! Form::text('exp_name', null, array('placeholder' => 'Exp Category Name','class' => 'form-control', 'id' => 'exp_name')) !!}
                                         </div>
 

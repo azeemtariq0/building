@@ -39,12 +39,10 @@
                   <table class="table table-striped table-bordered table-hover table-responsive data-table">
                     <thead>
                       <tr>
-                        <th>No</th>
                         <th>Unit Category Code</th>
                         <th>Unit Category</th>
                         <th>Monthly Amount</th>
                         <th>Description</th>
-                        <th>Created Date</th>
                         <th width="20%">Action</th>
                       </tr>
                     </thead>
@@ -70,12 +68,10 @@
                 serverSide: true,
                 ajax: "{{ route('unit_categories.index') }}",
                 columns: [
-                {data: 'id', unit_cat_code: 'id'},
                 {data: 'unit_cat_code', unit_cat_code: 'name'},
                 {data: 'unit_cat_name', unit_cat_name: 'name'},
                 {data: 'monthly_amount', monthly_amount: 'name'},
                 {data: 'description', description: 'name'},
-                {data: 'created_at', created_at: 'name'},
                 {data: 'action', description: 'action', orderable: false, searchable: false},
                 ]
               });

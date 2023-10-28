@@ -40,7 +40,6 @@
                     <thead>
                       <tr>
                         <th>Staff Name</th>
-                        <th>created Date</th>
                         <th width="20%">Action</th>
                       </tr>
                     </thead>
@@ -116,7 +115,6 @@
                 ajax: "{{ route('staff_types.index') }}",
                 columns: [
                 {data: 'staff_name', staff_name: 'name'},
-                {data: 'created_at', created_at: 'name'},
                 {data: 'action', description: 'action', orderable: false, searchable: false},
                 ]
               });

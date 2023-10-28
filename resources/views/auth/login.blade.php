@@ -1,8 +1,10 @@
 @extends('layouts.auth')
 
 @section('content')
+ 
+<div class="padding-15" style="background-image: ">
 
-<div class="padding-15" style="background: #dddddd;">
+{{-- <img src="{{asset('frontend/img/Icon awesome-eye.png')}}" class="w-16" alt="eye">--}}
     <div class="login-box">
         <!-- login form -->
         <form method="POST" action="{{ route('login') }}" class="sky-form boxed">
@@ -46,11 +48,11 @@
                     <section>
                         <label class="label">{{ __('Password') }}</label>
                         <label class="input">
-                            <i class="icon-append fa fa-lock"></i>
+                            <i id="toggle-password" class="icon-append fa fa-eye"></i>
                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-                            <b class="tooltip tooltip-top-right">Type your Password</b>
                         </label>
-
+                        
+                        
                         <label class="checkbox">
                             <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}><i></i>{{ __('Keep me logged in') }}
                         </label>
@@ -70,5 +72,27 @@
            <hr />
        </div>
    </div>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+   <script>
+            $(document).ready(function() {
+                $("#toggle-password").click(function() {
+                const passwordInput = $("#password");
+                const icon = $(this).find("i");
+                
+                if (passwordInput.attr("type") === "password") {
+                    passwordInput.attr("type", "text");
+                    icon.removeClass("fa-eye");
+                    icon.addClass("fa-eye-slash");
+                } else {
+                    passwordInput.attr("type", "password");
+                    icon.removeClass("fa-eye-slash");
+                    icon.addClass("fa-eye");
+                }
+                });
+            });
+            </script>
    
 @endsection

@@ -15,9 +15,10 @@ class UnitOwnerController extends Controller
 {
    function __construct()
    {
-     // $this->middleware('projects:role-create', ['only' => ['create','store']]);
-     // $this->middleware('projects:role-edit', ['only' => ['edit','update']]);
-     // $this->middleware('projects:role-delete', ['only' => ['destroy']]);
+     $this->middleware('permission:unit-owner-list|unit-owner-create|unit-owner-edit|unit-owner-delete', ['only' => ['index','store']]);
+     $this->middleware('permission:unit-owner-create', ['only' => ['create','store']]);
+     $this->middleware('permission:unit-owner-edit', ['only' => ['edit','update']]);
+     $this->middleware('permission:unit-owner-delete', ['only' => ['destroy']]);
    }
 
     public function index(Request $request){

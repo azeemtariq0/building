@@ -14,6 +14,36 @@
         owner_cnic: {
           required: true,
           noSpace: true // Use the custom rule
+        },
+        unit_id:{
+          required: true,
+          noSpace: true // Use the custom rule
+
+
+        },
+        mobile_no:{
+          required: true,
+          noSpace: true // Use the custom rule
+
+
+        },
+        ptcl_no:{
+          required: true,
+          noSpace: true // Use the custom rule
+
+
+        },
+        owner_email:{
+          required: true,
+          noSpace: true // Use the custom rule
+
+
+        },
+        owner_since:{
+          required: true,
+          noSpace: true // Use the custom rule
+
+
         }
       },
       messages: {
@@ -22,11 +52,27 @@
         },
         owner_cnic: {
           required: "Owner cnic  field is required."
+        },
+        unit_id:{
+          required: "Unit id is required"
+        }
+        ,
+        mobile_no:{
+          required: "Mobile number is required"
+        },
+        ptcl_no:{
+          required: "Ptcl number is required"
+        },
+        owner_email:{
+          required: "Owner Email is required"
+        },
+        owner_since:{
+          required: "Owner since is required"
         }
       },
       submitHandler: function(form) {
         // Handle the form submission if it's valid
-        alert("Form submitted!");
+        $('#unit_owners').submit();
       }
     });
   });

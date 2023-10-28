@@ -42,10 +42,10 @@
                         <th>unit</th>
                         <th>Owner Name</th>
                         <th>Owner CNIC</th>
-                        <th>Owner Contact</th>
+                        <th>Mobile No</th>
+                        <th>PTCL No</th>
                         <th>Owner email</th>
                         <th>Address</th>
-                        <th>Created Date</th>
                         <th width="20%">Action</th>
                       </tr>
                     </thead>
@@ -74,10 +74,10 @@
                 {data: 'unit.unit_name', unit_name: 'name'},
                 {data: 'owner_name', owner_name: 'name'},
                 {data: 'owner_cnic', owner_cnic: 'name'},
-                {data: 'owner_contact', owner_contact: 'name'},
+                {data: 'mobile_no', mobile_no: 'name'},
+                {data: 'ptcl_no', ptcl_no: 'name'},
                 {data: 'owner_email', owner_email: 'name'},
                 {data: 'owner_address', owner_address: 'name'},
-                {data: 'created_at', created_at: 'name'},
                 {data: 'action', owner_address: 'action', orderable: false, searchable: false},
                 ]
               });

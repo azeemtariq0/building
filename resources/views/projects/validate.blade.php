@@ -34,7 +34,7 @@
       },
       submitHandler: function(form) {
         // Handle the form submission if it's valid
-        alert("Form submitted!");
+        $('#first_form').submit();
       }
     });
   });

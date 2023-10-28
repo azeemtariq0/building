@@ -14,9 +14,10 @@ class ReceiptTypeController extends Controller
 {
    function __construct()
    {
-     // $this->middleware('projects:role-create', ['only' => ['create','store']]);
-     // $this->middleware('projects:role-edit', ['only' => ['edit','update']]);
-     // $this->middleware('projects:role-delete', ['only' => ['destroy']]);
+    $this->middleware('permission:receipt-list|receipt-create|receipt-edit|receipt-delete', ['only' => ['index','store']]);
+    $this->middleware('permission:receipt-create', ['only' => ['create','store']]);
+    $this->middleware('permission:receipt-edit', ['only' => ['edit','update']]);
+    $this->middleware('permission:receipt-delete', ['only' => ['destroy']]);
    }
 
     public function index(Request $request){

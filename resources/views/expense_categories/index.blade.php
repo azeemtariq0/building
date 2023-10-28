@@ -39,9 +39,8 @@
                   <table class="table table-striped table-bordered table-hover table-responsive data-table">
                     <thead>
                       <tr>
-                        <th>No</th>
-                        <th>Exp Category Code</th>
-                        <th>Exp Category Name</th>
+                        <th>Expense Category Code</th>
+                        <th>Expense Category</th>
                         <th>Description</th>
                         <th width="20%">Action</th>
                       </tr>
@@ -68,7 +67,6 @@
                 serverSide: true,
                 ajax: "{{ route('expense_categories.index') }}",
                 columns: [
-                {data: 'id', exp_code: 'id'},
                 {data: 'exp_code', exp_code: 'name'},
                 {data: 'exp_name', exp_name: 'name'},
                 {data: 'description', description: 'name'},

@@ -66,7 +66,7 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Project </label>
+                                            <label>Project *</label>
                                            <select class="select2 form-control" required name="project_id">
                                             <option value=""></option>
                                             @foreach($projects as $value)
@@ -81,7 +81,7 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Block </label>
+                                            <label>Block *</label>
                                            <select class="select2 form-control" required name="block_id">
                                                <option ></option>
                                                 @foreach($blocks as $value)
@@ -95,7 +95,7 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Unit Category </label>
+                                            <label>Unit Category *</label>
                                            <select class="select2 form-control" required name="unit_category_id">
                                             <option ></option>
                                                 @foreach($unit_categories as $value)
@@ -114,7 +114,7 @@
                                  <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Unit Size </label>
+                                            <label>Unit Size *</label>
                                             {!! Form::number('unit_size', null, array('placeholder' => '','class' => 'form-control' , 'required'=>'true','type'=>'number')) !!}
                                         </div>
 

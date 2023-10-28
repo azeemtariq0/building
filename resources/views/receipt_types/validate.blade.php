@@ -20,7 +20,7 @@
       },
       submitHandler: function(form) {
         // Handle the form submission if it's valid
-        alert("Form submitted!");
+        $('#reciept_form').submit();
       }
     });
   });

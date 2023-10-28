@@ -46,7 +46,6 @@
                         <th width="120">Unit Category</th>
             
                         <th width="150">Outstanding Amount</th>
-                        <th width="150">Created Date</th>
                       
                         <th width="20%">Action</th>
                       </tr>
@@ -78,8 +77,7 @@
                 {data: 'project.project_name', project_name: 'name'},
                 {data: 'block.block_name', block_id: 'name'},
                 {data: 'unit_category.unit_cat_name', unit_category_id: 'name'},
-                {data: 'out_standing_balance', out_standing_balance: 'name'},
-                {data: 'created_at', created_at: 'name'},
+                {data: 'out_standing_amount', out_standing_amount: 'name'},
                 {data: 'action', description: 'action', orderable: false, searchable: false},
                 ]
               });

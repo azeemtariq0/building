@@ -27,7 +27,7 @@
       },
       submitHandler: function(form) {
         // Handle the form submission if it's valid
-        alert("Form submitted!");
+        $('#block_form').submit();
       }
     });
   });
