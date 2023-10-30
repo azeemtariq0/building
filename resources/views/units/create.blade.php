@@ -67,26 +67,38 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Project *</label>
-                                           <select class="select2 form-control" required name="project_id">
+                                           <select id="project" class=" form-control" required name="project_id">
                                             <option value=""></option>
                                             @foreach($projects as $value)
                                                <option {{  $value->id== @$unit->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
                                                @endforeach
+
+                                              
                                            </select>
                                         </div>
 
                                     </div>
                                 </div>
+                                <input type="hidden" value="$value->project_name" id="project_val">
+
+                                
+            <script>
+                    $(document).ready(function() {
+                        var valueToSelect = "{{$value->id}}"; 
+                        
+                        console.log(valueToSelect);// The value you want to select
+
+                        $('#project').val(valueToSelect);
+                    });
+                    </script>
 
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Block *</label>
-                                           <select class="select2 form-control" required name="block_id">
-                                               <option ></option>
-                                                @foreach($blocks as $value)
-                                               <option {{  $value->id== @$unit->block_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->block_name}}</option>
-                                               @endforeach
+                                           <select id="block" class=" form-control" required name="block_id">
+                                           <option value="">Select block</option>
+                                               
                                            </select>
                                         </div>
 
@@ -96,7 +108,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Unit Category *</label>
-                                           <select class="select2 form-control" required name="unit_category_id">
+                                           <select class=" form-control" required name="unit_category_id">
                                             <option ></option>
                                                 @foreach($unit_categories as $value)
                                                <option {{  $value->id== @$unit->unit_category_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->unit_cat_name}}</option>
@@ -126,7 +138,8 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Outstanding Amount</label>
-                                            {!! Form::number('out_standing_amount',null, array('placeholder' => '','class' => 'form-control')) !!}
+                                            @php $readonly = (@$unit->id) ? 'readonly' : ''; @endphp
+                                            {!! Form::number('out_standing_amount',null, array('placeholder' => '','class' => 'form-control',$readonly=>true)) !!}
                                         </div>
 
                                     </div>
@@ -142,26 +155,7 @@
                                     </div>
                                 </div>
 
-                                   <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-md-10 col-sm-10">
-                                            <label>Current Owner</label>
-                                            {!! Form::text('current_owner', null, array('placeholder' => 'Current Owner','class' => 'form-control')) !!}
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                   <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-md-10 col-sm-10">
-                                            <label>Current Tenant</label>
-                                            {!! Form::text('current_tenant', null, array('placeholder' => 'Current Tenant','class' => 'form-control')) !!}
-                                        </div>
-
-                                    </div>
-                                </div>
-
+                           
                                </div>
 
 
@@ -183,5 +177,26 @@
        </div>
    </div>
 </div>
+<script>
+    $('#project').on('change', function () {
+        var countryId = $(this).val();
+        if (countryId) {
+            $.ajax({
+                url: '/all_block/' + countryId,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    $('#block').empty();
+                    $.each(data, function (key, value) {
+                        $('#block').append('<option value="' + value.id + '">' + value.block_name + '</option>');
+                    });
+                }
+            });
+        } else {
+            $('#block').empty();
+        }
+    });
+</script>
+
 @include('units/validate')
 @endsection

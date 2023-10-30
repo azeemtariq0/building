@@ -177,6 +177,13 @@ class BlockController extends Controller
         return redirect()->route('blocks.index')
         ->with('success','block updated successfully');
     }
+
+    public function allBlocks($id){
+
+        $blocks = block::where('project_id', $id)->get();
+        return response()->json($blocks);
+        
+    }
     /**
      * Remove the specified resource from storage.
      *

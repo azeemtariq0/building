@@ -22,7 +22,7 @@ class Unit extends Model
         'block_id',
         'unit_category_id',
         'unit_size',
-        'out_standing_balance',
+        'out_standing_amount',
         'ob_date',
         'current_owner',
         'current_tenant',

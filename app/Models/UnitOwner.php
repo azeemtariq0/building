@@ -19,6 +19,8 @@ class UnitOwner extends Model
         'unit_id',
         'owner_name',
         'owner_cnic',
+        'mobile_no',
+        'ptcl_no',
         'owner_address',
         'owner_contact',
         'owner_email',

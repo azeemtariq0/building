@@ -113,6 +113,8 @@
 
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-6">
                                 
                                 <div class="row">
                                     <div class="form-group">
@@ -124,31 +126,42 @@
                                     </div>
                                 </div>
 
-
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Address </label>
-                                            {!! Form::text('owner_address', null, array('placeholder' => 'Address','class' => 'form-control')) !!}
+                                            <label>Current Tenant</label>
+                                            {!! Form::text('current_tenant', null, array('placeholder' => 'Current Tenant','class' => 'form-control')) !!}
                                         </div>
 
                                     </div>
                                 </div>
 
-                                
+
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-10 col-sm-10">
+                                            <label>Address </label>
+                                            {!! Form::textarea('owner_address', null, array('placeholder' => 'Address','class' => 'form-control','rows'=>2)) !!}
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                  <div class="row">
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-3d btn-teal btn-sm btn-block margin-top-30">
+                                           Submit
+                                       </button>
+                                   </div>
+                               </div>
 
                             </div>
 
 
 
                         </fieldset>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <button type="submit" class="btn btn-3d btn-teal btn-sm btn-block margin-top-30">
-                                   Submit
-                               </button>
-                           </div>
-                       </div>
+                      
                        {!! Form::close() !!}
                    </div>
                </div>

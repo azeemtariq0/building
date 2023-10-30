@@ -53,10 +53,6 @@
         owner_cnic: {
           required: "Owner cnic  field is required."
         },
-        unit_id:{
-          required: "Unit id is required"
-        }
-        ,
         mobile_no:{
           required: "Mobile number is required"
         },

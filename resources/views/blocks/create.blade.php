@@ -55,13 +55,14 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Project </label>
-                                           <select class="select2 form-control" id="project_id"  required name="project_id">
+                                            <label>Project *</label>
+                                           <select class=" form-control" id="project_id"  required name="project_id">
                                             <option value=""></option>
                                             @foreach($projects as $value)
-                                               <option {{  $value->id== @$unit->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
+                                               <option {{  $value->id== @$block->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
                                                @endforeach
                                            </select>
+                                    
                                         </div>
 
                                     </div>

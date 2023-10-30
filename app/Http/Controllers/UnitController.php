@@ -85,9 +85,7 @@ class UnitController extends Controller
                 'unit_category_id' => $request->input('unit_category_id'),
                 'unit_size' => $request->input('unit_size'),
                 'out_standing_amount' => $request->input('out_standing_amount'),
-                'ob_date' => $request->input('ob_date'),
-                'current_owner' => $request->input('current_owner'),
-                'current_tenant' => $request->input('current_tenant')
+                'ob_date' => $request->input('ob_date')
             ]
         );
 
@@ -133,9 +131,6 @@ class UnitController extends Controller
         $unitCategory->unit_size = $request->input('unit_size');
         $unitCategory->out_standing_amount = $request->input('out_standing_amount');
         $unitCategory->ob_date = $request->input('ob_date');
-        $unitCategory->current_owner = $request->input('current_owner');
-        $unitCategory->current_tenant = $request->input('current_tenant');
-        $unitCategory->current_owner = $request->input('current_owner');
 
         $unitCategory->save();
         return redirect()->route('units.index')

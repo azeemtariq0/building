@@ -105,7 +105,7 @@ class ProjectController extends Controller
                 'project_name' => $request->input('project_name'),
                 'union_name' => $request->input('union_name'),
                 'union_president' => $request->input('union_president'),
-                'union_voice_president' => $request->input('union_voice_president'),
+                'union_vice_president' => $request->input('union_vice_president'),
                 'union_secretary' => $request->input('union_secretary'),
                 'union_joint_secretary' => $request->input('union_joint_secretary'),
                 'union_accountant' => $request->input('union_accountant'),
@@ -184,7 +184,7 @@ class ProjectController extends Controller
         $project->project_name = $request->input('project_name');
         $project->union_name = $request->input('union_name');
         $project->union_president = $request->input('union_president');
-        $project->union_voice_president = $request->input('union_voice_president');
+        $project->union_vice_president = $request->input('union_vice_president');
         $project->union_secretary = $request->input('union_secretary');
         $project->union_joint_secretary = $request->input('union_joint_secretary');
         $project->union_accountant = $request->input('union_accountant');
@@ -199,6 +199,9 @@ class ProjectController extends Controller
         return redirect()->route('projects.index')
         ->with('success','Project updated successfully');
     }
+
+
+    
     /**
      * Remove the specified resource from storage.
      *

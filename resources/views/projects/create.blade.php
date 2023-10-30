@@ -113,8 +113,8 @@ label.error {
                                      <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Union Voice President </label>
-                                            {!! Form::text('union_voice_president', null, array('placeholder' => 'Union Voice President','class' => 'form-control')) !!}
+                                            <label>Union Vice President </label>
+                                            {!! Form::text('union_vice_president', null, array('placeholder' => 'Union Vice President','class' => 'form-control')) !!}
                                         </div>
 
                                     </div>

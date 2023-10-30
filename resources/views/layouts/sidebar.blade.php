@@ -69,14 +69,7 @@
                                     <li class="{{ \Request::segment(1) == 'block' ? 'active' : '' }}"><a href="{{ route('blocks.index') }}">Blocks</a></li>
                                      @endcan
 
-                                     @can('expense-category-list')
-                                    <li class="{{ \Request::segment(1) == 'expense_categories' ? 'active' : '' }}"><a href="{{ route('expense_categories.index') }}">Expense Categories</a></li>
-                                       @endcan
-                                       @can('receipt-list') 
-                                      <li class="{{ \Request::segment(1) == 'receipt_types' ? 'active' : '' }}"><a href="{{ route('receipt_types.index') }}">Receipt Types</a></li>   
-                                      @endcan
-                                      <li class="{{ \Request::segment(1) == 'staff_types' ? 'active' : '' }}"><a href="{{ route('staff_types.index') }}">Staff Types</a></li>
-                                      @can('unit-category-list') 
+                                    @can('unit-category-list') 
                                       <li class="{{ \Request::segment(1) == 'unit_categories' ? 'active' : '' }}"><a href="{{ route('unit_categories.index') }}">Unit Categories</a></li>
                                       @endcan
                                       @can('unit-list') 
@@ -85,6 +78,15 @@
                                       @can('unit-owner-list') 
                                       <li class="{{ \Request::segment(1) == 'unit_owners' ? 'active' : '' }}"><a href="{{ route('unit_owners.index') }}">unit Owners</a></li>
                                       @endcan
+
+                                     @can('expense-category-list')
+                                    <li class="{{ \Request::segment(1) == 'expense_categories' ? 'active' : '' }}"><a href="{{ route('expense_categories.index') }}">Expense Categories</a></li>
+                                       @endcan
+                                       @can('receipt-list') 
+                                      <li class="{{ \Request::segment(1) == 'receipt_types' ? 'active' : '' }}"><a href="{{ route('receipt_types.index') }}">Receipt Types</a></li>   
+                                      @endcan
+                                      <li class="{{ \Request::segment(1) == 'staff_types' ? 'active' : '' }}"><a href="{{ route('staff_types.index') }}">Staff Types</a></li>
+                                  
                                 </ul>
                             </li>
 

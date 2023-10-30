@@ -81,6 +81,7 @@ class UnitOwnerController extends Controller
                 'mobile_no' => $request->input('mobile_no'),
                 'ptcl_no' => $request->input('ptcl_no'),
                 'owner_since' => $request->input('owner_since'),
+                'current_tenant' => $request->input('current_tenant'),
                 'owner_address' => $request->input('owner_address'),
             ]
         );
@@ -124,6 +125,7 @@ class UnitOwnerController extends Controller
         $unitOwner->mobile_no = $request->input('mobile_no');
         $unitOwner->ptcl_no = $request->input('ptcl_no');
         $unitOwner->owner_since = $request->input('owner_since');
+        $unitOwner->current_tenant = $request->input('current_tenant');
         $unitOwner->owner_address = $request->input('owner_address');
 
 
