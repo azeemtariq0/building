@@ -70,7 +70,7 @@
                                            <select id="project" class=" form-control" required name="project_id">
                                             <option value=""></option>
                                             @foreach($projects as $value)
-                                               <option {{  $value->id== @$unit->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
+                                               <option id="projects" {{  $value->id== @$unit->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
                                                @endforeach
 
                                               
@@ -79,18 +79,9 @@
 
                                     </div>
                                 </div>
-                                <input type="hidden" value="$value->project_name" id="project_val">
 
                                 
-            <script>
-                    $(document).ready(function() {
-                        var valueToSelect = "{{$value->id}}"; 
-                        
-                        console.log(valueToSelect);// The value you want to select
-
-                        $('#project').val(valueToSelect);
-                    });
-                    </script>
+           
 
                                 <div class="row">
                                     <div class="form-group">
@@ -197,6 +188,15 @@
         }
     });
 </script>
+<script>
+                    $(document).ready(function() {
+                        
+                        
+                        $('#projects').trigger('change');
+                        
+                    });
+                    </script>
+
 
 @include('units/validate')
 @endsection
