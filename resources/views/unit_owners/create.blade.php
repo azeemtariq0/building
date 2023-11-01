@@ -85,12 +85,22 @@
                                
                                 <div class="row">
                                     <div class="form-group">
-                                        <div class="col-md-10 col-sm-10">
+                                        <div class="col-md-5">
                                             <label>CNIC / NICOP / Passport *</label>
                                             {!! Form::text('owner_cnic', null, array('placeholder' => 'Owner CNIC','class' => 'form-control' ,'id' => 'owner_cnic','required'=>true)) !!}
                                         </div>
+                                        <div class="col-md-5 ">
+                                            <label>Identity Type *</label>
+                                            <select class=" form-control" required name="identity_type" id="identity_type">
+                                            <option value=""></option>
+                                            <option {{ $value->id== @$unit_owner->identity_type ? 'selected' : '' }} value="nicop">NICOP</option>
+                                            <option {{ $value->id== @$unit_owner->identity_type ? 'selected' : '' }} value="cnic">CNIC</option>
+                                            <option {{ $value->id== @$unit_owner->identity_type ? 'selected' : '' }} value="passport">Passport</option>
+                                            </select>
+                                        </div>
 
                                     </div>
+                                   
                                 </div>
 
 
@@ -182,7 +192,7 @@
                        {!! Form::close() !!}
                    </div>
                </div>
-               <!-- /----- -->
+               <!-- /-end---- -->
            </div>
        </div>
    </div>
