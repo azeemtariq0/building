@@ -1,0 +1,22 @@
+ALTER TABLE `construction`.`as_unit_owners`   
+  ADD COLUMN `current_tenant` VARCHAR(255) NULL AFTER `owner_email`;
+
+
+ALTER TABLE `construction`.`as_units`   
+  DROP COLUMN `current_owner`, 
+  DROP COLUMN `current_tenant`;
+
+ALTER TABLE `construction`.`as_projects`   
+  CHANGE `union_voice_president` `union_vice_president` VARCHAR(255) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci NULL;
+
+ALTER TABLE `construction`.`as_unit_owners`   
+  ADD COLUMN `current_tenant` VARCHAR(255) NULL AFTER `owner_email`;
+
+ALTER TABLE `construction`.`as_unit_owners`   
+  ADD COLUMN `identity_type` VARCHAR(255) NULL AFTER `owner_name`;
+
+
+
+
+apni soceity  ----> Project Name
+
