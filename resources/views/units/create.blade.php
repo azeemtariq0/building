@@ -188,6 +188,7 @@
         }
     });
 </script>
+// acript for trigger
 <script>
     $(document).ready(function() {
         $('#projects').trigger('change');
