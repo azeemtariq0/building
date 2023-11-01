@@ -66,6 +66,23 @@
                                     </div>
                                 </div> 
 
+                                
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-10 col-sm-10">
+                                            <label>Identity Type *</label>
+                                            <select class=" form-control" required name="identity_type" id="identity_type">
+                                            <option value=""></option>
+                                            <option {{ $value->id== @$unit_owner->identity_type ? 'selected' : '' }} value="nicop">NICOP</option>
+                                            <option {{ $value->id== @$unit_owner->identity_type ? 'selected' : '' }} value="cnic">CNIC</option>
+                                            <option {{ $value->id== @$unit_owner->identity_type ? 'selected' : '' }} value="passport">Passport</option>
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                               
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">

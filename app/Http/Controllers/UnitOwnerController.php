@@ -77,6 +77,7 @@ class UnitOwnerController extends Controller
                 'unit_id' => $request->input('unit_id'),
                 'owner_name' => $request->input('owner_name'),
                 'owner_cnic' => $request->input('owner_cnic'),
+                'identity_type' => $request->input('identity_type'),
                 'owner_email' => $request->input('owner_email'),
                 'mobile_no' => $request->input('mobile_no'),
                 'ptcl_no' => $request->input('ptcl_no'),
