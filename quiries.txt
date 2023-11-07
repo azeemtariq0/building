@@ -16,6 +16,18 @@ ALTER TABLE `construction`.`as_unit_owners`
   ADD COLUMN `identity_type` VARCHAR(255) NULL AFTER `owner_name`;
 
 
+CREATE TABLE `construction`.`as_receipt`(  
+  `project_id` INT(11),
+  `block_id` INT(11),
+  `unit_id` INT(11),
+  `description` VARCHAR(255),
+  `date` VARCHAR(255),
+  `recieveable` VARCHAR(255),
+  `status` INT(11) DEFAULT 0
+);
+
+
+
 
 
 apni soceity  ----> Project Name

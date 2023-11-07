@@ -12,6 +12,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\BlockController;
 use App\Http\Controllers\ExpenseCategoryController;
+use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\ReceiptTypeController;
 use App\Http\Controllers\UnitCategoryController;
 use App\Http\Controllers\StaffTypeController;
@@ -46,6 +47,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('expense_categories', ExpenseCategoryController::class);
     Route::resource('unit_categories', UnitCategoryController::class);
     Route::resource('staff_types', StaffTypeController::class);
+    Route::resource('receipts', ReceiptController::class);
     Route::resource('receipt_types', ReceiptTypeController::class);
     Route::resource('units', UnitController::class);
     Route::resource('research', ResearchController::class);
