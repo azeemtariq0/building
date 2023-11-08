@@ -46,7 +46,7 @@
                                     <div class="form-group">
                                         <div class="col-md-3">
                                             <label>Project *</label>
-                                            <select id="project" class=" form-control" required name="project_id">
+                                            <select id="project" class=" form-control select2" required name="project_id">
                                                 <option value=""></option>
                                                 @foreach($projects as $value)
                                                 <option id="projects" {{  $value->id== @$unit->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
@@ -58,14 +58,14 @@
                                         </div>
                                          <div class="col-md-3">
                                             <label>Block *</label>
-                                            <select id="block" class=" form-control" required name="block_id">
+                                            <select id="block" class=" form-control select2" required name="block_id">
                                                 <option value="">Select block</option>
 
                                             </select>
                                         </div>
                                         <div class="col-md-3">
                                             <label>Unit Category *</label>
-                                            <select class=" form-control" required name="unit_category_id">
+                                            <select class=" form-control select2" required name="unit_category_id">
                                                 <option></option>
                                                 @foreach($unit_categories as $value)
                                                 <option {{  $value->id== @$unit->unit_category_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->unit_cat_name}}</option>
@@ -77,21 +77,28 @@
                                 </div>
 
                             </div>
+                            <br>
 
-                            <table class="table table-striped table-bordered table-hover table-responsive data-table">
+                       
+
+                        </fieldset>
+
+                             <div class="table-responsive" style="margin-top: 20px">
+                            <table class="table table-striped table-bordered table-hover table-responsive data-table mt-4">
                                 <thead>
                                   <tr>
-                                    <th>Project </th>
-                                    <th>Project Name</th>
-                                    <th>Description</th>
+                                    <th>Unit </th>
+                                    <th>Unit Category </th>
+                                    <th>Outstanding</th>
+                                    <th>Last Amount</th>
+                                    <th>Last Date</th>
                                     <th width="20%">Action</th>
                                   </tr>
                                 </thead>
                                 <tbody>
                                 </tbody>
                               </table>
-
-                        </fieldset>
+                          </div>
                       
                        {!! Form::close() !!}
                    </div>
@@ -100,11 +107,8 @@
            </div>
        </div>
    </div>
-</div>
-@endsection
 
-
-<script type="text/javascript">
+   <script type="text/javascript">
      $(document).ready(function() {
         $('#project').on('change', function() {
         var countryId = $(this).val();
@@ -124,5 +128,34 @@
             $('#block').empty();
         }
     });
-           });
+});
+
+function generateUnitList(){
+     $('#project').on('change', function() {
+        var countryId = $(this).val();
+        if (countryId) {
+            $.ajax({
+                url: '<?= env('APP_BASEURL') ?>/all_block/' + countryId,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $('#block').empty();
+                    $.each(data, function(key, value) {
+                        $('#block').append('<option value="' + value.id + '">' + value.block_name + '</option>');
+                    });
+                }
+            });
+        } else {
+            $('#block').empty();
+        }
+    });
+
+
+}
+
 </script>
+
+</div>
+@endsection
+
+

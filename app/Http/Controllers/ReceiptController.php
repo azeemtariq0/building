@@ -64,7 +64,7 @@ class ReceiptController extends Controller
         $projects  =  Project::get();
         $data['page_management'] = array(
             'page_title' => 'Create New Receipt',
-            'slug' => 'Create',
+            'slug' => 'Transaction',
              'title' => 'Manage Receipts',
             'add' => 'Add Receipt',
         );
