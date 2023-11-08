@@ -90,7 +90,23 @@
                                 </ul>
                             </li>
 
+                            <li class="{{ in_array(\Request::segment(1),array(
+                             'receipts',
+                              )) ? 'active' : '' }}">
+                             <a href="#">
+                                    <i class="fa fa-menu-arrow pull-right"></i>
+                                    <i class="main-icon fa fa-users"></i> <span>Transaction</span>
+                                </a>
+                             
 
+                              <ul>
+                            
+                                    <li class="{{ \Request::segment(1) == 'receipts' ? 'active' : '' }}"><a href="{{ route('receipts.index') }}">Receipts</a></li>
+                                       
+                                  
+                                </ul>
+
+ </li>
 
                             <li><!-- logout -->
                                     

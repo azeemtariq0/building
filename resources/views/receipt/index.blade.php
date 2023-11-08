@@ -32,7 +32,7 @@
                   <!-- right options -->
                   <ul class="options pull-right list-inline">
                     <li>
-                      <a href="{{ route('projects.create')}}" class="btn btn-sm btn-success btn_create_new_user">
+                      <a href="{{ route('receipts.create')}}" class="btn btn-sm btn-success btn_create_new_user">
                         <!-- <i class="et-megaphone"></i> -->
                         <span>{{ $data['page_management']['add'] ?? "" }}</span>
                       </a>

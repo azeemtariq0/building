@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\receipt;
 use Illuminate\Http\Request;
-
+use App\Models\Block;
+use App\Models\Project;
+use App\Models\UnitCategory;
 class ReceiptController extends Controller
 {
     /**
@@ -57,7 +59,16 @@ class ReceiptController extends Controller
      */
     public function create()
     {
-        //
+        $blocks  =  Block::get();
+        $unit_categories  =  UnitCategory::get();
+        $projects  =  Project::get();
+        $data['page_management'] = array(
+            'page_title' => 'Create New Receipt',
+            'slug' => 'Create',
+             'title' => 'Manage Receipts',
+            'add' => 'Add Receipt',
+        );
+        return view('receipt.create', compact('data','blocks','projects','unit_categories'));
     }
 
     /**

@@ -173,7 +173,7 @@
         var countryId = $(this).val();
         if (countryId) {
             $.ajax({
-                url: '/all_block/' + countryId,
+                url: '<?= env('APP_BASEURL') ?>/all_block/' + countryId,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
