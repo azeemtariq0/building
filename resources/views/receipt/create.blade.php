@@ -2,7 +2,7 @@
 
 
 @section('content')
-
+  @include('layouts.additionalscripts.adddatatable')
 @if (count($errors) > 0)
 <div id="content" class="padding-20">
 
@@ -128,6 +128,8 @@
             $('#block').empty();
         }
     });
+
+        $('.data-table').DataTable();
 });
 
 function generateUnitList(){
