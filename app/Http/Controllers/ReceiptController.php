@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\receipt;
 use Illuminate\Http\Request;
+use App\Models\Unit;
 use App\Models\Block;
 use App\Models\Project;
 use App\Models\UnitCategory;
@@ -84,6 +85,42 @@ class ReceiptController extends Controller
             'add' => 'Add Receipt',
         );
         return view('receipt.create', compact('data','blocks','projects','unit_categories'));
+    }
+
+    public function getUnits(Request $request){
+
+        if ($request->ajax()) {
+        $units = Unit::with('project','block','unit_category')->get();
+        return Datatables::of($units)
+        ->addIndexColumn()
+        ->addColumn('receipt', function($model) {
+            $lastReceipt  = receipt::select('receipt_date','amount')->orderBy('created_at','DESC')->first();
+            return ['last_date'=> @$lastReceipt->receipt_date,'last_amount'=>@$lastReceipt->amount];
+        })
+        ->editColumn('created_at', function($model){
+        $formatDate = date('d-m-Y H:i:s',strtotime($model->created_at));
+        return $formatDate;
+        })->addColumn('action', function($row){
+            $btn= "<a href='".route('blocks.edit',$row->id)."' class='btn btn-info btn-sm'> <i class='fa fa-edit'> <span>Generate</span></a>";
+               return $btn;
+           })
+            ->rawColumns(['action'])
+            ->make(true);
+        }
+
+      $data['page_management'] = array(
+        'page_title' => 'Block',
+        'slug' => 'General Setup',
+        'title' => 'Manage Blocks',
+        'add' => 'Add Block',
+    );
+
+    return view('receipt.create', compact('data'));
+
+
+       
+
+
     }
 
     /**

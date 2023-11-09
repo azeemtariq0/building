@@ -89,6 +89,8 @@
                                   <tr>
                                     <th>Unit </th>
                                     <th>Unit Category </th>
+                                    <th>Project </th>
+                                    <th>Block </th>
                                     <th>Outstanding</th>
                                     <th>Last Amount</th>
                                     <th>Last Date</th>
@@ -129,11 +131,12 @@
         }
     });
 
-        $('.data-table').DataTable();
+        // $('.data-table').DataTable();
 });
 
 function generateUnitList(){
      $('#project').on('change', function() {
+        $('#block').empty();
         var countryId = $(this).val();
         if (countryId) {
             $.ajax({
@@ -141,7 +144,8 @@ function generateUnitList(){
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    $('#block').empty();
+                    
+                    $('#block').append('<option value="">Select an option</option>');
                     $.each(data, function(key, value) {
                         $('#block').append('<option value="' + value.id + '">' + value.block_name + '</option>');
                     });
@@ -156,7 +160,29 @@ function generateUnitList(){
 }
 
 </script>
+<script type="text/javascript">
+            $(function () {
 
+              var table = $('.data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ url('get-units') }}",
+                columns: [
+                {data: 'unit_name', unit_name: 'name'},
+                {data: 'project.project_name', project_name: 'name'},
+                {data: 'block.block_name', block_id: 'name'},
+                {data: 'unit_category.unit_cat_name', unit_category_id: 'name'},
+                {data: 'out_standing_amount', out_standing_amount: 'name'},
+                {data: 'receipt.last_amount', amount: 'name'},
+                {data: 'receipt.last_date', last_date: 'name'},
+                {data: 'action', description: 'action', orderable: false, searchable: false},
+                ]
+              });
+
+
+
+            });
+          </script>
 </div>
 @endsection
 

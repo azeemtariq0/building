@@ -57,6 +57,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::post('add_or_update_staff_type', [StaffTypeController::class, 'staffTypeSaveOrUpdate']);
     Route::post('assign_role', [UserController::class, 'assignRoleToUser']);
+    Route::get('get-units', [ReceiptController::class, 'getUnits']);
     Route::get('/all_block/{id}', [BlockController::class, 'allBlocks']);
 
 
