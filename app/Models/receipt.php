@@ -18,12 +18,12 @@ class receipt extends Model
 
     public function block()
     {
-        return $this->belongsTo(Block::class,'erp_user_id');
+        return $this->belongsTo(Block::class,'block_id');
     }
 
     public function unit()
     {
-        return $this->belongsTo(Unit::class,'erp_user_id');
+        return $this->belongsTo(Unit::class,'unit_id');
     }
 
 

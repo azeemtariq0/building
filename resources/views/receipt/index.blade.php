@@ -51,9 +51,14 @@
                   <table class="table table-striped table-bordered table-hover table-responsive data-table">
                     <thead>
                       <tr>
-                        <th>Project </th>
-                        <th>Project Name</th>
+                        <th>Receipt number</th>
+                         <th> project </th>
+                        <th> block </th>
+                        <th> unit </th>
+                        <th> receipt date </th>
                         <th>Description</th>
+                        <th> amount </th>
+                        <th> status </th> 
                         <th width="20%">Action</th>
                       </tr>
                     </thead>
@@ -77,15 +82,52 @@
               var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('projects.index') }}",
+                ajax: "{{ route('receipts.index') }}",
                 columns: [
-                {data: 'project_code', project_name: 'name'},
-                {data: 'project_name', project_name: 'name'},
+                {data: 'receipt_code', receipt_code: 'name'},
+                {data: 'project.project_name', project_id: 'name'},
+                {data: 'block.block_name', block_id: 'name'},
+                {data: 'unit.unit_name', unit_id: 'name'},
+                {data: 'receipt_date', receipt_date: 'name'},
                 {data: 'description', description: 'name'},
+                {data: 'amount', amount: 'name'},
+                {data: 'status', status: 'name'},
                 {data: 'action', description: 'action', orderable: false, searchable: false},
                 ]
               });
 
             });
+
+            
           </script>
+
+          <!-- Include jQuery library -->
+
+          <script>
+    $(document).ready(function() {
+        $('.toggle-switch').change(function() {
+            var userId = $(this).data('id');
+            var isChecked = $(this).prop('checked');
+
+            $.ajax({
+                type: 'POST',
+                url: '/your_ajax_endpoint', // Update with your actual endpoint
+                data: {
+                    userId: userId,
+                    isChecked: isChecked
+                },
+                success: function(response) {
+                    // Handle the response from the server if needed
+                    console.log(response);
+                },
+                error: function(error) {
+                    // Handle errors if any
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>
           @endsection
+
+          

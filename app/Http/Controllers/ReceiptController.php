@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Block;
 use App\Models\Project;
 use App\Models\UnitCategory;
+use DB;
+use DataTables, Form; 
 class ReceiptController extends Controller
 {
     /**
@@ -16,40 +18,53 @@ class ReceiptController extends Controller
      */
     public function index(Request $request)
     { if ($request->ajax()) {
-        $receipts = Receipt::with('project')->get();
+
+       $data = Receipt::with('project', 'block', 'unit')->get(); 
         return Datatables::of($data)
+
         ->addIndexColumn()
+            ->addColumn('symbol', function($row){
+                $text = '<p>dwdwdw</p>';
+                return $text;
+            })
         ->editColumn('created_at', function($model){
         $formatDate = date('d-m-Y H:i:s',strtotime($model->created_at));
         return $formatDate;
     })
-        ->addColumn('action', function($row){
-
-           // $btn = "<a href='".route('blocks.show',$row->id)."' class='btn btn-success btn-sm'><span>Show</span></a>";
-
-           $btn= "<a href='".route('blocks.edit',$row->id)."' class='btn btn-info btn-sm'> <span>Edit</span></a>";
-
-           $btn.= Form::open(['method' => 'DELETE','route' => ['blocks.destroy', $row->id],'style'=>'display:inline']);
-           $btn.= Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']);
-           $btn.= Form::close();
-
-           return $btn;
+        ->addColumn('action', function($row)
+        {
+            
+            $switchClass = "danger";
+            $checked = "";
+            if ($row->status == 1) {
+                $switchClass = "success";
+                $checked = "checked";
+            } else if ($row->status == 0) {
+                $switchClass = "danger";
+            }
+            $text = '<label class="switch switch-'.$switchClass.'">
+            <input id="toggleSwitch" data-id="'.$row->id.'" type="checkbox" '.$checked.'>
+            <span class="switch-label" data-on="on" data-off="off"></span>
+            </label>';
+            
+            return $text;
        })
+       
         ->rawColumns(['action'])
         ->make(true);
     }
 
       $data['page_management'] = array(
-        'page_title' => 'Block',
+        'page_title' => 'Receipts',
         'slug' => 'General Setup',
         'title' => 'Manage Blocks',
-        'add' => 'Add Block',
+        'add' => 'Add receipt',
     );
+
 
     return view('receipt.index', compact('data'));
 
-
-       
+   
     }
 
     /**
