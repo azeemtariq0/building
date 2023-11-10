@@ -109,7 +109,72 @@
            </div>
        </div>
    </div>
+          <!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
+    <!-- Modal content-->
+    <form id="form1" method="post">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Create Receipt</h4>
+      </div>
+      <div class="modal-body">
+          <fieldset>
+                        <!-- required [php action request] -->
+                        <input type="hidden" name="action" value="contact_send" />
+                         <div class="col-md-12">
+                                 <div class="row">
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                        
+                                            <label>Monthly Amount</label>
+                                            {!! Form::text('monthly_amount', null, array('class' => 'form-control','id'=>'monthly_amount' , 'readonly'=>'true')) !!}
+                                       
+                                        <input type="hidden" id="id" value="">
+
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                        
+                                            <label>Outstanding Amount</label>
+                                            {!! Form::text('outstanding_amount', null, array('class' => 'form-control','id'=>'outstanding_amount' , 'readonly'=>'true')) !!}
+                                       
+                                        <input type="hidden" id="id" value="">
+
+                                    </div>
+                                  </div>
+                                  <div class="col-md-12
+                                  ">
+                                    <div class="form-group">
+                                        
+                                        <label>Receipt Amount</label>
+                                            {!! Form::number('amount', null, array('placeholder' => 'Enter Amount','class' => 'form-control','id'=>'amount' , 'required'=>'true','value'=>0)) !!}
+                                       
+                                        <input type="hidden" id="unit_id" value="">
+                                        <input type="hidden" id="project_id" value="">
+                                        <input type="hidden" id="block_id" value="">
+                                        <input type="hidden" id="unit_category_id" value="">
+
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                       
+                     
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+    </form>
+    </div>
+
+  </div>
+</div>
    <script type="text/javascript">
      $(document).ready(function() {
         $('#project').on('change', function() {
@@ -164,24 +229,57 @@ function generateUnitList(){
             $(function () {
 
               var table = $('.data-table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ url('get-units') }}",
-                columns: [
-                {data: 'unit_name', unit_name: 'name'},
-                {data: 'project.project_name', project_name: 'name'},
-                {data: 'block.block_name', block_id: 'name'},
-                {data: 'unit_category.unit_cat_name', unit_category_id: 'name'},
-                {data: 'out_standing_amount', out_standing_amount: 'name'},
-                {data: 'receipt.last_amount', amount: 'name'},
-                {data: 'receipt.last_date', last_date: 'name'},
-                {data: 'action', description: 'action', orderable: false, searchable: false},
-                ]
+                          processing: true,
+                          serverSide: true,
+                          ajax: "{{ url('get-units') }}",
+                          columns: [
+                          {data: 'unit_name', unit_name: 'name'},
+                          {data: 'project.project_name', project_name: 'name'},
+                          {data: 'block.block_name', block_id: 'name'},
+                          {data: 'unit_category.unit_cat_name', unit_category_id: 'name'},
+                          {data: 'out_standing_amount', out_standing_amount: 'name'},
+                          {data: 'receipt.last_amount', amount: 'name'},
+                          {data: 'receipt.last_date', last_date: 'name'},
+                          {data: 'action', description: 'action', orderable: false, searchable: false},
+                          ]
               });
 
+              $("#form1").submit(function (event) {
+                    var formData = {
+                      amount: $("#amount").val(),
+                      unit_id: $("#unit_id").val(),
+                      project_id: $("#project_id").val(),
+                      block_id: $("#block_id").val(),
+                      unit_category_id: $("#unit_category_id").val(),
+                      _token: $("input[name=_token").val()
+                    };
+                    $.ajax({
+                        type: "POST",
+                        url: "{{url('add-receipt')}}",
+                        data: formData,
+                        dataType: "json",
+                        encode: true,
+                      }).done(function (data) {
 
-
+                         $('input[type="search"]').val(' ').trigger('keyup');
+                          $('#myModal').modal('hide');
+                          table.ajax.reload();
+                          toastr.success(data.msg);
+                     
+                      });
+                    event.preventDefault();
+                  });
             });
+
+            function generateReceipt(obj,id){
+                  $('#monthly_amount').val($(obj).data('monthly_amount'));
+                  $('#outstanding_amount').val( $(obj).data('outstanding_amount'));
+                  $('#project_id').val($(obj).data('project_id'));
+                  $('#block_id').val($(obj).data('block_id'));
+                  $('#unit_category_id').val($(obj).data('unit_category_id'));
+                  $('#unit_id').val(id);
+                  $('#myModal').modal('show');
+            }
           </script>
 </div>
 @endsection

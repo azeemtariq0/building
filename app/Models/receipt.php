@@ -10,6 +10,16 @@ class receipt extends Model
     use HasFactory;
 
     protected $table = 'as_receipts';
+    protected $fillable = [
+      'project_id',
+      'block_id',
+      'description',
+      'unit_id',
+      'receipt_date',
+      'amount',
+      'status'
+  ];
+     
 
     public function project()
     {

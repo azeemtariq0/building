@@ -101,7 +101,15 @@ class ReceiptController extends Controller
         $formatDate = date('d-m-Y H:i:s',strtotime($model->created_at));
         return $formatDate;
         })->addColumn('action', function($row){
-            $btn= "<a href='".route('blocks.edit',$row->id)."' class='btn btn-info btn-sm'> <i class='fa fa-edit'> <span>Generate</span></a>";
+            $btn= "<button onclick='generateReceipt(this,".$row->id.")' 
+            data-monthly_amount=".$row->unit_category->monthly_amount."  
+            data-outstanding_amount=".$row->out_standing_amount."
+            data-project_id=".$row->project_id."
+            data-block_id=".$row->block_id."
+            data-unit_category_id=".$row->unit_category_id."
+            data-outstanding_amount=".$row->out_standing_amount."
+
+            class='btn btn-info btn-sm'> <i class='fa fa-edit'> <span>Generate</span></button>";
                return $btn;
            })
             ->rawColumns(['action'])
@@ -116,12 +124,26 @@ class ReceiptController extends Controller
     );
 
     return view('receipt.create', compact('data'));
-
-
-       
-
-
     }
+
+    public function addReceipt(Request $request){
+        $_return = ['success'=>true,'msg'=>'Receipt Created Successfully!'];
+        receipt::create(
+                [
+                    'unit_id' => $request->input('unit_id'),
+                    'project_id' => $request->input('project_id'),
+                    'block_id' => $request->input('block_id'),
+                    'unit_category_id' => $request->input('unit_category_id'),
+                    'amount' => $request->input('amount'),
+                    'receipt_date' => date('Y-m-d'),
+                    'status' => 0,
+                    'created_by' => 1, //Auth::id(),
+                ]
+        );
+        echo json_encode($_return);
+        exit;
+    }
+
 
     /**
      * Store a newly created resource in storage.
