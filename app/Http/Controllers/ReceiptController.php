@@ -31,27 +31,34 @@ class ReceiptController extends Controller
         ->editColumn('created_at', function($model){
         $formatDate = date('d-m-Y H:i:s',strtotime($model->created_at));
         return $formatDate;
-    })
-        ->addColumn('action', function($row)
-        {
-            
-            $switchClass = "danger";
+    })->addColumn('status', function($row){
+            $switchClass = "";
             $checked = "";
             if ($row->status == 1) {
                 $switchClass = "success";
                 $checked = "checked";
             } else if ($row->status == 0) {
-                $switchClass = "danger";
+                $switchClass = "";
             }
             $text = '<label class="switch switch-'.$switchClass.'">
-            <input id="toggleSwitch" data-id="'.$row->id.'" type="checkbox" '.$checked.'>
+            <input class="toggle-switch" data-id="'.$row->id.'" type="checkbox" '.$checked.'>
             <span class="switch-label" data-on="on" data-off="off"></span>
             </label>';
             
             return $text;
+    })
+        ->addColumn('action', function($row)
+        {
+            
+               $btn= "<a href='".route('receipts.edit',$row->id)."' class='btn btn-info btn-sm'><i class='fa fa-edit'></i> <span>Edit</span></a>";
+               $btn.= Form::open(['method' => 'DELETE','route' => ['receipts.destroy', $row->id],'style'=>'display:inline']);
+               $btn.= Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']);
+               $btn.= Form::close();
+
+               return $btn;
        })
        
-        ->rawColumns(['action'])
+        ->rawColumns(['action','status'])
         ->make(true);
     }
 
@@ -94,7 +101,7 @@ class ReceiptController extends Controller
         return Datatables::of($units)
         ->addIndexColumn()
         ->addColumn('receipt', function($model) {
-            $lastReceipt  = receipt::select('receipt_date','amount')->orderBy('created_at','DESC')->first();
+            $lastReceipt  = receipt::select('receipt_date','amount')->where('unit_id',$model->id)->orderBy('created_at','DESC')->first();
             return ['last_date'=> @$lastReceipt->receipt_date,'last_amount'=>@$lastReceipt->amount];
         })
         ->editColumn('created_at', function($model){
@@ -143,6 +150,15 @@ class ReceiptController extends Controller
         echo json_encode($_return);
         exit;
     }
+    public function updateStatus(Request $request){
+        $_return = ['success'=>true,'msg'=>'Status Updated Successfully!'];
+        $receipt = receipt::where('id',$request->id)->first();
+        $receipt->status =  $request->status;
+        $receipt->update();
+        echo json_encode($_return);
+        exit;
+    }
+    
 
 
     /**

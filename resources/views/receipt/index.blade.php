@@ -51,13 +51,13 @@
                   <table class="table table-striped table-bordered table-hover table-responsive data-table">
                     <thead>
                       <tr>
-                        <th>Receipt number</th>
-                         <th> project </th>
+                        <th>Receipt Code</th>
+                        <th> receipt date </th>
+                        <th> project </th>
                         <th> block </th>
                         <th> unit </th>
-                        <th> receipt date </th>
                         <th>Description</th>
-                        <th> amount </th>
+                        <th> Receipt amount </th>
                         <th> status </th> 
                         <th width="20%">Action</th>
                       </tr>
@@ -105,20 +105,23 @@
 
           <script>
     $(document).ready(function() {
-        $('.toggle-switch').change(function() {
-            var userId = $(this).data('id');
-            var isChecked = $(this).prop('checked');
+        $(document).on('change','.toggle-switch',function() {
+            var id = $(this).data('id');
+            var status = $(this).is(':checked') ? '1' : '0';
 
             $.ajax({
                 type: 'POST',
-                url: '/your_ajax_endpoint', // Update with your actual endpoint
+                url: '{{ url("receipt-status") }}', // Update with your actual endpoint
                 data: {
-                    userId: userId,
-                    isChecked: isChecked
+                    id: id,
+                    status: status,
+                    _token: $("input[name=_token").val()
                 },
+                 dataType: "json",
+                 encode: true,
                 success: function(response) {
-                    // Handle the response from the server if needed
-                    console.log(response);
+
+                      toastr.success(response.msg);
                 },
                 error: function(error) {
                     // Handle errors if any

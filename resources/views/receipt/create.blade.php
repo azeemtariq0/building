@@ -46,7 +46,7 @@
                                     <div class="form-group">
                                         <div class="col-md-3">
                                             <label>Project *</label>
-                                            <select id="project" class=" form-control select2" required name="project_id">
+                                            <select id="filter_project_id" onchange="reloadTbl(true)" class=" form-control select2" required name="project_id">
                                                 <option value=""></option>
                                                 @foreach($projects as $value)
                                                 <option id="projects" {{  $value->id== @$unit->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
@@ -58,14 +58,14 @@
                                         </div>
                                          <div class="col-md-3">
                                             <label>Block *</label>
-                                            <select id="block" class=" form-control select2" required name="block_id">
+                                            <select id="filter_block_id" onchange="reloadTbl(true)" class=" form-control select2" required name="block_id">
                                                 <option value="">Select block</option>
 
                                             </select>
                                         </div>
                                         <div class="col-md-3">
                                             <label>Unit Category *</label>
-                                            <select class=" form-control select2" required name="unit_category_id">
+                                            <select class="form-control select2" onchange="reloadTbl(true)" required id="filter_unit_category_id">
                                                 <option></option>
                                                 @foreach($unit_categories as $value)
                                                 <option {{  $value->id== @$unit->unit_category_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->unit_cat_name}}</option>
@@ -177,73 +177,33 @@
 </div>
    <script type="text/javascript">
      $(document).ready(function() {
-        $('#project').on('change', function() {
+     $('#filter_project_id').on('change', function() {
+        $('#filter_block_id').empty();
         var countryId = $(this).val();
         if (countryId) {
             $.ajax({
-                url: '<?= env('APP_BASEURL') ?>/all_block/' + countryId,
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    $('#block').empty();
-                    $.each(data, function(key, value) {
-                        $('#block').append('<option value="' + value.id + '">' + value.block_name + '</option>');
-                    });
-                }
-            });
-        } else {
-            $('#block').empty();
-        }
-    });
-
-        // $('.data-table').DataTable();
-});
-
-function generateUnitList(){
-     $('#project').on('change', function() {
-        $('#block').empty();
-        var countryId = $(this).val();
-        if (countryId) {
-            $.ajax({
-                url: '<?= env('APP_BASEURL') ?>/all_block/' + countryId,
+                url: '<?= url('all_block/') ?>' + countryId,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
                     
-                    $('#block').append('<option value="">Select an option</option>');
+                    $('#filter_block_id').append('<option value="">Select an option</option>');
                     $.each(data, function(key, value) {
-                        $('#block').append('<option value="' + value.id + '">' + value.block_name + '</option>');
+                        $('#filter_block_id').append('<option value="' + value.id + '">' + value.block_name + '</option>');
                     });
+                    reloadTbl(true);
                 }
             });
         } else {
-            $('#block').empty();
+            $('#filter_block_id').empty();
         }
     });
-
-
 }
 
 </script>
 <script type="text/javascript">
             $(function () {
-
-              var table = $('.data-table').DataTable({
-                          processing: true,
-                          serverSide: true,
-                          ajax: "{{ url('get-units') }}",
-                          columns: [
-                          {data: 'unit_name', unit_name: 'name'},
-                          {data: 'project.project_name', project_name: 'name'},
-                          {data: 'block.block_name', block_id: 'name'},
-                          {data: 'unit_category.unit_cat_name', unit_category_id: 'name'},
-                          {data: 'out_standing_amount', out_standing_amount: 'name'},
-                          {data: 'receipt.last_amount', amount: 'name'},
-                          {data: 'receipt.last_date', last_date: 'name'},
-                          {data: 'action', description: 'action', orderable: false, searchable: false},
-                          ]
-              });
-
+              reloadTbl();
               $("#form1").submit(function (event) {
                     var formData = {
                       amount: $("#amount").val(),
@@ -263,7 +223,7 @@ function generateUnitList(){
 
                          $('input[type="search"]').val(' ').trigger('keyup');
                           $('#myModal').modal('hide');
-                          table.ajax.reload();
+                          reloadTbl(true);
                           toastr.success(data.msg);
                      
                       });
@@ -280,6 +240,36 @@ function generateUnitList(){
                   $('#unit_id').val(id);
                   $('#myModal').modal('show');
             }
+
+            function reloadTbl(load=false){
+              if(load){
+                $('.data-table').DataTable().destroy();
+              }
+              var table = $('.data-table').DataTable({
+                          processing: true,
+                          serverSide: true,
+                          ajax: {
+                              url: "{{ url('get-units') }}",
+                              type: "get",
+                              data: function(f) {
+                                  f.project = $('#filter_project_id').val(),
+                                  f.block_id =  $('#filter_block_id').val(),
+                                  f.unit_category_id =  $('#filter_unit_category_id').val()
+                              }
+                          },
+                          columns: [
+                          {data: 'unit_name', unit_name: 'name'},
+                          {data: 'project.project_name', project_name: 'name'},
+                          {data: 'block.block_name', block_id: 'name'},
+                          {data: 'unit_category.unit_cat_name', unit_category_id: 'name'},
+                          {data: 'out_standing_amount', out_standing_amount: 'name'},
+                          {data: 'receipt.last_amount', amount: 'name'},
+                          {data: 'receipt.last_date', last_date: 'name'},
+                          {data: 'action', description: 'action', orderable: false, searchable: false},
+                          ]
+              });
+             }
+
           </script>
 </div>
 @endsection
