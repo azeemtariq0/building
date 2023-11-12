@@ -48,11 +48,11 @@
                 <!-- panel content -->
                 <div class="panel-body">
 
-                  <table class="table table-striped table-bordered table-hover table-responsive data-table">
+                  <table class="table table-striped table-bordered table-hover table-responsive data-table" width="100%">
                     <thead>
                       <tr>
-                        <th>Receipt Code</th>
-                        <th> receipt date </th>
+                        <th width="100">Receipt Code</th>
+                        <th width="100"> receipt date </th>
                         <th> project </th>
                         <th> block </th>
                         <th> unit </th>
@@ -127,6 +127,7 @@
                                       
                                     </div>
                                   </div>
+                                  
                                 </div>
                             </div>
                         </fieldset>
@@ -246,10 +247,10 @@
                 ajax: "{{ route('receipts.index') }}",
                 columns: [
                 {data: 'receipt_code', receipt_code: 'name'},
+                {data: 'receipt_date', receipt_date: 'name'},
                 {data: 'project.project_name', project_id: 'name'},
                 {data: 'block.block_name', block_id: 'name'},
                 {data: 'unit.unit_name', unit_id: 'name'},
-                {data: 'receipt_date', receipt_date: 'name'},
                 {data: 'description', description: 'name'},
                 {data: 'amount', amount: 'name'},
                 {data: 'status', status: 'name'},

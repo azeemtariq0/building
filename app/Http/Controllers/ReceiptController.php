@@ -65,8 +65,8 @@ class ReceiptController extends Controller
 
       $data['page_management'] = array(
         'page_title' => 'Receipts',
-        'slug' => 'General Setup',
-        'title' => 'Manage Blocks',
+        'slug' => 'Transaction',
+        'title' => 'Manage Receipts',
         'add' => 'Add receipt',
     );
 
@@ -154,6 +154,7 @@ class ReceiptController extends Controller
                         'block_id' => $request->input('block_id'),
                         'unit_category_id' => $request->input('unit_category_id'),
                         'amount' => $request->input('amount'),
+                        'description' => $request->input('description'),
                         'year' => date('y'),
                         'receipt_date' => date('Y-m-d'),
                         'status' => 0,

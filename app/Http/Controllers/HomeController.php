@@ -27,6 +27,6 @@ class HomeController extends Controller
                 'page_title' => 'Dashboard',
                 'slug' => ''
             );
-        return view('home', compact('data'));
+        return view('home2', compact('data'));
     }
 }

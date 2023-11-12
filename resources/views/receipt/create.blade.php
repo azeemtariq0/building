@@ -160,6 +160,17 @@
 
                                     </div>
                                   </div>
+                                  <div class="col-md-12
+                                  ">
+                                    <div class="form-group">
+                                        
+                                        <label>Description</label>
+                                            {!! Form::textarea('description', null, array('placeholder' => 'Add Description','class' => 'form-control','id'=>'description' )) !!}
+                                       
+                                        <input type="hidden" id="id" value="">
+                                      
+                                    </div>
+                                  </div>
                                 </div>
                             </div>
                         </fieldset>
@@ -211,6 +222,7 @@
                       project_id: $("#project_id").val(),
                       block_id: $("#block_id").val(),
                       unit_category_id: $("#unit_category_id").val(),
+                      description: $("#description").val(),
                       _token: $("input[name=_token").val()
                     };
                     $.ajax({
