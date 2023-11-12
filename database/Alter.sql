@@ -16,3 +16,5 @@ CREATE TABLE `as_receipts` (
   KEY `id` (`id`)
 );
 
+ALTER TABLE `as_receipts`   
+  ADD COLUMN `unit_category_id` INT NULL AFTER `block_id`;

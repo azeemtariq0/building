@@ -73,38 +73,107 @@
               <!-- /PANEL -->
 
             </div>
+
+
+
+
+
+
+            <!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <form id="form1" method="post">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Update Receipt</h4>
+      </div>
+      <div class="modal-body">
+          <fieldset>
+                        <!-- required [php action request] -->
+              
+                         <div class="col-md-12">
+                                 <div class="row">
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                        
+                                            <label>Monthly Amount</label>
+                                            {!! Form::text('monthly_amount', null, array('class' => 'form-control','id'=>'monthly_amount' , 'readonly'=>'true')) !!}
+                                       
+                                        <input type="hidden" id="id" value="">
+
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                        
+                                            <label>Outstanding Amount</label>
+                                            {!! Form::text('outstanding_amount', null, array('class' => 'form-control','id'=>'outstanding_amount' , 'readonly'=>'true')) !!}
+                                       
+                                        <input type="hidden" id="id" value="">
+
+                                    </div>
+                                  </div>
+                                  <div class="col-md-12
+                                  ">
+                                    <div class="form-group">
+                                        
+                                        <label>Receipt Amount</label>
+                                            {!! Form::number('amount', null, array('placeholder' => 'Enter Amount','class' => 'form-control','id'=>'amount' , 'required'=>'true','value'=>0)) !!}
+                                       
+                                        <input type="hidden" id="id" value="">
+                                      
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                       
+                     
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+    </form>
+    </div>
+
+  </div>
+</div>
+
           @endsection
 
           @section('pagelevelscript')
-          <script type="text/javascript">
-            $(function () {
-
-              var table = $('.data-table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route('receipts.index') }}",
-                columns: [
-                {data: 'receipt_code', receipt_code: 'name'},
-                {data: 'project.project_name', project_id: 'name'},
-                {data: 'block.block_name', block_id: 'name'},
-                {data: 'unit.unit_name', unit_id: 'name'},
-                {data: 'receipt_date', receipt_date: 'name'},
-                {data: 'description', description: 'name'},
-                {data: 'amount', amount: 'name'},
-                {data: 'status', status: 'name'},
-                {data: 'action', description: 'action', orderable: false, searchable: false},
-                ]
-              });
-
-            });
-
-            
-          </script>
+       
 
           <!-- Include jQuery library -->
 
           <script>
     $(document).ready(function() {
+      reloadTbl();
+         $("#form1").submit(function (event) {
+                    var formData = {
+                      amount: $("#amount").val(),
+                      id: $("#id").val(),
+                      _token: $("input[name=_token").val()
+                    };
+                    $.ajax({
+                        type: "POST",
+                        url: "{{url('add-receipt')}}",
+                        data: formData,
+                        dataType: "json",
+                        encode: true,
+                      }).done(function (data) {
+                          $('#myModal').modal('hide');
+                          reloadTbl(true);
+                          toastr.success(data.msg);
+                     
+                      });
+                    event.preventDefault();
+                  });
+
         $(document).on('change','.toggle-switch',function() {
             var object = $(this);
             var id = $(this).data('id');
@@ -163,13 +232,39 @@
                   $('#delete-form').submit()
                }
             });
-
-
     }
 
 
+    
+            function reloadTbl(load=false){
+              if(load){
+                $('.data-table').DataTable().destroy();
+              }
+               var table = $('.data-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('receipts.index') }}",
+                columns: [
+                {data: 'receipt_code', receipt_code: 'name'},
+                {data: 'project.project_name', project_id: 'name'},
+                {data: 'block.block_name', block_id: 'name'},
+                {data: 'unit.unit_name', unit_id: 'name'},
+                {data: 'receipt_date', receipt_date: 'name'},
+                {data: 'description', description: 'name'},
+                {data: 'amount', amount: 'name'},
+                {data: 'status', status: 'name'},
+                {data: 'action', description: 'action', orderable: false, searchable: false},
+                ]
+              });
+             }
 
-
+              function ediReceipt(obj,id){
+                  $('#monthly_amount').val($(obj).data('monthly_amount'));
+                  $('#outstanding_amount').val( $(obj).data('outstanding_amount'));
+                  $('#amount').val( $(obj).data('amount'));
+                  $('#id').val(id);
+                  $('#myModal').modal('show');
+            }
 
 </script>
           @endsection

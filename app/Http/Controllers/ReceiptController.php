@@ -20,7 +20,7 @@ class ReceiptController extends Controller
     public function index(Request $request)
     { if ($request->ajax()) {
 
-       $data = Receipt::with('project', 'block', 'unit')->get(); 
+       $data = Receipt::with('project', 'block', 'unit','unit_category')->get(); 
         return Datatables::of($data)
 
         ->addIndexColumn()
@@ -50,7 +50,7 @@ class ReceiptController extends Controller
         ->addColumn('action', function($row)
         {
             
-               $btn= "<a href='".route('receipts.edit',$row->id)."' class='btn btn-info btn-sm'><i class='fa fa-edit'></i> <span>Edit</span></a>";
+               $btn= "<button type='button' onclick='ediReceipt(this,".$row->id.")' data-outstanding_amount ='".$row->unit->out_standing_amount."' data-monthly_amount ='".$row->unit_category->monthly_amount."' data-amount ='".$row->amount."' class='btn btn-info btn-sm'><i class='fa fa-edit'></i> <span>Edit</span></button>";
                $btn.= Form::open(['id'=>'delete-form','method' => 'DELETE','route' => ['receipts.destroy', $row->id],'style'=>'display:inline']);
                $btn.= Form::submit('Delete', ['class' => 'btn btn-danger btn-sm dltBtn','onclick'=>'rowDetele(event)']);
                $btn.= Form::close();
@@ -135,18 +135,25 @@ class ReceiptController extends Controller
 
     public function addReceipt(Request $request){
         $_return = ['success'=>true,'msg'=>'Receipt Created Successfully!'];
-        receipt::create(
-                [
-                    'unit_id' => $request->input('unit_id'),
-                    'project_id' => $request->input('project_id'),
-                    'block_id' => $request->input('block_id'),
-                    'unit_category_id' => $request->input('unit_category_id'),
-                    'amount' => $request->input('amount'),
-                    'receipt_date' => date('Y-m-d'),
-                    'status' => 0,
-                    'created_by' => 1, //Auth::id(),
-                ]
-        );
+        if(empty($request->id)){
+            receipt::create(
+                    [
+                        'unit_id' => $request->input('unit_id'),
+                        'project_id' => $request->input('project_id'),
+                        'block_id' => $request->input('block_id'),
+                        'unit_category_id' => $request->input('unit_category_id'),
+                        'amount' => $request->input('amount'),
+                        'receipt_date' => date('Y-m-d'),
+                        'status' => 0,
+                        'created_by' => 1, //Auth::id(),
+                    ]
+            );
+        }else{
+            $_return = ['msg'=>'Receipt Updated Successfully!'];
+            $staffType = receipt::find($request->id);
+            $staffType->amount = $request->input('amount');
+            $staffType->save();
+        }
         echo json_encode($_return);
         exit;
     }
@@ -214,7 +221,7 @@ class ReceiptController extends Controller
      */
     public function destroy($id){
         DB::table("as_receipts")->where('id',$id)->delete();
-        return redirect()->route('receipt.index')
+        return redirect()->route('receipts.index')
         ->with('success','Receipt deleted successfully');
     }
 }
