@@ -52,6 +52,7 @@
                     <thead>
                       <tr>
                         <th width="100">Receipt Code</th>
+                        <th width="100"> receipt Type </th>
                         <th width="100"> receipt date </th>
                         <th> project </th>
                         <th> block </th>
@@ -98,6 +99,29 @@
                                  <div class="row">
                                   <div class="col-md-6">
                                     <div class="form-group">
+                                        <label>Receipt Type</label>
+                                        <select id="receipt_type_id"  class=" form-control  col-md-12" required name="receipt_type_id">
+                                          <option value=""></option>
+                                                @foreach($receiptType as $type)
+                                        <option  value="{{ $type->id}}">{{ $type->receipt_name}}</option>
+                                          @endforeach
+                                          </select>
+                                      
+
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                        
+                                            <label>Receipt Date</label>
+                                            {!! Form::text('date', date('d-m-Y'), array('class' => 'form-control','id'=>'date' , 'readonly'=>'true','value'=>date('d-m-Y'))) !!}
+                                       
+                                        <input type="hidden" id="id" value="">
+
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
                                         
                                             <label>Monthly Amount</label>
                                             {!! Form::text('monthly_amount', null, array('class' => 'form-control','id'=>'monthly_amount' , 'readonly'=>'true')) !!}
@@ -122,6 +146,17 @@
                                         
                                         <label>Receipt Amount</label>
                                             {!! Form::number('amount', null, array('placeholder' => 'Enter Amount','class' => 'form-control','id'=>'amount' , 'required'=>'true','value'=>0)) !!}
+                                       
+                                        <input type="hidden" id="id" value="">
+                                      
+                                    </div>
+                                  </div>
+                                   <div class="col-md-12
+                                  ">
+                                    <div class="form-group">
+                                        
+                                        <label>Description</label>
+                                            {!! Form::textarea('description', null, array('placeholder' => 'Add Description','class' => 'form-control','id'=>'description','rows'=>2 )) !!}
                                        
                                         <input type="hidden" id="id" value="">
                                       
@@ -156,6 +191,8 @@
       reloadTbl();
          $("#form1").submit(function (event) {
                     var formData = {
+                      receipt_type_id: $("#receipt_type_id").val(),
+                      description: $("#description").val(),
                       amount: $("#amount").val(),
                       id: $("#id").val(),
                       _token: $("input[name=_token").val()
@@ -223,7 +260,7 @@
          event.preventDefault(); // prevent form submit
              swal({
              title: "Are you sure?",
-             text: "Do You Want to Update Receipt Status!",
+             text: "Do You Want to Delete This Record!",
              icon: "warning",
              buttons: true,
              dangerMode: true,
@@ -247,6 +284,7 @@
                 ajax: "{{ route('receipts.index') }}",
                 columns: [
                 {data: 'receipt_code', receipt_code: 'name'},
+                {data: 'receipt_type.receipt_name', receipt_code: 'name'},
                 {data: 'receipt_date', receipt_date: 'name'},
                 {data: 'project.project_name', project_id: 'name'},
                 {data: 'block.block_name', block_id: 'name'},
@@ -263,6 +301,9 @@
                   $('#monthly_amount').val($(obj).data('monthly_amount'));
                   $('#outstanding_amount').val( $(obj).data('outstanding_amount'));
                   $('#amount').val( $(obj).data('amount'));
+                  $('#receipt_date').val( $(obj).data('date'));
+                  $('#description').val( $(obj).data('description'));
+                  $('#receipt_type_id').val( $(obj).data('receipt_type_id'));
                   $('#id').val(id);
                   $('#myModal').modal('show');
             }

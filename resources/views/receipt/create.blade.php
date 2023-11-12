@@ -84,17 +84,18 @@
                         </fieldset>
 
                              <div class="table-responsive" style="margin-top: 20px">
-                            <table class="table table-striped table-bordered table-hover table-responsive data-table mt-4">
+                            <table class="table table-striped table-bordered table-hover table-responsive data-table mt-4" width="100%">
                                 <thead>
                                   <tr>
                                     <th>Unit </th>
                                     <th>Unit Category </th>
                                     <th>Project </th>
                                     <th>Block </th>
+                                    <th>Residential Name </th>
                                     <th>Outstanding</th>
                                     <th>Last Amount</th>
                                     <th>Last Date</th>
-                                    <th width="20%">Action</th>
+                                    <th width="10%">Action</th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -126,6 +127,29 @@
                         <input type="hidden" name="action" value="contact_send" />
                          <div class="col-md-12">
                                  <div class="row">
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Receipt Type</label>
+                                        <select id="receipt_type_id"  class=" form-control  col-md-12" required name="receipt_type_id">
+                                          <option value=""></option>
+                                                @foreach($receiptType as $type)
+                                        <option  value="{{ $type->id}}">{{ $type->receipt_name}}</option>
+                                          @endforeach
+                                          </select>
+                                      
+
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                        
+                                            <label>Receipt Date</label>
+                                            {!! Form::text('date', date('d-m-Y'), array('class' => 'form-control','id'=>'date' , 'readonly'=>'true','value'=>date('d-m-Y'))) !!}
+                                       
+                                        <input type="hidden" id="id" value="">
+
+                                    </div>
+                                  </div>
                                   <div class="col-md-6">
                                     <div class="form-group">
                                         
@@ -165,7 +189,7 @@
                                     <div class="form-group">
                                         
                                         <label>Description</label>
-                                            {!! Form::textarea('description', null, array('placeholder' => 'Add Description','class' => 'form-control','id'=>'description' )) !!}
+                                            {!! Form::textarea('description', null, array('placeholder' => 'Add Description','class' => 'form-control','id'=>'description','rows'=>2 )) !!}
                                        
                                         <input type="hidden" id="id" value="">
                                       
@@ -217,6 +241,7 @@
               reloadTbl();
               $("#form1").submit(function (event) {
                     var formData = {
+                      receipt_type_id: $("#receipt_type_id").val(),
                       amount: $("#amount").val(),
                       unit_id: $("#unit_id").val(),
                       project_id: $("#project_id").val(),
@@ -274,6 +299,7 @@
                           {data: 'project.project_name', project_name: 'name'},
                           {data: 'block.block_name', block_id: 'name'},
                           {data: 'unit_category.unit_cat_name', unit_category_id: 'name'},
+                          {data: 'name', out_standing_amount: 'name'},
                           {data: 'out_standing_amount', out_standing_amount: 'name'},
                           {data: 'receipt.last_amount', amount: 'name'},
                           {data: 'receipt.last_date', last_date: 'name'},

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\receipt;
+use App\Models\Receipt;
 use Illuminate\Http\Request;
 use App\Models\Unit;
 use App\Models\Block;
 use App\Models\Project;
 use App\Models\UnitCategory;
+use App\Models\ReceiptType;
+use App\Models\UnitOwner;
 use DB;
 use DataTables, Form; 
 class ReceiptController extends Controller
@@ -20,7 +22,7 @@ class ReceiptController extends Controller
     public function index(Request $request)
     { if ($request->ajax()) {
 
-       $data = Receipt::with('project', 'block', 'unit','unit_category');
+       $data = Receipt::with('project', 'block', 'unit','unit_category','receipt_type');
         $data = $data->get(); 
         return Datatables::of($data)
 
@@ -51,7 +53,14 @@ class ReceiptController extends Controller
         ->addColumn('action', function($row)
         {
             
-               $btn= "<button type='button' onclick='ediReceipt(this,".$row->id.")' data-outstanding_amount ='".$row->unit->out_standing_amount."' data-monthly_amount ='".$row->unit_category->monthly_amount."' data-amount ='".$row->amount."' class='btn btn-info btn-sm'><i class='fa fa-edit'></i> <span>Edit</span></button>";
+               $btn= "<button type='button' onclick='ediReceipt(this,".$row->id.")' 
+               data-outstanding_amount ='".$row->unit->out_standing_amount."' 
+               data-monthly_amount ='".$row->unit_category->monthly_amount."' 
+               data-amount ='".$row->amount."'
+               data-receipt_type_id ='".$row->receipt_type_id."'
+               data-description ='".$row->description."'
+               data-receipt_date ='".date('d-m-Y',strtotime($row->receipt_date))."'
+                class='btn btn-info btn-sm'><i class='fa fa-edit'></i> <span>Edit</span></button>";
                $btn.= Form::open(['id'=>'delete-form','method' => 'DELETE','route' => ['receipts.destroy', $row->id],'style'=>'display:inline']);
                $btn.= Form::submit('Delete', ['class' => 'btn btn-danger btn-sm dltBtn','onclick'=>'rowDetele(event)']);
                $btn.= Form::close();
@@ -70,8 +79,8 @@ class ReceiptController extends Controller
         'add' => 'Add receipt',
     );
 
-
-    return view('receipt.index', compact('data'));
+    $receiptType = ReceiptType::get();
+    return view('receipt.index', compact('data','receiptType'));
 
    
     }
@@ -86,13 +95,14 @@ class ReceiptController extends Controller
         $blocks  =  Block::get();
         $unit_categories  =  UnitCategory::get();
         $projects  =  Project::get();
+        $receiptType = ReceiptType::get();
         $data['page_management'] = array(
             'page_title' => 'Create New Receipt',
             'slug' => 'Transaction',
              'title' => 'Manage Receipts',
             'add' => 'Add Receipt',
         );
-        return view('receipt.create', compact('data','blocks','projects','unit_categories'));
+        return view('receipt.create', compact('data','blocks','projects','unit_categories','receiptType'));
     }
 
     public function getUnits(Request $request){
@@ -111,8 +121,12 @@ class ReceiptController extends Controller
         $units = $units->get();
         return Datatables::of($units)
         ->addIndexColumn()
+        ->addColumn('name', function($model) {
+            $owner  = UnitOwner::select('owner_name')->where('unit_id',$model->id)->first();
+            return @$owner->owner_name;
+        })
         ->addColumn('receipt', function($model) {
-            $lastReceipt  = receipt::select('receipt_date','amount')->where('unit_id',$model->id)->orderBy('created_at','DESC')->first();
+            $lastReceipt  = Receipt::select('receipt_date','amount')->where('unit_id',$model->id)->orderBy('created_at','DESC')->first();
             return ['last_date'=> @$lastReceipt->receipt_date,'last_amount'=>@$lastReceipt->amount];
         })
         ->editColumn('created_at', function($model){
@@ -126,7 +140,6 @@ class ReceiptController extends Controller
             data-block_id=".$row->block_id."
             data-unit_category_id=".$row->unit_category_id."
             data-outstanding_amount=".$row->out_standing_amount."
-
             class='btn btn-info btn-sm'> <i class='fa fa-edit'> <span>Generate</span></button>";
                return $btn;
            })
@@ -152,6 +165,7 @@ class ReceiptController extends Controller
                         'unit_id' => $request->input('unit_id'),
                         'project_id' => $request->input('project_id'),
                         'block_id' => $request->input('block_id'),
+                        'receipt_type_id' => $request->input('receipt_type_id'),
                         'unit_category_id' => $request->input('unit_category_id'),
                         'amount' => $request->input('amount'),
                         'description' => $request->input('description'),
@@ -164,6 +178,7 @@ class ReceiptController extends Controller
         }else{
             $_return = ['msg'=>'Receipt Updated Successfully!'];
             $staffType = receipt::find($request->id);
+            $staffType->receipt_type_id = $request->input('receipt_type_id');
             $staffType->amount = $request->input('amount');
             $staffType->save();
         }

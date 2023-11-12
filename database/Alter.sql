@@ -22,6 +22,9 @@ ALTER TABLE `as_receipts`
 ALTER TABLE `as_receipts`   
   ADD COLUMN `year` CHAR(40) NULL AFTER `description`;
 
+ALTER TABLE `as_receipts`   
+  ADD COLUMN `receipt_type_id` INT(11) NULL AFTER `receipt_code`;
+
 
 DELIMITER $$
 DROP TRIGGER /*!50032 IF EXISTS */ `as_receipts`$$

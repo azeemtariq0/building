@@ -39,7 +39,7 @@ class Unit extends Model
    public function unit_category(){
       return $this->hasOne(UnitCategory::class, 'id', 'unit_category_id');
    }
-
+   
 
     /**
      * The attributes that should be cast to native types.

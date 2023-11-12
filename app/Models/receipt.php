@@ -5,19 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class receipt extends Model
+class Receipt extends Model
 {
     use HasFactory;
 
     protected $table = 'as_receipts';
     protected $fillable = [
+      'receipt_type_id',
+      'receipt_date',
       'project_id',
       'block_id',
       'unit_id',
       'unit_category_id',
       'description',
       'year',
-      'receipt_date',
       'amount',
       'status'
   ];
@@ -40,7 +41,12 @@ class receipt extends Model
     {
         return $this->belongsTo(Unit::class,'unit_id');
     }
-
+    public function receipt_type()
+    {
+        return $this->belongsTo(ReceiptType::class,'receipt_type_id','id');
+    }
+   
+   
 
 
 }
