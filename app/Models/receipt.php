@@ -16,6 +16,7 @@ class receipt extends Model
       'unit_id',
       'unit_category_id',
       'description',
+      'year',
       'receipt_date',
       'amount',
       'status'

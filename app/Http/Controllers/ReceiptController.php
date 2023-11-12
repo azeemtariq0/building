@@ -20,7 +20,8 @@ class ReceiptController extends Controller
     public function index(Request $request)
     { if ($request->ajax()) {
 
-       $data = Receipt::with('project', 'block', 'unit','unit_category')->get(); 
+       $data = Receipt::with('project', 'block', 'unit','unit_category');
+        $data = $data->get(); 
         return Datatables::of($data)
 
         ->addIndexColumn()
@@ -97,7 +98,17 @@ class ReceiptController extends Controller
     public function getUnits(Request $request){
 
         if ($request->ajax()) {
-        $units = Unit::with('project','block','unit_category')->get();
+        $units = Unit::with('project','block','unit_category');
+         if(!empty($request->project_id)){
+                $units->where('project_id',$request->project_id);
+        }
+        if(!empty($request->block_id)){
+                $units->where('block_id',$request->block_id);
+        }
+        if(!empty($request->unit_category_id)){ 
+                $units->where('unit_category_id',$request->unit_category_id);
+        }
+        $units = $units->get();
         return Datatables::of($units)
         ->addIndexColumn()
         ->addColumn('receipt', function($model) {
@@ -143,6 +154,7 @@ class ReceiptController extends Controller
                         'block_id' => $request->input('block_id'),
                         'unit_category_id' => $request->input('unit_category_id'),
                         'amount' => $request->input('amount'),
+                        'year' => date('y'),
                         'receipt_date' => date('Y-m-d'),
                         'status' => 0,
                         'created_by' => 1, //Auth::id(),

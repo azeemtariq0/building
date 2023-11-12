@@ -46,7 +46,7 @@
                                     <div class="form-group">
                                         <div class="col-md-3">
                                             <label>Project *</label>
-                                            <select id="filter_project_id" onchange="reloadTbl(true)" class=" form-control select2" required name="project_id">
+                                            <select id="filter_project_id"  class=" form-control select2" required name="project_id">
                                                 <option value=""></option>
                                                 @foreach($projects as $value)
                                                 <option id="projects" {{  $value->id== @$unit->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
@@ -179,10 +179,10 @@
      $(document).ready(function() {
      $('#filter_project_id').on('change', function() {
         $('#filter_block_id').empty();
-        var countryId = $(this).val();
-        if (countryId) {
+        var projectId = $(this).val();
+        if (projectId) {
             $.ajax({
-                url: '<?= url('all_block/') ?>' + countryId,
+                url: '<?= env('APP_BASEURL') ?>/all_block/'+projectId,
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
@@ -198,7 +198,7 @@
             $('#filter_block_id').empty();
         }
     });
-}
+});
 
 </script>
 <script type="text/javascript">
