@@ -51,8 +51,8 @@ class ReceiptController extends Controller
         {
             
                $btn= "<a href='".route('receipts.edit',$row->id)."' class='btn btn-info btn-sm'><i class='fa fa-edit'></i> <span>Edit</span></a>";
-               $btn.= Form::open(['method' => 'DELETE','route' => ['receipts.destroy', $row->id],'style'=>'display:inline']);
-               $btn.= Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']);
+               $btn.= Form::open(['id'=>'delete-form','method' => 'DELETE','route' => ['receipts.destroy', $row->id],'style'=>'display:inline']);
+               $btn.= Form::submit('Delete', ['class' => 'btn btn-danger btn-sm dltBtn','onclick'=>'rowDetele(event)']);
                $btn.= Form::close();
 
                return $btn;
@@ -212,8 +212,9 @@ class ReceiptController extends Controller
      * @param  \App\Models\receipt  $receipt
      * @return \Illuminate\Http\Response
      */
-    public function destroy(receipt $receipt)
-    {
-        //
+    public function destroy($id){
+        DB::table("as_receipts")->where('id',$id)->delete();
+        return redirect()->route('receipt.index')
+        ->with('success','Receipt deleted successfully');
     }
 }

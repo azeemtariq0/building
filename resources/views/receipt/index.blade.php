@@ -106,30 +106,71 @@
           <script>
     $(document).ready(function() {
         $(document).on('change','.toggle-switch',function() {
+            var object = $(this);
             var id = $(this).data('id');
             var status = $(this).is(':checked') ? '1' : '0';
 
-            $.ajax({
-                type: 'POST',
-                url: '{{ url("receipt-status") }}', // Update with your actual endpoint
-                data: {
-                    id: id,
-                    status: status,
-                    _token: $("input[name=_token").val()
-                },
-                 dataType: "json",
-                 encode: true,
-                success: function(response) {
+        swal({
+             title: "Are you sure?",
+             text: "Do You Want to Update Receipt Status!",
+             icon: "warning",
+             buttons: true,
+             dangerMode: true,
+           })
+          .then((willConfirm) => {
+               if (willConfirm) {
+                  $.ajax({
+                    type: 'POST',
+                    url: '{{ url("receipt-status") }}', // Update with your actual endpoint
+                    data: {
+                        id: id,
+                        status: status,
+                        _token: $("input[name=_token").val()
+                    },
+                     dataType: "json",
+                     encode: true,
+                    success: function(response) {
 
-                      toastr.success(response.msg);
-                },
-                error: function(error) {
-                    // Handle errors if any
-                    console.log(error);
-                }
-            });
+                          toastr.success(response.msg);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+               }else{
+                   if(status==1)
+                      $(object).prop("checked" , false);
+                   else
+                      $(object).prop("checked" , true);
+               }    
         });
+        });
+
     });
+
+
+    function rowDetele(event) {
+         event.preventDefault(); // prevent form submit
+             swal({
+             title: "Are you sure?",
+             text: "Do You Want to Update Receipt Status!",
+             icon: "warning",
+             buttons: true,
+             dangerMode: true,
+           })
+          .then((willDelete) => {
+               if (willDelete) {
+                  $('#delete-form').submit()
+               }
+            });
+
+
+    }
+
+
+
+
+
 </script>
           @endsection
 
