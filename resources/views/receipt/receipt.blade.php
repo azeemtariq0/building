@@ -193,9 +193,9 @@ tr:hover .cut { opacity: 1; }
 		<header>
 			<h1>Recepit Voucher</h1>
 			<address contenteditable>
-				<p>{{ $owner->owner_name}}</p>
-				<p>{{ $owner->owneraddress}}</p>
-				<p>{{ $owner->mobile_no}}</p>
+				<p>{{ @$owner->owner_name}}</p>
+				<p>{{ @$owner->owneraddress}}</p>
+				<p>{{ @$owner->mobile_no}}</p>
 			</address>
 			<span><img alt="" src="http://www.jonathantneal.com/examples/invoice/logo.png"><input type="file" accept="image/*"></span>
 		</header>
