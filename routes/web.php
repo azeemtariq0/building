@@ -65,6 +65,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/all_block/{id}', [BlockController::class, 'allBlocks']);
 
 
+    Route::get('/print-receipt/{id}', [ReceiptController::class, 'printView']);
+
+
 });
 
 // Route::get('users', [UserController::class, 'index'])->name('users.index');

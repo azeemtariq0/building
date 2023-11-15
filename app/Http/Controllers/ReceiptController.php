@@ -12,6 +12,7 @@ use App\Models\ReceiptType;
 use App\Models\UnitOwner;
 use DB;
 use DataTables, Form; 
+// use PDF; // at the top of the file
 class ReceiptController extends Controller
 {
     /**
@@ -20,7 +21,9 @@ class ReceiptController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    { if ($request->ajax()) {
+    {
+
+        if ($request->ajax()) {
 
        $data = Receipt::with('project', 'block', 'unit','unit_category','receipt_type');
         $data = $data->get(); 
@@ -53,14 +56,20 @@ class ReceiptController extends Controller
         ->addColumn('action', function($row)
         {
             
-               $btn= "<button type='button' onclick='ediReceipt(this,".$row->id.")' 
+             
+
+               $btn= "<a target='_blank' href='".url('print-receipt/'.$row->id)."' class='btn btn-default btn-sm'><i class='fa fa-print'></i></a>";
+               $btn.= "<button type='button' onclick='ediReceipt(this,".$row->id.")' 
                data-outstanding_amount ='".$row->unit->out_standing_amount."' 
                data-monthly_amount ='".$row->unit_category->monthly_amount."' 
                data-amount ='".$row->amount."'
                data-receipt_type_id ='".$row->receipt_type_id."'
                data-description ='".$row->description."'
                data-receipt_date ='".date('d-m-Y',strtotime($row->receipt_date))."'
-                class='btn btn-info btn-sm'><i class='fa fa-edit'></i> <span>Edit</span></button>";
+                class='btn btn-info btn-sm'><i class='fa fa-edit'></i>Edit</button>";
+
+                
+
                $btn.= Form::open(['id'=>'delete-form','method' => 'DELETE','route' => ['receipts.destroy', $row->id],'style'=>'display:inline']);
                $btn.= Form::submit('Delete', ['class' => 'btn btn-danger btn-sm dltBtn','onclick'=>'rowDetele(event)']);
                $btn.= Form::close();
@@ -127,7 +136,8 @@ class ReceiptController extends Controller
         })
         ->addColumn('receipt', function($model) {
             $lastReceipt  = Receipt::select('receipt_date','amount')->where('unit_id',$model->id)->orderBy('created_at','DESC')->first();
-            return ['last_date'=> @$lastReceipt->receipt_date,'last_amount'=>@$lastReceipt->amount];
+            $date= @$lastReceipt->receipt_date ? date('d-m-Y',strtotime($lastReceipt->receipt_date)) : '';
+            return ['last_date'=> $date,'last_amount'=>@$lastReceipt->amount];
         })
         ->editColumn('created_at', function($model){
         $formatDate = date('d-m-Y H:i:s',strtotime($model->created_at));
@@ -192,6 +202,27 @@ class ReceiptController extends Controller
         $receipt->update();
         echo json_encode($_return);
         exit;
+    }
+    public function printView($id){
+
+
+     $data = Receipt::with('project', 'block', 'unit','unit_category','receipt_type')->where('id',11)->first();
+    $data['owner']  = UnitOwner::select('*')->where('unit_id',$data->unit->id)->first();
+
+   return view('receipt.receipt', $data);
+        // $filename = 'hello_world.pdf';
+        // $data = [
+        //     'title' => 'Hello world!'
+        // ];
+        // $view = \View::make('receipt.receipt', $data);
+        // $html = $view->render();
+
+        // $pdf = new PDF;
+        // $pdf::SetTitle('Receipt Voucher');
+        // $pdf::AddPage();
+        // $pdf::writeHTML($html, true, false, true, false, '');
+        // $pdf::Output($filename);
+
     }
     
 
