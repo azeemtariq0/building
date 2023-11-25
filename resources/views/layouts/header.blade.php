@@ -11,7 +11,9 @@
         </a>
     </span>
     <form method="get" action="page-search.html" class="search pull-left hidden-xs">
-        <input type="text" class="form-control" name="k" placeholder="Search for something..." />
+        <span >
+        <h3> &nbsp&nbsp Apni Society Development Karachi , Pakistan </h3>
+    </span>
     </form>
 
     <nav>

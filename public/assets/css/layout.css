@@ -216,7 +216,7 @@ body.boxed #asidebg {
 		margin:0 10px;
 	}
 	#header .dropdown-toggle {
-		color:#939da8;
+		color:#fbfbfb;
 		margin:0 !important;
 		padding:0 !important;
 		height:50px;
@@ -245,13 +245,14 @@ body.boxed #asidebg {
 		margin:0;
 		padding:0;
 	}
-	#header form.search>input {
-		color:#fff;
+	#header form.search h3 {
+		color:#f9ffceab;
 		height:50px;
-		line-height:50px;
+		line-height:2;
 		padding:0;
 		border:0;
 		margin:0;
+		font-weight: bold;
 		background:transparent;
 
 		-webkit-box-shadow:none !important;
@@ -389,7 +390,7 @@ body.boxed #asidebg {
 	#aside nav ul {
 		list-style:none;
 		border-top:rgba(0,0,0,0.1) 1px solid;
-		border-bottom:rgba(255,255,255,0.1) 1px solid;
+		/*border-bottom:rgba(255,255,255,0.1) 1px solid;*/
 		/*height:100%;*/
 	}
 	#aside nav ul li {
@@ -398,9 +399,10 @@ body.boxed #asidebg {
 	#aside nav ul li a {
 		/*background-color:#5a6667;*/
 		border-bottom:rgba(0,0,0,0.1) 1px solid; 
-		border-top:rgba(255,255,255,0.1) 1px solid;
+		border-top:rgb(191 162 162 / 10%) 1px solid;
 		padding:12px 10px !important;
-		color:#c2c9c9;
+		/*color:#c2c9c9;*/
+		color:#ffffff;
 		font-size:14px;
 		line-height:14px;
 		display:block;
@@ -488,7 +490,7 @@ body.boxed #asidebg {
 		padding-left:8px;
 		font-size:14px;
 		width:20px;
-		color:#9da9b7;
+		color:#efefef;
 	}
 
 	/* SUBMENU */

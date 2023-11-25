@@ -18,6 +18,7 @@ use App\Http\Controllers\UnitCategoryController;
 use App\Http\Controllers\StaffTypeController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UnitOwnerController;
+use App\Http\Controllers\ExpenseController;
   
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +55,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('analyst', AnalystController::class);
     Route::resource('products', ProductController::class);
     Route::resource('unit_owners', UnitOwnerController::class);
+    Route::resource('expenses', ExpenseController::class);
 
     Route::post('add_or_update_staff_type', [StaffTypeController::class, 'staffTypeSaveOrUpdate']);
     Route::post('assign_role', [UserController::class, 'assignRoleToUser']);

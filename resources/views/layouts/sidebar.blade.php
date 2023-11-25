@@ -102,6 +102,7 @@
                               <ul>
                             
                                     <li class="{{ \Request::segment(1) == 'receipts' ? 'active' : '' }}"><a href="{{ route('receipts.index') }}">Receipts</a></li>
+                                    <li class="{{ \Request::segment(1) == 'expenses' ? 'active' : '' }}"><a href="{{ route('expenses.index') }}">Expenses</a></li>
                                        
                                   
                                 </ul>

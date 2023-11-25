@@ -46,3 +46,44 @@ CREATE
 END;
 $$
 DELIMITER ;
+
+
+
+
+CREATE TABLE `building`.`as_expenses` (  
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `exp_code` CHAR(40),
+  `exp_category_id` INT(11),
+  `exp_date` VARCHAR(255),
+  `year` VARCHAR(255),
+  `description` TEXT,
+  `created_at` DATETIME,
+  `created_by` INT(11),
+  `updated_at` VARCHAR(255),
+  `updated_by` INT(11),
+  PRIMARY KEY (`id`)
+);
+
+
+
+
+DELIMITER $$
+DROP TRIGGER /*!50032 IF EXISTS */ `as_expenses`$$
+CREATE
+    /*!50017 DEFINER = 'root'@'localhost' */
+    TRIGGER `as_expenses` BEFORE INSERT ON `as_expenses` 
+    FOR EACH ROW BEGIN
+    UPDATE 
+     `sequence` 
+    SET
+     `executed_record` = @tempVariable := executed_record + 1 
+    WHERE TABLE_NAME = 'as_expenses'
+          AND tbl_year = NEW.year ;
+        IF (ROW_COUNT() < 1) THEN 
+         INSERT INTO sequence SET TABLE_NAME = 'as_expenses',tbl_year = NEW.year,executed_record = 1;
+         SET @tempVariable = 1;
+    END IF;
+     SET NEW.exp_code = CONCAT(NEW.year ,'/EX-',LPAD((@tempVariable),4, '0'));
+END;
+$$
+DELIMITER ;
