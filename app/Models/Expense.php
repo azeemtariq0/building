@@ -26,8 +26,17 @@ class Expense extends Model
         'description',
     ];
 
+    public function block(){
+      return $this->hasOne(Block::class, 'id', 'block_id');
+   }
+    public function project(){
+      return $this->hasOne(Project::class, 'id', 'project_id');
+   }
     public function expense_category(){
-      return $this->hasOne(ExpenseCategory::class, 'id', 'expense_category_id');
+      return $this->hasOne(ExpenseCategory::class, 'id', 'exp_category_id');
+   }
+   public function expense_detail(){
+      return $this->hasMany(ExpenseDetail::class, 'expense_id', 'id');
    }
 
 

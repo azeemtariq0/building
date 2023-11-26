@@ -22,6 +22,12 @@
     width: 30%;
 }.col-md-3,.col-md-7,.col-md-4,.col-md-5{
   padding-right: 0px !important;
+}.center{
+  text-align: center;
+}.left{
+  text-align: left;
+}.right{
+  text-align: right;
 }
 </style>
 
@@ -38,10 +44,10 @@
                 </div>
 
                 <div class="panel-body">
-                  @if(!isset($expenseCategory->id))
+                  @if(!isset($expense->id))
                    {!! Form::open(array('route' => 'expenses.store','method'=>'POST' , 'id' => 'expense_form')) !!}
                    @else
-                     {!! Form::model($expenseCategory, ['method' => 'PATCH','route' => ['expense_categories.update', $expenseCategory->id ]]) !!}
+                     {!! Form::model($expense, ['method' => 'PATCH','route' => ['expenses.update', $expense->id ]]) !!}
                     @endif
                    <!-- <form class="validate" action="{{ route('users.store')}}" method="post" data-success="Sent! Thank you!" data-toastr-position="top-right"> -->
                     <fieldset>
@@ -170,20 +176,30 @@
                             <table class="table table-striped table-bordered table-hover table-responsive data-table mt-4" width="100%">
                                 <thead>
                                   <tr>
-                                    <th class="center">S.No </th>
-                                    <th>Expense Description </th>
-                                    <th>Amount</th>
-                                    <th width="10%"><button type="button" class="btn btn-default btn-xs" id="addNew"><i class="fa fa-plus"></i></button></th>
+                                    <th width="10%" class="center">S.No </th>
+                                    <th  class="center"> Description </th>
+                                    <th  class="center" width="20%">Amount</th>
+                                    <th  class="center" width="10%"><button type="button" class="btn btn-default btn-xs" id="addNew"><i class="fa fa-plus"></i></button></th>
                                   </tr>
                                 </thead>
                                 <tbody id="tbody">
-                                  <tr> 
-                                      <td class="count">1</td>
-                                      <td>
-                                        <textarea rows="1" type="text" class="form-control" name="description[]"></textarea></td>
-                                      <td><input type="text" class="form-control" name="amount[]"></td>
-                                      <td><button type="button" class="btn btn-default btn-xs removeBtn"><i class="fa fa-trash"></i></button></td>
-                                  </tr>
+                                  <?php if(isset($expense->expense_detail)){ foreach ($expense->expense_detail as $key => $value) {?>
+                                    <tr> 
+                                        <td class="count center"><?= $key+1 ?></td>
+                                        <td>
+                                          <textarea rows="1" type="text" class="form-control" name="description[]">{{ $value->description}}</textarea></td>
+                                        <td><input type="text" class="form-control right" name="amount[]" value="{{ $value->amount}}"></td>
+                                        <td class="center"><button type="button" class="btn btn-default btn-xs removeBtn"><i class="fa fa-trash"></i></button></td>
+                                    </tr>
+                                  <?php }} else{ ?>
+                                        <tr> 
+                                        <td class="count">1</td>
+                                        <td>
+                                          <textarea rows="1" type="text" class="form-control" name="description[]" value=""></textarea></td>
+                                        <td><input type="text" class="form-control" name="amount[]"></td>
+                                        <td><button type="button" class="btn btn-default btn-xs removeBtn"><i class="fa fa-trash"></i></button></td>
+                                    </tr>
+                                   <?php }  ?>
                                 </tbody>
                               </table>
                           </div>

@@ -24,11 +24,12 @@ class ExpenseController extends Controller
 
     public function index(Request $request){
         if ($request->ajax()) {
-            $data = Expense::with('expense_category')->get();
+            $data = Expense::with('expense_category','expense_detail')->get();
             return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function($row){
-               $btn= "<a href='".route('expenses.edit',$row->id)."' class='btn btn-info btn-sm'> <span>Edit</span></a>";
+               $btn= "<a target='_blank' href='".url('print-expense/'.$row->id)."' class='btn btn-default btn-sm'><i class='fa fa-print'></i></a>";
+               $btn.= "<a href='".route('expenses.edit',$row->id)."' class='btn btn-info btn-sm'> <span>Edit</span></a>";
                $btn.= Form::open(['method' => 'DELETE','route' => ['expenses.destroy', $row->id],'style'=>'display:inline']);
                $btn.= Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']);
                $btn.= Form::close();
@@ -59,10 +60,12 @@ class ExpenseController extends Controller
     }
 
     public function store(Request $request){
-        // $this->validate($request, [
-        //     'block_id' => 'required',
-        //     'exp_category_id' => 'required',
-        // ]);
+        $this->validate($request, [
+            'block_id' => 'required',
+            'exp_category_id' => 'required',
+            'project_id' => 'required',
+            'exp_date' => 'required',
+        ]);
 
         $expense_id = Expense::insertGetId(
             [
@@ -75,23 +78,21 @@ class ExpenseController extends Controller
                 'remarks' => $request->remarks
             ]
         );
-
-        dd($expense_id);
+        
+        foreach ($request->description as $key => $value) {
 
         ExpenseDetail::create(
             [
                 'expense_id' => $expense_id,
-                'block_id' => $request->block_id,
-                'exp_category_id' => $request->exp_category_id,
-                'payee' => $request->payee,
-                'exp_date' => $request->exp_date,
-                'year' => date('y'),
-                'remarks' => $request->remarks
+                'description' => $value,
+                'amount' => $request->amount[$key],
             ]
         );
 
+        }
 
-        return redirect()->route('expense_categories.index')
+
+        return redirect()->route('expenses.index')
         ->with('success','Exp Category created successfully');
     }
 
@@ -106,33 +107,62 @@ class ExpenseController extends Controller
     }
 
     public function edit($id){
-        $expenseCategory = ExpenseCategory::find($id);
+         $exp_categories  =  ExpenseCategory::get();
+        $expense = Expense::with('expense_category','expense_detail')->find($id);
          $data['page_management'] = array(
-            'page_title' => 'Edit Expense Categories',
-            'slug' => 'General Setup',
-            'title' => 'Edit Expense Categories',
+            'page_title' => 'Edit Expense',
+            'slug' => 'Transaction',
+            'title' => 'Edit Expense',
         ); 
-        return view('expense_categories.create',compact('expenseCategory', 'data'));
+        return view('expenses.create',compact('expense','exp_categories', 'data'));
     }
 
     public function update(Request $request, $id){
         $this->validate($request, [
-            'exp_name' => 'required',
+            'block_id' => 'required',
+            'exp_category_id' => 'required',
+            'project_id' => 'required',
+            'exp_date' => 'required',
         ]);
+     
 
-        $expCat = ExpenseCategory::find($id);
-        $expCat->exp_code = $request->input('exp_code');
-        $expCat->exp_name = $request->input('exp_name');
-        $expCat->description = $request->input('description');
-        $expCat->save();
 
-        return redirect()->route('expense_categories.index')
-        ->with('success','Exp Category updated successfully');
+        $expense = Expense::find($id);
+        $expense->project_id = $request->project_id;
+        $expense->block_id = $request->block_id;
+        $expense->exp_category_id = $request->exp_category_id;
+        $expense->payee = $request->payee;
+        $expense->exp_date = $request->exp_date;
+        $expense->remarks = $request->remarks;
+        $expense->save();
+        
+        ExpenseDetail::where('expense_id',$id)->delete();
+        foreach ($request->description as $key => $value) {
+        ExpenseDetail::create(
+            [
+                'expense_id' => $id,
+                'description' => $value,
+                'amount' => $request->amount[$key],
+            ]
+        );
+
+        }
+      
+
+        return redirect()->route('expenses.index')
+        ->with('success','Expense updated successfully');
     }
 
     public function destroy($id){
         DB::table("as_expense_categories")->where('id',$id)->delete();
         return redirect()->route('expense_categories.index')
         ->with('success','Exp Category deleted successfully');
+    }
+       public function printView($id){
+
+
+     $data = Expense::with('project', 'block','expense_category','expense_detail')->where('id',$id)->first();
+        return view('expenses.print', $data);
+
     }
 }

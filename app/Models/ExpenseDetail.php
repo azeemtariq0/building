@@ -17,7 +17,7 @@ class ExpenseDetail extends Model
      */
 
        protected $fillable = [
-        'receipt_id',
+        'expense_id',
         'amount',
         'description',
     ];

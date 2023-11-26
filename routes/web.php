@@ -68,6 +68,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 
     Route::get('/print-receipt/{id}', [ReceiptController::class, 'printView']);
+    Route::get('/print-expense/{id}', [ExpenseController::class, 'printView']);
 
 
 });

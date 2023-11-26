@@ -86,7 +86,7 @@ article address { float: left;  font-size: 75%;font-weight: bold; }
 
 /* table meta & balance */
 
-table.meta, table.balance { float: right; width: 36%; }
+table.meta, table.balance { float: right; width: 42%; }
 table.meta:after, table.balance:after { clear: both; content: ""; display: table; }
 
 /* table meta */
@@ -191,7 +191,7 @@ tr:hover .cut { opacity: 1; }
 	</style>
 	<body>
 		<header>
-			<h1>Recepit</h1>
+			<h1>Expense Voucher</h1>
 			
 			<address >
 				<p>Apni Soceity</p>
@@ -200,49 +200,49 @@ tr:hover .cut { opacity: 1; }
 		</header>
 		<article>
 			<h1>Recipient</h1>
+			<h2>Expense </h2>
 			<address contenteditable>
-				<p>Residentail : {{ @$owner->owner_name}}</p>
-				<p>Address : {{ @$owner->owner_address}}</p>
-				<p>Mobile No : {{ @$owner->mobile_no}}</p>
+				
+				<p>Project / Block: {{ @$project['project_name']}}   / {{ @$block['block_name']}}</p>
 			</address>
 			<table class="meta">
 				<tr>
-					<th><span >Invoice #</span></th>
-					<td><span >{{ $receipt_code}}</span></td>
+					<th><span >Expense Voucher #</span></th>
+					<td><span >{{ $exp_code}}</span></td>
 				</tr>
 				<tr>
 					<th><span >Date</span></th>
-					<td><span >{{ date('d M Y',strtotime($receipt_date))}}</span></td>
+					<td><span >{{ date('d M Y',strtotime($exp_date))}}</span></td>
 				</tr>
 				<tr>
-					<th><span >Amount Due</span></th>
-					<td><span id="prefix" >Rs.</span>{{ $unit['out_standing_amount']}}<span></span></td>
+					<th><span >Expense Category</span></th>
+					<td><span id="prefix" ></span>{{ $expense_category['exp_name']}}<span></span></td>
 				</tr>
 			</table>
 			<table class="inventory">
-				<thead>
+				<thead> 
 					<tr>
-						<th><span >Project</span></th>
-						<th><span >Block</span></th>
-						<th><span >Unit</span></th>
-						<th><span >Monthly</span></th>
-						<th><span >Receipt Amount</span></th>
+						<th width="10%"><span >S.No</span></th>
+						<th><span >Expense Detail</span></th>
+						<th width="20%"><span >Expense Amount</span></th>
 					</tr>
 				</thead>
 				<tbody>
+					<?php $amount = 0; foreach ($expense_detail as $key => $value) {
+						$amount+=  $value['amount']; ?>
+					
 					<tr>
-						<td class="center"><span >{{ $project['project_name']}}</span></td>
-						<td class="center"><span >{{ $block['block_name']}}</span></td>
-						<td class="center"><span >{{ $unit['unit_name']}}</span></td>
-						<td ><span >{{ $unit_category['monthly_amount']}}</span></td>
-						<td><span>{{ $amount}}</span></td>
+						<td class="center"><?= $key+1 ?></td>
+						<td ><span >{{ $value['description']}}</span></td>
+						<td class="text-right"><span >{{ $value['amount']}}</span></td>
 					</tr>
+				<?php } ?>
 				</tbody>
 			</table>
 			<table class="balance">
 				<tr>
-					<th><span >balance Amount :</span></th>
-					<td><span data-prefix>Rs.</span><span><?= $unit['out_standing_amount'] - $amount ?></span></td>
+					<th><span >Total Amount :</span></th>
+					<td><span data-prefix>Rs.</span><span><?= $amount ?></span></td>
 				</tr>
 			</table>
 		</article>
