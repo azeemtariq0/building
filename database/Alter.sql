@@ -50,7 +50,7 @@ DELIMITER ;
 
 
 
-CREATE TABLE `building`.`as_expenses` (  
+CREATE TABLE `as_expenses` (  
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `exp_code` CHAR(40),
   `project_id` INT(11),
@@ -59,7 +59,7 @@ CREATE TABLE `building`.`as_expenses` (
   `exp_date` VARCHAR(255),
   `year` VARCHAR(255),
   `payee` VARCHAR(255),
-  `description` TEXT,
+  `remarks` TEXT,
   `created_at` DATETIME,
   `created_by` INT(11),
   `updated_at` VARCHAR(255),
@@ -68,9 +68,9 @@ CREATE TABLE `building`.`as_expenses` (
 );
 
 
-CREATE TABLE `building`.`as_receipt_detail` (  
+CREATE TABLE `as_expense_detail` (  
   `id` INT NOT NULL AUTO_INCREMENT,
-  `receipt_id` INT,
+  `expense_id` INT,
   `description` TEXT,
   `amount` VARCHAR(255),
   `created_at` DATETIME,

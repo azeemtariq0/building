@@ -159,9 +159,10 @@ class ExpenseController extends Controller
     }
 
     public function destroy($id){
-        DB::table("as_expense_categories")->where('id',$id)->delete();
-        return redirect()->route('expense_categories.index')
-        ->with('success','Exp Category deleted successfully');
+        DB::table("as_expenses")->where('id',$id)->delete();
+        DB::table("as_expense_detail")->where('expense_id',$id)->delete();
+        return redirect()->route('expenses.index')
+        ->with('success','Expense deleted successfully');
     }
        public function printView($id){
 
