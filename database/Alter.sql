@@ -53,9 +53,12 @@ DELIMITER ;
 CREATE TABLE `building`.`as_expenses` (  
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `exp_code` CHAR(40),
+  `project_id` INT(11),
+  `block_id` INT(11),
   `exp_category_id` INT(11),
   `exp_date` VARCHAR(255),
   `year` VARCHAR(255),
+  `payee` VARCHAR(255),
   `description` TEXT,
   `created_at` DATETIME,
   `created_by` INT(11),
@@ -65,6 +68,17 @@ CREATE TABLE `building`.`as_expenses` (
 );
 
 
+CREATE TABLE `building`.`as_receipt_detail` (  
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `receipt_id` INT,
+  `description` TEXT,
+  `amount` VARCHAR(255),
+  `created_at` DATETIME,
+  `created_by` INT,
+  `updated_at` VARCHAR(255),
+  `updated_by` INT,
+  PRIMARY KEY (`id`)
+);
 
 
 DELIMITER $$

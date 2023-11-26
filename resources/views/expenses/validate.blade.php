@@ -6,22 +6,21 @@
     }, "This field cannot be blank or contain only spaces.");
     
     $("#expense_form").validate({
-      rules: {
-        exp_name: {
-          required: true,
-          noSpace: true // Use the custom rule
-        }
+       rules: {
+        "block_id": {
+             required: true,
+             minlength: 5,
+             digits: true
+         }
       },
-      messages: {
-        exp_name: {
-          required: "expense category name field is required."
-        }
-        
-      },
+   
+
       submitHandler: function(form) {
         // Handle the form submission if it's valid
+        // select
         $('#expense_form').submit();
       }
     });
   });
 </script>
+

@@ -8,6 +8,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\ExpenseCategory;
 use App\Models\Expense;
+use App\Models\ExpenseDetail;
 use DB;
 use DataTables, Form;       
 
@@ -58,17 +59,37 @@ class ExpenseController extends Controller
     }
 
     public function store(Request $request){
-        $this->validate($request, [
-            'exp_name' => 'required|unique:as_expense_categories,exp_name',
-        ]);
+        // $this->validate($request, [
+        //     'block_id' => 'required',
+        //     'exp_category_id' => 'required',
+        // ]);
 
-        ExpenseCategory::create(
+        $expense_id = Expense::insertGetId(
             [
-                'exp_code' => $request->input('exp_code'),
-                'exp_name' => $request->input('exp_name'),
-                'description' => $request->input('description')
+                'project_id' => $request->project_id,
+                'block_id' => $request->block_id,
+                'exp_category_id' => $request->exp_category_id,
+                'payee' => $request->payee,
+                'exp_date' => $request->exp_date,
+                'year' => date('y'),
+                'remarks' => $request->remarks
             ]
         );
+
+        dd($expense_id);
+
+        ExpenseDetail::create(
+            [
+                'expense_id' => $expense_id,
+                'block_id' => $request->block_id,
+                'exp_category_id' => $request->exp_category_id,
+                'payee' => $request->payee,
+                'exp_date' => $request->exp_date,
+                'year' => date('y'),
+                'remarks' => $request->remarks
+            ]
+        );
+
 
         return redirect()->route('expense_categories.index')
         ->with('success','Exp Category created successfully');

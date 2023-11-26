@@ -16,10 +16,12 @@
    </div>
    @endif
 <style type="">
-  form .row {
-    margin-bottom: 10px;
+.main {
+    margin-bottom: 10px !important;
 }.col-md-3 {
     width: 30%;
+}.col-md-3,.col-md-7,.col-md-4,.col-md-5{
+  padding-right: 0px !important;
 }
 </style>
 
@@ -37,7 +39,7 @@
 
                 <div class="panel-body">
                   @if(!isset($expenseCategory->id))
-                   {!! Form::open(array('route' => 'expense_categories.store','method'=>'POST' , 'id' => 'expense_form')) !!}
+                   {!! Form::open(array('route' => 'expenses.store','method'=>'POST' , 'id' => 'expense_form')) !!}
                    @else
                      {!! Form::model($expenseCategory, ['method' => 'PATCH','route' => ['expense_categories.update', $expenseCategory->id ]]) !!}
                     @endif
@@ -45,15 +47,17 @@
                     <fieldset>
                         <!-- required [php action request] -->
                         <input type="hidden" name="action" value="contact_send" />
-                         <div class="col-md-10">
+                         <div class="row">
 
-
-                                 <div class="row">
+                              <div class="main">
                                   <div class="col-md-7">
                                     <div class="form-group">
-                                            <label class="col-md-3">Expense no</label>
+                                            <label class="col-md-3">Exp Code</label>
                                             <div class="col-md-8">
-                                            {!! Form::text('exp_code', null, array('placeholder' => 'AUTO','class' => 'form-control' , 'readonly'=>'true')) !!}
+                                           
+                                                {!! Form::text('exp_code', null, array('placeholder' => 'AUTO','class' => 'form-control' , 'readonly'=>'true')) !!}
+                                         
+                                            <label id="unit_category_id-error" class="error" for="unit_category_id"></label>
                                           </div>
                                         
 
@@ -63,25 +67,56 @@
                                     <div class="form-group">
                                             <label class="col-md-2">Date</label>
                                             <div class="col-md-9">
-                                            {!! Form::text('exp_code', null, array('placeholder' => 'AUTO','class' => 'form-control' , 'readonly'=>'true')) !!}
-                                          </div>
+                                           {!! Form::date('exp_date', null, array('placeholder' => 'AUTO','class' => 'form-control' )) !!}
                                         
+                                          </div>
 
                                     </div>
                                   </div>
-                                </div>
-                                      <div class="row">
+                              </div>
+                              <div class="main">
                                   <div class="col-md-7">
                                     <div class="form-group">
                                             <label class="col-md-3">Exp Category</label>
                                             <div class="col-md-8">
-                                            <select class="select2 form-control" required name="unit_category_id">
+                                            <select class=" form-control" required name="exp_category_id">
                                                 <option></option>
                                                 
                                                 @foreach($exp_categories as $value)
                                                 <option {{  $value->id== @$expense->exp_category_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->exp_name}}</option>
                                                 @endforeach
                                             </select>
+                                            <label id="unit_category_id-error" class="error" for="unit_category_id"></label>
+                                          </div>
+                                        
+
+                                    </div>
+                                  </div>
+                                  <div class="col-md-5">
+                                    <div class="form-group">
+                                            <label class="col-md-2">Payee</label>
+                                            <div class="col-md-9">
+                                          {!! Form::text('payee', null, array('placeholder' => 'Payee Name..','class' => 'form-control' )) !!}
+                                        
+                                          </div>
+
+                                    </div>
+                                  </div>
+                              </div>
+
+                              <div class="main">
+                                  <div class="col-md-7">
+                                    <div class="form-group">
+                                            <label class="col-md-3">Project Name</label>
+                                            <div class="col-md-8">
+                                            <select class=" form-control" required name="project_id">
+                                                <option></option>
+                                                
+                                                @foreach($exp_categories as $value)
+                                                <option {{  $value->id== @$expense->exp_category_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->exp_name}}</option>
+                                                @endforeach
+                                            </select>
+                                            <label id="unit_category_id-error" class="error" for="unit_category_id"></label>
                                           </div>
                                         
 
@@ -91,29 +126,31 @@
                                     <div class="form-group">
                                             <label class="col-md-2">Block</label>
                                             <div class="col-md-9">
-                                           <select class="select2 form-control" required name="unit_category_id">
-                                                <option></option>
+                                           <select class="select2 form-control sl"  name="block_id"  id="block_id">
+                                                <option value=""></option>
                                                 
                                                 @foreach($exp_categories as $value)
                                                 <option {{  $value->id== @$expense->exp_category_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->exp_name}}</option>
                                                 @endforeach
                                             </select>
+                                        <label id="block_id-error" class="error" for="block_id"></label>
                                           </div>
-                                        
 
                                     </div>
                                   </div>
                                 </div>
 
 
+
+
                                
                             
-                                      <div class="row">
+                                      <div class="main">
                                   <div class="col-md-7">
                                     <div class="form-group">
                                             <label class="col-md-3">Description</label>
                                             <div class="col-md-8">
-                                            {!! Form::textarea('description', null, array('placeholder' => 'Descreption','class' => 'form-control','rows'=>1)) !!}
+                                            {!! Form::textarea('remarks', null, array('placeholder' => 'Descreption','class' => 'form-control','rows'=>2)) !!}
                                           </div>
                                         
 
@@ -142,8 +179,9 @@
                                 <tbody id="tbody">
                                   <tr> 
                                       <td class="count">1</td>
-                                      <td><textarea rows="1" type="text" class="form-control" name="description"></textarea></td>
-                                      <td><input type="text" class="form-control" name="description"></td>
+                                      <td>
+                                        <textarea rows="1" type="text" class="form-control" name="description[]"></textarea></td>
+                                      <td><input type="text" class="form-control" name="amount[]"></td>
                                       <td><button type="button" class="btn btn-default btn-xs removeBtn"><i class="fa fa-trash"></i></button></td>
                                   </tr>
                                 </tbody>

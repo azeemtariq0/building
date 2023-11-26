@@ -5,26 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Expense extends Model
+class ExpenseDetail extends Model
 {
     use HasFactory;
 
-    protected $table = 'as_expenses';
+    protected $table = 'as_expense_detail';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'exp_code',
-        'project_id',
-        'block_id',
-        'exp_category_id',
-        'exp_date',
-        'year',
-        'payee',
+
+       protected $fillable = [
+        'receipt_id',
+        'amount',
         'description',
     ];
+
 
     public function expense_category(){
       return $this->hasOne(ExpenseCategory::class, 'id', 'expense_category_id');
