@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\ExpenseCategory;
+use App\Models\Project;
 use App\Models\Expense;
 use App\Models\ExpenseDetail;
 use DB;
@@ -51,12 +52,14 @@ class ExpenseController extends Controller
 
     public function create(){
          $exp_categories  =  ExpenseCategory::get();
+         $projects  =  Project::get();
+
          $data['page_management'] = array(
             'page_title' => 'Add Expense',
             'slug' => 'Transaction',
             'title' => 'Add Expense',
         );        
-         return view('expenses.create', compact('data','exp_categories'));
+         return view('expenses.create', compact('data','projects' ,'exp_categories'));
     }
 
     public function store(Request $request){
@@ -108,13 +111,15 @@ class ExpenseController extends Controller
 
     public function edit($id){
          $exp_categories  =  ExpenseCategory::get();
+         $projects  =  Project::get();
+
         $expense = Expense::with('expense_category','expense_detail')->find($id);
          $data['page_management'] = array(
             'page_title' => 'Edit Expense',
             'slug' => 'Transaction',
             'title' => 'Edit Expense',
         ); 
-        return view('expenses.create',compact('expense','exp_categories', 'data'));
+        return view('expenses.create',compact('expense','exp_categories','projects' ,'data'));
     }
 
     public function update(Request $request, $id){

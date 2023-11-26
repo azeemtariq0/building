@@ -109,18 +109,18 @@
 
  </li>
 
-                            <li><!-- logout -->
-                                    
-                              
-
-
                            
-                                <a href="{{ route('logout') }}"
+                             <li ><!-- dashboard -->
+                                <a class="dashboard" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();"><i class="fa fa-power-off"></i> {{ __('Logout') }}</span>
-                                </a>
+                                    document.getElementById('logout-form').submit();"><!-- warning - url used by default by ajax (if eneabled) -->
+                                    <i class="main-icon fa fa-power-off"></i> <span>Dashboard
 
-                                  </li>
+
+
+                                    </span>
+                                </a>
+                            </li>
                         </ul>
 
                     </nav>

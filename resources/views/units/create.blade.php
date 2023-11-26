@@ -38,7 +38,7 @@
                         <!-- <form class="validate" action="{{ route('users.store')}}" method="post" data-success="Sent! Thank you!" data-toastr-position="top-right"> -->
                         <fieldset>
                             <!-- required [php action request] -->
-                            <input type="hidden" name="action" value="contact_send" />
+                              <input type="hidden" id="block_hidden" value="{{ @$unit->block_id }}" />
                             <div class="col-md-6">
 
 
@@ -170,7 +170,7 @@
 </div>
 <script>
     
-    $('#project').on('change', function() {
+    $('#projects').on('change', function() {
         var countryId = $(this).val();
         if (countryId) {
             $.ajax({
@@ -182,6 +182,7 @@
                     $.each(data, function(key, value) {
                         $('#block').append('<option value="' + value.id + '">' + value.block_name + '</option>');
                     });
+                     $('#block').val($('#block_hidden').val()).trigger('change');;
                 }
             });
         } else {

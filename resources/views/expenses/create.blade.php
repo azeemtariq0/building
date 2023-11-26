@@ -17,17 +17,21 @@
    @endif
 <style type="">
 .main {
-    margin-bottom: 10px !important;
+    /*margin-bottom: 10px !important;*/
 }.col-md-3 {
     width: 30%;
 }.col-md-3,.col-md-7,.col-md-4,.col-md-5{
   padding-right: 0px !important;
+
 }.center{
   text-align: center;
 }.left{
   text-align: left;
 }.right{
   text-align: right;
+}
+.col-md-7{
+    margin-bottom: 7px;
 }
 </style>
 
@@ -52,7 +56,7 @@
                    <!-- <form class="validate" action="{{ route('users.store')}}" method="post" data-success="Sent! Thank you!" data-toastr-position="top-right"> -->
                     <fieldset>
                         <!-- required [php action request] -->
-                        <input type="hidden" name="action" value="contact_send" />
+                        <input type="hidden" id="block_hidden" value="{{ @$expense->block_id }}" />
                          <div class="row">
 
                               <div class="main">
@@ -63,7 +67,7 @@
                                            
                                                 {!! Form::text('exp_code', null, array('placeholder' => 'AUTO','class' => 'form-control' , 'readonly'=>'true')) !!}
                                          
-                                            <label id="unit_category_id-error" class="error" for="unit_category_id"></label>
+                                           
                                           </div>
                                         
 
@@ -92,7 +96,7 @@
                                                 <option {{  $value->id== @$expense->exp_category_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->exp_name}}</option>
                                                 @endforeach
                                             </select>
-                                            <label id="unit_category_id-error" class="error" for="unit_category_id"></label>
+                                            
                                           </div>
                                         
 
@@ -115,14 +119,14 @@
                                     <div class="form-group">
                                             <label class="col-md-3">Project Name</label>
                                             <div class="col-md-8">
-                                            <select class=" form-control" required name="project_id">
+                                            <select class=" form-control" required name="project_id" id="projects">
                                                 <option></option>
                                                 
-                                                @foreach($exp_categories as $value)
-                                                <option {{  $value->id== @$expense->exp_category_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->exp_name}}</option>
+                                                @foreach($projects as $value)
+                                                <option id="projects" {{  $value->id== @$expense->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
                                                 @endforeach
                                             </select>
-                                            <label id="unit_category_id-error" class="error" for="unit_category_id"></label>
+                                            
                                           </div>
                                         
 
@@ -132,14 +136,10 @@
                                     <div class="form-group">
                                             <label class="col-md-2">Block</label>
                                             <div class="col-md-9">
-                                           <select class="select2 form-control sl"  name="block_id"  id="block_id">
+                                           <select class=" form-control sl"  required name="block_id"  id="block">
                                                 <option value=""></option>
-                                                
-                                                @foreach($exp_categories as $value)
-                                                <option {{  $value->id== @$expense->exp_category_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->exp_name}}</option>
-                                                @endforeach
                                             </select>
-                                        <label id="block_id-error" class="error" for="block_id"></label>
+                                       
                                           </div>
 
                                     </div>
@@ -195,8 +195,8 @@
                                         <tr> 
                                         <td class="count">1</td>
                                         <td>
-                                          <textarea rows="1" type="text" class="form-control" name="description[]" value=""></textarea></td>
-                                        <td><input type="text" class="form-control" name="amount[]"></td>
+                                          <textarea rows="1" type="text" required class="form-control" name="description[]" value=""></textarea></td>
+                                        <td><input type="text" required class="form-control" name="amount[]"></td>
                                         <td><button type="button" class="btn btn-default btn-xs removeBtn"><i class="fa fa-trash"></i></button></td>
                                     </tr>
                                    <?php }  ?>
@@ -230,6 +230,11 @@
     singleDiv();
 
 });
+
+
+  $('#projects').trigger('change');
+   
+
 });
 
 function SequenceNo(){
@@ -254,7 +259,25 @@ $('.removeBtn').on('click',function(){
 });
 }
 removeDiv();
-
+ $('#projects').on('change', function() {
+        var Id = $(this).val();
+        if (Id) {
+            $.ajax({
+                url: '<?= env('APP_BASEURL') ?>/all_block/' + Id,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $('#block').empty();
+                    $.each(data, function(key, value) {
+                        $('#block').append('<option value="' + value.id + '">' + value.block_name + '</option>');
+                    });
+                    $('#block').val($('#block_hidden').val()).trigger('change');;
+                }
+            });
+        } else {
+            $('#block').empty();
+        }
+    });
    </script>
 </div>
 @include('expense_categories/validate')
