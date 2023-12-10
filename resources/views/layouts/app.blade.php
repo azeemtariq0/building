@@ -31,6 +31,7 @@ if(!empty($data)){
 
         <!-- CORE CSS -->
         <link href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/plugins/bootstrap.datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
 
         <!-- THEME CSS -->
         <link href="{{ asset('assets/css/essentials.css') }}" rel="stylesheet" type="text/css" />
@@ -43,6 +44,7 @@ if(!empty($data)){
         <script type="text/javascript" src="{{ asset('assets/plugins/jquery/jquery-2.1.4.min.js')}}"></script>
         <script type="text/javascript" src="{{ asset('assets/plugins/toastr/toastr.js')}}"></script>
         <script type="text/javascript" src="{{ asset('assets/plugins\sweetAlert\sweetalert.min.js')}}"></script>
+        <script type="text/javascript" src="{{ asset('assets/plugins\bootstrap.datepicker/js/bootstrap-datepicker.min.js')}}"></script>
 
 
         @yield('pagelevelstyle')
@@ -119,6 +121,14 @@ if(!empty($data)){
     <!-- <script async type="text/javascript" src="{{ asset('assets/plugins/styleswitcher/styleswitcher.js') }}"></script> -->
     <script>
         
+        function datepicker (){
+            $('.datepicker').datepicker({
+                    format: 'dd-mm-yyyy',
+                    autoclose: true
+            });    
+         } 
+         datepicker();
+
         // $('.alert').delay(5000).fadeOut('slow');
     </script>
     @yield('pagelevelscript')

@@ -105,6 +105,7 @@ class UnitController extends Controller
 
     public function edit($id){
         $unit = Unit::find($id);
+        $unit['ob_date'] =  date('d-m-Y',strtotime($unit['ob_date']));
         $blocks  =  Block::get();
         $unit_categories  =  UnitCategory::get();
         $projects  =  Project::get();

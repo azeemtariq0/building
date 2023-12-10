@@ -81,7 +81,8 @@ class UnitOwnerController extends Controller
                 'owner_email' => $request->input('owner_email'),
                 'mobile_no' => $request->input('mobile_no'),
                 'ptcl_no' => $request->input('ptcl_no'),
-                'owner_since' => $request->input('owner_since'),
+                'owner_since' => date('Y-m-d',strtotime($request->input('owner_since'))),
+                'is_tenant' => isset($request->is_tenant) ? 1 : 0,
                 'current_tenant' => $request->input('current_tenant'),
                 'owner_address' => $request->input('owner_address'),
             ]
@@ -102,7 +103,9 @@ class UnitOwnerController extends Controller
     }
 
     public function edit($id){
-        $unit_owner = UnitOwner::find($id);
+         $unit_owner = UnitOwner::find($id);
+         $unit_owner['owner_since'] =  date('d-m-Y',strtotime($unit_owner['owner_since']));
+
         $units = Unit::get();
 
          $data['page_management'] = array(
@@ -125,7 +128,8 @@ class UnitOwnerController extends Controller
         $unitOwner->owner_email = $request->input('owner_email');
         $unitOwner->mobile_no = $request->input('mobile_no');
         $unitOwner->ptcl_no = $request->input('ptcl_no');
-        $unitOwner->owner_since = $request->input('owner_since');
+        $unitOwner->is_tenant = isset($request->is_tenant) ? 1 : 0;
+        $unitOwner->owner_since = date('Y-m-d',strtotime($request->input('owner_since')));
         $unitOwner->current_tenant = $request->input('current_tenant');
         $unitOwner->owner_address = $request->input('owner_address');
 

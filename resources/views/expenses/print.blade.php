@@ -252,7 +252,8 @@ tr:hover .cut { opacity: 1; }
 				<p>A finance charge of 1.5% will be made on unpaid balances after 30 days.</p>
 			</div> -->
 		</aside>
-        <button border class="btn btn-default" id="printPageButton" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
+          <button border class="btn btn-success" id="printPageButton" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
+         <button border class="btn btn-default" id="printPageButton" onclick="window.close()"><i class="fa fa-print"></i> Close</button>
 
 		<script type="text/javascript">
 			

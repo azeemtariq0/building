@@ -18,6 +18,8 @@ class ExpenseDetail extends Model
 
        protected $fillable = [
         'expense_id',
+        'reference_no',
+        'reference_date',
         'amount',
         'description',
     ];

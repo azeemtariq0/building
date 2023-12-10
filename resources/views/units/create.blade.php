@@ -140,7 +140,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>OB Date</label>
-                                            {!! Form::date('ob_date', null, array('type'=>'date','placeholder' => '','class' => 'form-control')) !!}
+                                            {!! Form::text('ob_date', null, array('placeholder' => 'dd-mm-yyyy','class' => 'form-control datepicker')) !!}
                                         </div>
 
                                     </div>
@@ -170,7 +170,7 @@
 </div>
 <script>
     
-    $('#projects').on('change', function() {
+    $('#project').on('change', function() {
         var countryId = $(this).val();
         if (countryId) {
             $.ajax({

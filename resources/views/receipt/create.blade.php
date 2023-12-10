@@ -120,8 +120,10 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Create Receipt</h4>
+         <span class="text-success" id="resident"></span>
       </div>
       <div class="modal-body">
+       
           <fieldset>
                         <!-- required [php action request] -->
                         <input type="hidden" name="action" value="contact_send" />
@@ -131,7 +133,6 @@
                                     <div class="form-group">
                                         <label>Receipt Type</label>
                                         <select id="receipt_type_id"  class=" form-control  col-md-12" required name="receipt_type_id">
-                                          <option value=""></option>
                                                 @foreach($receiptType as $type)
                                         <option  value="{{ $type->id}}">{{ $type->receipt_name}}</option>
                                           @endforeach
@@ -275,6 +276,7 @@
                   $('#block_id').val($(obj).data('block_id'));
                   $('#unit_category_id').val($(obj).data('unit_category_id'));
                   $('#unit_id').val(id);
+                  $('#resident').text($(obj).data('resident'));
                   $('#myModal').modal('show');
             }
 
@@ -289,7 +291,7 @@
                               url: "{{ url('get-units') }}",
                               type: "get",
                               data: function(f) {
-                                  f.project = $('#filter_project_id').val(),
+                                  f.project_id = $('#filter_project_id').val(),
                                   f.block_id =  $('#filter_block_id').val(),
                                   f.unit_category_id =  $('#filter_unit_category_id').val()
                               }

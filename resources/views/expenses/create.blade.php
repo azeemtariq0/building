@@ -77,7 +77,7 @@
                                     <div class="form-group">
                                             <label class="col-md-2">Date</label>
                                             <div class="col-md-9">
-                                           {!! Form::date('exp_date', null, array('placeholder' => 'AUTO','class' => 'form-control' )) !!}
+                                           {!! Form::text('exp_date', null, array('placeholder' => 'dd-mm-yyyy','class' => 'form-control datepicker','required'=>true ,'autocomplete'=>'off')) !!}
                                         
                                           </div>
 
@@ -176,9 +176,11 @@
                             <table class="table table-striped table-bordered table-hover table-responsive data-table mt-4" width="100%">
                                 <thead>
                                   <tr>
-                                    <th width="10%" class="center">S.No </th>
-                                    <th  class="center"> Description </th>
-                                    <th  class="center" width="20%">Amount</th>
+                                    <th width="5%" class="center">S.No </th>
+                                    <th  class="center"> Expense Detail </th>
+                                    <th  class="center" width="15%"> Reference No </th>
+                                    <th  class="center" width="15%"> Reference Date </th>
+                                    <th  class="center" width="15%">Amount</th>
                                     <th  class="center" width="10%"><button type="button" class="btn btn-default btn-xs" id="addNew"><i class="fa fa-plus"></i></button></th>
                                   </tr>
                                 </thead>
@@ -187,16 +189,21 @@
                                     <tr> 
                                         <td class="count center"><?= $key+1 ?></td>
                                         <td>
-                                          <textarea rows="1" type="text" class="form-control" name="description[]">{{ $value->description}}</textarea></td>
-                                        <td><input type="text" class="form-control right" name="amount[]" value="{{ $value->amount}}"></td>
+                                          <textarea rows="1" type="text" required class="form-control" name="description[]" autocomplete="off">{{ $value->description}}</textarea></td>
+                                           <td><input type="text"  class="form-control" name="reference_no[]" autocomplete="off" value="{{ $value->reference_no}}"></td>
+                                        <td><input type="text"  class="form-control datepicker" placeholder="dd-mm-yyyy" name="reference_date[]" value="{{ $value->reference_date}}" autocomplete="off"></td>
+
+                                        <td><input type="text" required class="form-control right" name="amount[]" value="{{ $value->amount}}" autocomplete="off"></td>
                                         <td class="center"><button type="button" class="btn btn-default btn-xs removeBtn"><i class="fa fa-trash"></i></button></td>
                                     </tr>
                                   <?php }} else{ ?>
                                         <tr> 
-                                        <td class="count">1</td>
+                                        <td  class="count center">1</td>
                                         <td>
-                                          <textarea rows="1" type="text" required class="form-control" name="description[]" value=""></textarea></td>
-                                        <td><input type="text" required class="form-control" name="amount[]"></td>
+                                          <textarea rows="1" type="text" required class="form-control" name="description[]" autocomplete="off"></textarea></td>
+                                        <td><input type="text"  class="form-control" name="reference_no[]" autocomplete="off"></td>
+                                        <td><input type="text"  class="form-control datepicker" placeholder="dd-mm-yyyy" name="reference_date[]" autocomplete="off"></td>
+                                        <td><input type="text" required class="form-control right" name="amount[]" autocomplete="off"></td>
                                         <td><button type="button" class="btn btn-default btn-xs removeBtn"><i class="fa fa-trash"></i></button></td>
                                     </tr>
                                    <?php }  ?>
@@ -224,7 +231,7 @@
       $tr = $('#tbody').find('tr:last');
       var $clone = $tr.clone();
      $tr.after($clone);
-  
+    datepicker();
     SequenceNo();
     removeDiv();
     singleDiv();

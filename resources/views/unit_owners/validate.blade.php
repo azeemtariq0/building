@@ -27,22 +27,15 @@
 
 
         },
-        ptcl_no:{
-          required: true,
-          noSpace: true // Use the custom rule
-
-
-        },
-        owner_email:{
-          required: true,
-          noSpace: true // Use the custom rule
-
-
-        },
         owner_since:{
           required: true,
           noSpace: true // Use the custom rule
 
+
+        },
+        current_tenant:{
+          required: true,
+          noSpace: true // Use the custom rule
 
         }
       },
@@ -59,8 +52,8 @@
         ptcl_no:{
           required: "Ptcl number is required"
         },
-        owner_email:{
-          required: "Owner Email is required"
+        current_tenant:{
+          required: "Current Resident is required"
         },
         owner_since:{
           required: "Owner since is required"

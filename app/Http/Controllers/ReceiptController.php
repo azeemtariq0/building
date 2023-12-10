@@ -12,7 +12,7 @@ use App\Models\ReceiptType;
 use App\Models\UnitOwner;
 use DB;
 use DataTables, Form; 
-// use PDF; // at the top of the file
+use PDF; // at the top of the file
 class ReceiptController extends Controller
 {
     /**
@@ -22,7 +22,6 @@ class ReceiptController extends Controller
      */
     public function index(Request $request)
     {
-
         if ($request->ajax()) {
 
        $data = Receipt::with('project', 'block', 'unit','unit_category','receipt_type');
@@ -34,10 +33,10 @@ class ReceiptController extends Controller
                 $text = '<p>dwdwdw</p>';
                 return $text;
             })
-        ->editColumn('created_at', function($model){
-        $formatDate = date('d-m-Y H:i:s',strtotime($model->created_at));
-        return $formatDate;
-    })->addColumn('status', function($row){
+        ->editColumn('receipt_date', function($model){
+            $formatDate = date('d-m-Y',strtotime($model->receipt_date));
+            return $formatDate;
+        })->addColumn('status', function($row){
             $switchClass = "";
             $checked = "";
             if ($row->status == 1) {
@@ -46,33 +45,51 @@ class ReceiptController extends Controller
             } else if ($row->status == 0) {
                 $switchClass = "";
             }
-            $text = '<label class="switch switch-'.$switchClass.'">
-            <input class="toggle-switch" data-id="'.$row->id.'" type="checkbox" '.$checked.'>
-            <span class="switch-label" data-on="on" data-off="off"></span>
-            </label>';
+            // $text = '<label class="switch switch-'.$switchClass.'">
+            // <input class="toggle-switch" data-id="'.$row->id.'" type="checkbox" '.$checked.'>
+            // <span class="switch-label" data-on="on" data-off="off"></span>
+            // </label>';
+
+
+                   $text = '<input class="toggle-switch right"  data-id="'.$row->id.'" '.($checked ? 'disabled' : '').' type="checkbox" '.$checked.'>';
+
+
+
+
+
             
             return $text;
     })
         ->addColumn('action', function($row)
         {
             
-             
+                $owner = UnitOwner::where('unit_id',$row->unit_id)->first();
 
-               $btn= "<a target='_blank' href='".url('print-receipt/'.$row->id)."' class='btn btn-default btn-sm'><i class='fa fa-print'></i></a>";
+            $btn= '';
+            if($row->status == 1){
+               $btn.= "<a target='_blank' href='".url('print-receipt/'.$row->id)."' class='btn btn-default btn-sm'><i class='fa fa-print'></i></a>";
+           }
+
+               if(auth()->user()->id == $row->created_by && $row->status == 0){
                $btn.= "<button type='button' onclick='ediReceipt(this,".$row->id.")' 
                data-outstanding_amount ='".$row->unit->out_standing_amount."' 
                data-monthly_amount ='".$row->unit_category->monthly_amount."' 
+               data-resident ='".(@$row->unit->unit_name.' / '.@$row->project->project_name.' / '.@$owner['current_tenant'])."' 
                data-amount ='".$row->amount."'
                data-receipt_type_id ='".$row->receipt_type_id."'
                data-description ='".$row->description."'
                data-receipt_date ='".date('d-m-Y',strtotime($row->receipt_date))."'
-                class='btn btn-info btn-sm'><i class='fa fa-edit'></i>Edit</button>";
+                class='btn btn-info btn-sm'><i class='fa fa-edit'></i></button>";
 
                 
 
                $btn.= Form::open(['id'=>'delete-form','method' => 'DELETE','route' => ['receipts.destroy', $row->id],'style'=>'display:inline']);
-               $btn.= Form::submit('Delete', ['class' => 'btn btn-danger btn-sm dltBtn','onclick'=>'rowDetele(event)']);
+                 $btn.= "<button class='btn btn-danger btn-sm' type='submit' onclick='rowDetele(event)' ><i class='fa fa-trash'></i></button>";
                $btn.= Form::close();
+
+           }
+
+
 
                return $btn;
        })
@@ -143,14 +160,17 @@ class ReceiptController extends Controller
         $formatDate = date('d-m-Y H:i:s',strtotime($model->created_at));
         return $formatDate;
         })->addColumn('action', function($row){
+
+            $owner = UnitOwner::where('unit_id',$row->id)->first();
             $btn= "<button onclick='generateReceipt(this,".$row->id.")' 
             data-monthly_amount=".$row->unit_category->monthly_amount."  
             data-outstanding_amount=".$row->out_standing_amount."
             data-project_id=".$row->project_id."
+            data-resident ='".(@$row->unit_name.' / '.@$row->project->project_name.' / '.@$owner['current_tenant'])."' 
             data-block_id=".$row->block_id."
             data-unit_category_id=".$row->unit_category_id."
             data-outstanding_amount=".$row->out_standing_amount."
-            class='btn btn-info btn-sm'> <i class='fa fa-edit'> <span>Generate</span></button>";
+            class='btn btn-info btn-sm'> <i class='fa fa-edit'> <span>Create</span></button>";
                return $btn;
            })
             ->rawColumns(['action'])
@@ -182,7 +202,7 @@ class ReceiptController extends Controller
                         'year' => date('y'),
                         'receipt_date' => date('Y-m-d'),
                         'status' => 0,
-                        'created_by' => 1, //Auth::id(),
+                        'created_by' => auth()->user()->id,
                     ]
             );
         }else{
@@ -190,6 +210,7 @@ class ReceiptController extends Controller
             $staffType = receipt::find($request->id);
             $staffType->receipt_type_id = $request->input('receipt_type_id');
             $staffType->amount = $request->input('amount');
+            $staffType->updated_by = auth()->user()->id;
             $staffType->save();
         }
         echo json_encode($_return);
@@ -198,30 +219,39 @@ class ReceiptController extends Controller
     public function updateStatus(Request $request){
         $_return = ['success'=>true,'msg'=>'Status Updated Successfully!'];
         $receipt = receipt::where('id',$request->id)->first();
+
+        // Unit Outsatding Amount update
+        $unit = Unit::where('id',$receipt->unit_id)->first();
+        $unit->out_standing_amount =  $unit->out_standing_amount  - $receipt->amount;
+        $unit->update();
+
+         // Receipt Status update
         $receipt->status =  $request->status;
         $receipt->update();
+
+
         echo json_encode($_return);
         exit;
     }
     public function printView($id){
 
 
-     $data = Receipt::with('project', 'block', 'unit','unit_category','receipt_type')->where('id',11)->first();
-    $data['owner']  = UnitOwner::select('*')->where('unit_id',$data->unit->id)->first();
-
+     $data = Receipt::with('project', 'block', 'unit','unit_category','receipt_type')->where('id',$id)->first();
+     $data['owner']  = UnitOwner::select('*')->where('unit_id',$data->unit->id)->first();
+// dd($data);
    return view('receipt.receipt', $data);
-        // $filename = 'hello_world.pdf';
-        // $data = [
-        //     'title' => 'Hello world!'
-        // ];
-        // $view = \View::make('receipt.receipt', $data);
-        // $html = $view->render();
+        $filename = 'hello_world.pdf';
+        $data['title'] = 'Hello world!'
+        ;
+        $view = \View::make('receipt.pdf2', $data);
+        // return $view->render();
+        $html = $view->render();
 
-        // $pdf = new PDF;
-        // $pdf::SetTitle('Receipt Voucher');
-        // $pdf::AddPage();
-        // $pdf::writeHTML($html, true, false, true, false, '');
-        // $pdf::Output($filename);
+        $pdf = new PDF;
+        $pdf::SetTitle('Receipt Voucher');
+        $pdf::AddPage();
+        $pdf::writeHTML($html, true, false, true, false, '');
+        $pdf::Output($filename);
 
     }
     

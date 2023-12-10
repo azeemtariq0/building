@@ -60,43 +60,29 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Unit Owner Name *</label>
-                                            {!! Form::text('owner_name', null, array('placeholder' => 'Owner Name','class' => 'form-control' ,'id' => 'owner_name')) !!}
+                                            {!! Form::text('owner_name', null, array('placeholder' => 'Owner Name','class' => 'form-control' ,'id' => 'owner_name','autocomplete'=>'off')) !!}
                                         </div>
 
                                     </div>
                                 </div> 
 
-                                
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-md-10 col-sm-10">
-                                            <label>Identity Type *</label>
-                                            <select class=" form-control" required name="identity_type" id="identity_type">
-                                            <option value=""></option>
-                                            <option {{ $value->id== @$unit_owner->identity_type ? 'selected' : '' }} value="nicop">NICOP</option>
-                                            <option {{ $value->id== @$unit_owner->identity_type ? 'selected' : '' }} value="cnic">CNIC</option>
-                                            <option {{ $value->id== @$unit_owner->identity_type ? 'selected' : '' }} value="passport">Passport</option>
-                                            </select>
-                                        </div>
-
-                                    </div>
-                                </div>
-
+          
                                
                                 <div class="row">
                                     <div class="form-group">
-                                        <div class="col-md-5">
-                                            <label>CNIC / NICOP / Passport *</label>
-                                            {!! Form::text('owner_cnic', null, array('placeholder' => 'Owner CNIC','class' => 'form-control' ,'id' => 'owner_cnic','required'=>true)) !!}
-                                        </div>
-                                        <div class="col-md-5 ">
+                                        
+                                        <div class="col-md-3 " style="padding-right: 0px">
                                             <label>Identity Type *</label>
                                             <select class=" form-control" required name="identity_type" id="identity_type">
-                                            <option value=""></option>
+                                              <option {{ $value->id== @$unit_owner->identity_type ? 'selected' : '' }} value="cnic">CNIC</option>
                                             <option {{ $value->id== @$unit_owner->identity_type ? 'selected' : '' }} value="nicop">NICOP</option>
-                                            <option {{ $value->id== @$unit_owner->identity_type ? 'selected' : '' }} value="cnic">CNIC</option>
+                                            
                                             <option {{ $value->id== @$unit_owner->identity_type ? 'selected' : '' }} value="passport">Passport</option>
                                             </select>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <label>CNIC / NICOP / Passport *</label>
+                                            {!! Form::text('owner_cnic', null, array('placeholder' => 'Identity','class' => 'form-control' ,'id' => 'owner_cnic','required'=>true,'autocomplete'=>'off')) !!}
                                         </div>
 
                                     </div>
@@ -108,7 +94,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Mobile no *</label>
-                                            {!! Form::text('mobile_no', null, array('placeholder' => 'Mobile no','class' => 'form-control', 'id' => 'mobile_no')) !!}
+                                            {!! Form::text('mobile_no', null, array('placeholder' => 'Mobile no','class' => 'form-control', 'id' => 'mobile_no','autocomplete'=>'off')) !!}
                                         </div>
 
                                     </div>
@@ -120,8 +106,8 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>PTCL no *</label>
-                                            {!! Form::text('ptcl_no', null, array('placeholder' => 'PTCL no','class' => 'form-control' , 'id' => 'ptcl_no')) !!}
+                                            <label>PTCL no</label>
+                                            {!! Form::text('ptcl_no', null, array('placeholder' => 'PTCL no','class' => 'form-control' , 'id' => 'ptcl_no','autocomplete'=>'off')) !!}
                                         </div>
 
                                     </div>
@@ -134,8 +120,8 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Email *</label>
-                                            {!! Form::text('owner_email', null, array('placeholder' => 'Owner Email','class' => 'form-control', 'id' => 'owner_email')) !!}
+                                            <label>Email</label>
+                                            {!! Form::email('owner_email', null, array('placeholder' => 'Owner Email','class' => 'form-control', 'id' => 'owner_email','autocomplete'=>'off')) !!}
                                         </div>
 
                                     </div>
@@ -147,7 +133,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Owner Since *</label>
-                                            {!! Form::date('owner_since', null, array('placeholder' => 'Owner Since','class' => 'form-control', 'id' => 'owner_since')) !!}
+                                            {!! Form::text('owner_since', null, array('placeholder' => 'dd-mm-yyyy','class' => 'form-control datepicker', 'id' => 'owner_since','autocomplete'=>'off')) !!}
                                         </div>
 
                                     </div>
@@ -156,8 +142,19 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Current Tenant</label>
-                                            {!! Form::text('current_tenant', null, array('placeholder' => 'Current Tenant','class' => 'form-control')) !!}
+                                            <label>Current  Resident *</label>
+                                            {!! Form::text('current_tenant', null, array('placeholder' => 'Current Resident','class' => 'form-control','autocomplete'=>'off', 'id' => 'current_tenant','required'=>true)) !!}
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-md-10 col-sm-10">
+                                            <label>Is Tenant &nbsp&nbsp</label>
+                                            <input type="checkbox" <?= (@$unit_owner->is_tenant==1) ? 'checked' : '' ?> name="is_tenant" value="1">
                                         </div>
 
                                     </div>

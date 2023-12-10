@@ -20,7 +20,9 @@ class Receipt extends Model
       'description',
       'year',
       'amount',
-      'status'
+      'status',
+      'created_by',
+      'updated_by'
   ];
      
 

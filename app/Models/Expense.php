@@ -24,6 +24,8 @@ class Expense extends Model
         'year',
         'payee',
         'description',
+        'created_by',
+        'updated_by'
     ];
 
     public function block(){

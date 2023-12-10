@@ -191,7 +191,7 @@ tr:hover .cut { opacity: 1; }
 	</style>
 	<body>
 		<header>
-			<h1>Recepit</h1>
+			<h1>Receipt </h1>
 			
 			<address >
 				<p>Apni Soceity</p>
@@ -204,6 +204,8 @@ tr:hover .cut { opacity: 1; }
 				<p>Residentail : {{ @$owner->owner_name}}</p>
 				<p>Address : {{ @$owner->owner_address}}</p>
 				<p>Mobile No : {{ @$owner->mobile_no}}</p>
+
+			    <h4 class="mt-4" style="margin-top: 20px;font-size: 18px;color: #707070;text-decoration: underline;">* <?= ($status==0) ? 'Provisional' : 'Actual' ?> Receipt </h4>
 			</address>
 			<table class="meta">
 				<tr>
@@ -216,7 +218,7 @@ tr:hover .cut { opacity: 1; }
 				</tr>
 				<tr>
 					<th><span >Amount Due</span></th>
-					<td><span id="prefix" >Rs.</span>{{ $unit['out_standing_amount']}}<span></span></td>
+					<td><span id="prefix" >Rs.</span>{{  $amount + $unit['out_standing_amount']}}<span></span></td>
 				</tr>
 			</table>
 			<table class="inventory">
@@ -241,8 +243,8 @@ tr:hover .cut { opacity: 1; }
 			</table>
 			<table class="balance">
 				<tr>
-					<th><span >balance Amount :</span></th>
-					<td><span data-prefix>Rs.</span><span><?= $unit['out_standing_amount'] - $amount ?></span></td>
+					<th><span >Balance Amount :</span></th>
+					<td><span data-prefix>Rs.</span><span><?= $unit['out_standing_amount'] ?></span></td>
 				</tr>
 			</table>
 		</article>
@@ -252,7 +254,8 @@ tr:hover .cut { opacity: 1; }
 				<p>A finance charge of 1.5% will be made on unpaid balances after 30 days.</p>
 			</div> -->
 		</aside>
-        <button border class="btn btn-default" id="printPageButton" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
+        <button border class="btn btn-success" id="printPageButton" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
+         <button border class="btn btn-default" id="printPageButton" onclick="window.close()"><i class="fa fa-print"></i> Close</button>
 
 		<script type="text/javascript">
 			

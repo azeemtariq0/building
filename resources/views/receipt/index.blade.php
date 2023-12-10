@@ -54,12 +54,12 @@
                         <th width="100">Receipt Code</th>
                         <th width="100"> receipt Type </th>
                         <th width="100"> receipt date </th>
-                        <th> project </th>
+                        <th width="400px"> project </th>
                         <th> block </th>
                         <th> unit </th>
                         <th>Description</th>
                         <th> Receipt amount </th>
-                        <th> status </th> 
+                        <th> Approved ? </th> 
                         <th width="20%">Action</th>
                       </tr>
                     </thead>
@@ -90,6 +90,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Update Receipt</h4>
+        <span class="text-success" id="resident"></span>
       </div>
       <div class="modal-body">
           <fieldset>
@@ -212,6 +213,7 @@
                     event.preventDefault();
                   });
 
+        // $(document).on('change','.toggle-switch',function() {
         $(document).on('change','.toggle-switch',function() {
             var object = $(this);
             var id = $(this).data('id');
@@ -219,7 +221,7 @@
 
         swal({
              title: "Are you sure?",
-             text: "Do You Want to Update Receipt Status!",
+             text: "Do you want to approve this Receipt ?",
              icon: "warning",
              buttons: true,
              dangerMode: true,
@@ -239,6 +241,7 @@
                     success: function(response) {
 
                           toastr.success(response.msg);
+                          reloadTbl(true);
                     },
                     error: function(error) {
                         console.log(error);
@@ -304,6 +307,7 @@
                   $('#receipt_date').val( $(obj).data('date'));
                   $('#description').val( $(obj).data('description'));
                   $('#receipt_type_id').val( $(obj).data('receipt_type_id'));
+                  $('#resident').text($(obj).data('resident'));
                   $('#id').val(id);
                   $('#myModal').modal('show');
             }

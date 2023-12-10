@@ -28,9 +28,14 @@ class ExpenseController extends Controller
             $data = Expense::with('expense_category','expense_detail')->get();
             return Datatables::of($data)
             ->addIndexColumn()
+            ->editColumn('exp_date', function($model){
+               $formatDate = date('d-m-Y',strtotime($model->exp_date));
+               return $formatDate;
+            })
             ->addColumn('action', function($row){
                $btn= "<a target='_blank' href='".url('print-expense/'.$row->id)."' class='btn btn-default btn-sm'><i class='fa fa-print'></i></a>";
-               $btn.= "<a href='".route('expenses.edit',$row->id)."' class='btn btn-info btn-sm'> <span>Edit</span></a>";
+               $btn.= "<a href='".route('expenses.edit',$row->id)."' class='btn btn-eye btn-sm'> <span></span></a>";
+               $btn.= "<a href='".route('expenses.edit',$row->id)."' class='btn btn-info btn-sm'> <span></span></a>";
                $btn.= Form::open(['method' => 'DELETE','route' => ['expenses.destroy', $row->id],'style'=>'display:inline']);
                $btn.= Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']);
                $btn.= Form::close();
@@ -78,7 +83,8 @@ class ExpenseController extends Controller
                 'payee' => $request->payee,
                 'exp_date' => $request->exp_date,
                 'year' => date('y'),
-                'remarks' => $request->remarks
+                'remarks' => $request->remarks,
+                'created_by' =>  auth()->user()->id
             ]
         );
         
@@ -139,6 +145,7 @@ class ExpenseController extends Controller
         $expense->payee = $request->payee;
         $expense->exp_date = $request->exp_date;
         $expense->remarks = $request->remarks;
+        $expense->updated_by =  auth()->user()->id;
         $expense->save();
         
         ExpenseDetail::where('expense_id',$id)->delete();
@@ -147,6 +154,8 @@ class ExpenseController extends Controller
             [
                 'expense_id' => $id,
                 'description' => $value,
+                'reference_no' => $request->reference_no[$key],
+                'reference_date' => $request->reference_date[$key],
                 'amount' => $request->amount[$key],
             ]
         );
