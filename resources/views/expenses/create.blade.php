@@ -4,6 +4,7 @@
 @section('content')
 
 @if (count($errors) > 0)
+<?php  $isView = (@$view==1) ? 'readonly' : '';   ?>
 <div id="content" class="padding-20">
 
     <div class="alert alert-danger margin-bottom-30">
@@ -89,7 +90,7 @@
                                     <div class="form-group">
                                             <label class="col-md-3">Exp Category</label>
                                             <div class="col-md-8">
-                                            <select class=" form-control" required name="exp_category_id">
+                                            <select class=" form-control" required id="exp_category_id" name="exp_category_id">
                                                 <option></option>
                                                 
                                                 @foreach($exp_categories as $value)
@@ -119,7 +120,7 @@
                                     <div class="form-group">
                                             <label class="col-md-3">Project Name</label>
                                             <div class="col-md-8">
-                                            <select class=" form-control" required name="project_id" id="projects">
+                                            <select class=" form-control"  name="project_id" id="projects">
                                                 <option></option>
                                                 
                                                 @foreach($projects as $value)
@@ -136,7 +137,7 @@
                                     <div class="form-group">
                                             <label class="col-md-2">Block</label>
                                             <div class="col-md-9">
-                                           <select class=" form-control sl"  required name="block_id"  id="block">
+                                           <select class=" form-control sl"   name="block_id"  id="block">
                                                 <option value=""></option>
                                             </select>
                                        
@@ -210,14 +211,15 @@
                                 </tbody>
                               </table>
                           </div>
-
+                        
                         <div class="row">
-                            <div class="col-md-2">
-                                <button type="submit" class="btn btn-3d btn-teal btn-sm btn-block margin-top-30">
-                                   Submit
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-info margin-top-30 pull-right">
+                                   <i class="fa fa-check"></i> Save
                                </button>
                            </div>
                        </div>
+                    
                        {!! Form::close() !!}
                    </div>
                </div>

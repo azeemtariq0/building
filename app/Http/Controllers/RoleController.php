@@ -46,13 +46,10 @@ class RoleController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function($row){
 
-             $btn = "<a href='".route('roles.show',$row->id)."' class='btn btn-success btn-sm'><span>Show</span></a>";
+            $btn = htmlBtn('roles.show',$row->id,'warning','eye');
+            $btn.=htmlBtn('roles.edit',$row->id);
+            $btn.= htmDeleteBtn('roles.destroy',$row->id);
 
-             $btn.= "<a href='".route('roles.edit',$row->id)."' class='btn btn-info btn-sm'> <span>Edit</span></a>";
-
-             $btn.= Form::open(['method' => 'DELETE','route' => ['roles.destroy', $row->id],'style'=>'display:inline']);
-             $btn.= Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']);
-             $btn.= Form::close();
 
              return $btn;
          })

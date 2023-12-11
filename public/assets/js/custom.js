@@ -24,3 +24,19 @@
 /* 	$('#category').on('change', function() {
   console.log( this.value );
 }); */
+
+    function rowDetele(event) {
+         event.preventDefault(); // prevent form submit
+             swal({
+             title: "Are you sure?",
+             text: "Do You Want to Delete This Record!",
+             icon: "warning",
+             buttons: true,
+             dangerMode: true,
+           })
+          .then((willDelete) => {
+               if (willDelete) {
+                  $('#delete-form').submit()
+               }
+            });
+    }

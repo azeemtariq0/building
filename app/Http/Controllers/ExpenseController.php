@@ -34,11 +34,10 @@ class ExpenseController extends Controller
             })
             ->addColumn('action', function($row){
                $btn= "<a target='_blank' href='".url('print-expense/'.$row->id)."' class='btn btn-default btn-sm'><i class='fa fa-print'></i></a>";
-               $btn.= "<a href='".route('expenses.edit',$row->id)."' class='btn btn-eye btn-sm'> <span></span></a>";
-               $btn.= "<a href='".route('expenses.edit',$row->id)."' class='btn btn-info btn-sm'> <span></span></a>";
-               $btn.= Form::open(['method' => 'DELETE','route' => ['expenses.destroy', $row->id],'style'=>'display:inline']);
-               $btn.= Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']);
-               $btn.= Form::close();
+               $btn.= htmlBtn('expenses.show',$row->id,'warning','eye');
+               $btn.=htmlBtn('expenses.edit',$row->id);
+               $btn.= htmDeleteBtn('expenses.destroy',$row->id);
+
 
                return $btn;
            })
@@ -69,9 +68,9 @@ class ExpenseController extends Controller
 
     public function store(Request $request){
         $this->validate($request, [
-            'block_id' => 'required',
+            // 'block_id' => 'required',
             'exp_category_id' => 'required',
-            'project_id' => 'required',
+            // 'project_id' => 'required',
             'exp_date' => 'required',
         ]);
 
@@ -106,13 +105,17 @@ class ExpenseController extends Controller
     }
 
     public function show($id){
-        $permission = ExpenseCategory::find($id);
-        $data['page_management'] = array(
-            'page_title' => 'Show expense_categories',
-            'slug' => 'Show'
-        );
+        $exp_categories  =  ExpenseCategory::get();
+        $projects  =  Project::get();
 
-        return view('expense_categories.show',compact('permission', 'data'));
+        $expense = Expense::with('expense_category','expense_detail')->find($id);
+        $data['page_management'] = array(
+            'page_title' => 'View Expense',
+            'slug' => 'Transaction',
+            'title' => 'View Expense',
+        ); 
+        $expense['view'] =1; 
+        return view('expenses.create',compact('expense','exp_categories','projects' ,'data'));
     }
 
     public function edit($id){
@@ -125,14 +128,15 @@ class ExpenseController extends Controller
             'slug' => 'Transaction',
             'title' => 'Edit Expense',
         ); 
+         $expense['view'] =0; 
         return view('expenses.create',compact('expense','exp_categories','projects' ,'data'));
     }
 
     public function update(Request $request, $id){
         $this->validate($request, [
-            'block_id' => 'required',
+            // 'block_id' => 'required',
             'exp_category_id' => 'required',
-            'project_id' => 'required',
+            // 'project_id' => 'required',
             'exp_date' => 'required',
         ]);
      

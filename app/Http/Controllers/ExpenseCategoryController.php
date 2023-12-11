@@ -26,10 +26,9 @@ class ExpenseCategoryController extends Controller
             return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function($row){
-               $btn= "<a href='".route('expense_categories.edit',$row->id)."' class='btn btn-info btn-sm'> <span>Edit</span></a>";
-               $btn.= Form::open(['method' => 'DELETE','route' => ['expense_categories.destroy', $row->id],'style'=>'display:inline']);
-               $btn.= Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']);
-               $btn.= Form::close();
+               $btn = htmlBtn('expense_categories.show',$row->id,'warning','eye');
+               $btn.=htmlBtn('expense_categories.edit',$row->id);
+               $btn.= htmDeleteBtn('expense_categories.destroy',$row->id);
 
                return $btn;
            })

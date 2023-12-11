@@ -41,6 +41,9 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+// $app->register(Elibyy\TCPDF\ServiceProvider::class);
+        class_alias(Elibyy\TCPDF\Facades\TCPDF::class, 'PDF');
+        
 /*
 |--------------------------------------------------------------------------
 | Return The Application

@@ -200,11 +200,14 @@ tr:hover .cut { opacity: 1; }
 		</header>
 		<article>
 			<h1>Recipient</h1>
+
+			<?php if(@$project['project_name']){ ?>
 			<h2>Expense </h2>
 			<address contenteditable>
 				
-				<p>Project / Block: {{ @$project['project_name']}}   / {{ @$block['block_name']}}</p>
+				<p>Project / Block: {{ @$project['project_name']}}  <? if(@$block['block_name']){  echo ' / '.$block['block_name'] } ?></p>
 			</address>
+		    <?php } ?>
 			<table class="meta">
 				<tr>
 					<th><span >Expense Voucher #</span></th>

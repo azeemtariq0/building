@@ -45,19 +45,10 @@ class ReceiptController extends Controller
             } else if ($row->status == 0) {
                 $switchClass = "";
             }
-            // $text = '<label class="switch switch-'.$switchClass.'">
-            // <input class="toggle-switch" data-id="'.$row->id.'" type="checkbox" '.$checked.'>
-            // <span class="switch-label" data-on="on" data-off="off"></span>
-            // </label>';
 
 
-                   $text = '<input class="toggle-switch right"  data-id="'.$row->id.'" '.($checked ? 'disabled' : '').' type="checkbox" '.$checked.'>';
+           $text = '<input class="toggle-switch right"  data-id="'.$row->id.'" '.($checked ? 'disabled' : '').' type="checkbox" '.$checked.'>';
 
-
-
-
-
-            
             return $text;
     })
         ->addColumn('action', function($row)
@@ -81,11 +72,9 @@ class ReceiptController extends Controller
                data-receipt_date ='".date('d-m-Y',strtotime($row->receipt_date))."'
                 class='btn btn-info btn-sm'><i class='fa fa-edit'></i></button>";
 
-                
-
-               $btn.= Form::open(['id'=>'delete-form','method' => 'DELETE','route' => ['receipts.destroy', $row->id],'style'=>'display:inline']);
-                 $btn.= "<button class='btn btn-danger btn-sm' type='submit' onclick='rowDetele(event)' ><i class='fa fa-trash'></i></button>";
-               $btn.= Form::close();
+            
+               $btn.= htmDeleteBtn('receipts.destroy',$row->id);
+   
 
            }
 

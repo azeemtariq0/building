@@ -39,13 +39,9 @@ class PermissionController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function($row){
 
-               $btn = "<a href='".route('permissions.show',$row->id)."' class='btn btn-success btn-sm'><span>Show</span></a>";
-
-               $btn.= "<a href='".route('permissions.edit',$row->id)."' class='btn btn-info btn-sm'> <span>Edit</span></a>";
-
-               $btn.= Form::open(['method' => 'DELETE','route' => ['permissions.destroy', $row->id],'style'=>'display:inline']);
-               $btn.= Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']);
-               $btn.= Form::close();
+               $btn = htmlBtn('permissions.show',$row->id,'warning','eye');
+               $btn.=htmlBtn('permissions.edit',$row->id);
+               $btn.= htmDeleteBtn('permissions.destroy',$row->id);
 
                return $btn;
            })

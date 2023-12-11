@@ -115,7 +115,7 @@
                                 <a class="dashboard" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();"><!-- warning - url used by default by ajax (if eneabled) -->
-                                    <i class="main-icon fa fa-power-off"></i> <span>Dashboard
+                                    <i class="main-icon fa fa-power-off"></i> <span>Logout
 
 
 

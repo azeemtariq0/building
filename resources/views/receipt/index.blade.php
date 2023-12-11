@@ -51,16 +51,17 @@
                   <table class="table table-striped table-bordered table-hover table-responsive data-table" width="100%">
                     <thead>
                       <tr>
-                        <th width="100">Receipt Code</th>
-                        <th width="100"> receipt Type </th>
-                        <th width="100"> receipt date </th>
-                        <th width="400px"> project </th>
-                        <th> block </th>
-                        <th> unit </th>
+                        <th width="8%">Receipt Code</th>
+                        <th width="12%"> Receipt Type </th>
+                        <th width="100"> 
+                        Receipt date </th>
+                        <th width="400px"> Project Name</th>
+                        <th> Block </th>
+                        <th> Unit </th>
                         <th>Description</th>
-                        <th> Receipt amount </th>
-                        <th> Approved ? </th> 
-                        <th width="20%">Action</th>
+                        <th width="8%">Amount </th>
+                        <th width="5%"> Approved ? </th> 
+                        <th width="10%">Action</th>
                       </tr>
                     </thead>
                     <tbody>

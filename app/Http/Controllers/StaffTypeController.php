@@ -29,11 +29,7 @@ class StaffTypeController extends Controller
             return $formatDate;
         })
             ->addColumn('action', function($row){
-               $btn= "<a href='#' class='btn btn-info btn-sm add_staff' data-id=".$row->id."> <span>Edit</span></a>";
-               $btn.= Form::open(['method' => 'DELETE','route' => ['staff_types.destroy', $row->id],'style'=>'display:inline']);
-               $btn.= Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']);
-               $btn.= Form::close();
-
+              $btn= htmDeleteBtn('staff_types.destroy',$row->id);
                return $btn;
            })
             ->rawColumns(['action'])

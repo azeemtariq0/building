@@ -31,10 +31,9 @@ class UnitOwnerController extends Controller
             return $formatDate;
         })
             ->addColumn('action', function($row){
-               $btn= "<a href='".route('unit_owners.edit',$row->id)."' class='btn btn-info btn-sm'> <span>Edit</span></a>";
-               $btn.= Form::open(['method' => 'DELETE','route' => ['unit_owners.destroy', $row->id],'style'=>'display:inline']);
-               $btn.= Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']);
-               $btn.= Form::close();
+               $btn = htmlBtn('unit_owners.show',$row->id,'warning','eye');
+               $btn.=htmlBtn('unit_owners.edit',$row->id);
+               $btn.= htmDeleteBtn('unit_owners.destroy',$row->id);
 
                return $btn;
            })

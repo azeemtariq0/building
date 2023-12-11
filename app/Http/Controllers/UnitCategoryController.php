@@ -30,11 +30,9 @@ class UnitCategoryController extends Controller
             return $formatDate;
         })
             ->addColumn('action', function($row){
-               $btn= "<a href='".route('unit_categories.edit',$row->id)."' class='btn btn-info btn-sm'> <span>Edit</span></a>";
-               $btn.= Form::open(['method' => 'DELETE','route' => ['unit_categories.destroy', $row->id],'style'=>'display:inline']);
-               $btn.= Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']);
-               $btn.= Form::close();
-
+               $btn = htmlBtn('unit_categories.show',$row->id,'warning','eye');
+               $btn.=htmlBtn('unit_categories.edit',$row->id);
+               $btn.= htmDeleteBtn('unit_categories.destroy',$row->id);
                return $btn;
            })
             ->rawColumns(['action'])
