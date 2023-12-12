@@ -58,9 +58,9 @@ class ProjectController extends Controller
         }
 
          $data['page_management'] = array(
-            'page_title' => 'Project',
+           'page_title' => 'Projects',
             'slug' => 'General Setup',
-            'title' => 'Manage Project',
+            'title' => 'Manage Projects',
             'add' => 'Add Project',
         );
 
@@ -74,12 +74,11 @@ class ProjectController extends Controller
      */
     public function create()
     {
-
-        // $permission = Permission::get();
-        // return view('permissions.create',compact('permission'));
         $data['page_management'] = array(
-            'page_title' => 'Create New Project',
-            'slug' => 'Create'
+             'page_title' => 'Add Project',
+            'slug' => 'General Setup',
+            'title' => 'Manage Project',
+            'add' => 'Add Project',
         );
         return view('projects.create', compact('data'));
     }
@@ -124,18 +123,15 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        $permission = Permission::find($id);
-        // $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
-        // ->where("role_has_permissions.role_id",$id)
-        // ->get();
-        
-
+        $project = Project::find($id);
         $data['page_management'] = array(
-            'page_title' => 'Show Permissions',
-            'slug' => 'Show'
+             'page_title' => 'View Project',
+            'slug' => 'General Setup',
+            'title' => 'View Project',
+            'add' => 'View Project',
         );
-
-        return view('permissions.show',compact('permission', 'data'));
+        $project['is_view'] = 1;
+        return view('projects.create',compact('project', 'data'));
     }
     
     /**
@@ -147,20 +143,13 @@ class ProjectController extends Controller
     public function edit($id)
     {
         $project = Project::find($id);
-        // $permission = Permission::get();
-        /*$rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
-        ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
-        ->all();
-        
-
-        return view('permissions.edit',compact('role','permission','rolePermissions'));*/
-
-
         $data['page_management'] = array(
-            'page_title' => 'Edit Project',
-            'slug' => 'Edit'
+             'page_title' => 'Edit Project',
+            'slug' => 'General Setup',
+            'title' => 'Edit Project',
+            'add' => 'Edit Project',
         );
-        return view('projects.edit',compact('project', 'data'));
+        return view('projects.create',compact('project', 'data'));
     }
     
     /**

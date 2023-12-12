@@ -76,13 +76,14 @@ class ReceiptTypeController extends Controller
     }
 
     public function show($id){
-        $permission = ReceiptType::find($id);
-        $data['page_management'] = array(
-            'page_title' => 'Show expense_categories',
-            'slug' => 'Show'
-        );
-
-        return view('receipt_types.show',compact('permission', 'data'));
+        $receiptType = ReceiptType::find($id);
+         $data['page_management'] = array(
+            'page_title' => 'View Receipt Type',
+            'slug' => 'General Setup',
+            'title' => 'View Receipt Type',
+        ); 
+        $receiptType['is_view'] =1; 
+        return view('receipt_types.create',compact('receiptType', 'data'));
     }
 
     public function edit($id){

@@ -46,10 +46,10 @@ class ExpenseController extends Controller
         }
 
         $data['page_management'] = array(
-            'page_title' => 'Expenses',
+            'page_title' => 'Expenses Voucher',
             'slug' => 'Transaction',
-            'title' => 'Manage Expenses',
-            'add' => 'Add Expense',
+            'title' => 'Manage Expenses Voucher',
+            'add' => 'Add Expense Voucher',
         );
         return view('expenses.index', compact('data'));
     }
@@ -59,9 +59,9 @@ class ExpenseController extends Controller
          $projects  =  Project::get();
 
          $data['page_management'] = array(
-            'page_title' => 'Add Expense',
+            'page_title' => 'Add Expense Voucher',
             'slug' => 'Transaction',
-            'title' => 'Add Expense',
+            'title' => 'Add Expense Voucher',
         );        
          return view('expenses.create', compact('data','projects' ,'exp_categories'));
     }
@@ -110,11 +110,11 @@ class ExpenseController extends Controller
 
         $expense = Expense::with('expense_category','expense_detail')->find($id);
         $data['page_management'] = array(
-            'page_title' => 'View Expense',
+            'page_title' => 'View Expense Voucher',
             'slug' => 'Transaction',
-            'title' => 'View Expense',
+            'title' => 'View Expense Voucher',
         ); 
-        $expense['view'] =1; 
+        $expense['is_view'] =1; 
         return view('expenses.create',compact('expense','exp_categories','projects' ,'data'));
     }
 
@@ -124,11 +124,12 @@ class ExpenseController extends Controller
 
         $expense = Expense::with('expense_category','expense_detail')->find($id);
          $data['page_management'] = array(
-            'page_title' => 'Edit Expense',
+            'page_title' => 'Edit Expense Voucher',
             'slug' => 'Transaction',
-            'title' => 'Edit Expense',
+            'title' => 'Edit Expense Voucher',
         ); 
          $expense['view'] =0; 
+
         return view('expenses.create',compact('expense','exp_categories','projects' ,'data'));
     }
 

@@ -72,13 +72,14 @@ class ExpenseCategoryController extends Controller
     }
 
     public function show($id){
-        $permission = ExpenseCategory::find($id);
-        $data['page_management'] = array(
-            'page_title' => 'Show expense_categories',
-            'slug' => 'Show'
-        );
-
-        return view('expense_categories.show',compact('permission', 'data'));
+        $expenseCategory = ExpenseCategory::find($id);
+         $data['page_management'] = array(
+            'page_title' => 'View Expense Categories',
+            'slug' => 'General Setup',
+            'title' => 'View Expense Categories',
+        ); 
+        $expenseCategory['is_view'] =1; 
+        return view('expense_categories.create',compact('expenseCategory', 'data'));
     }
 
     public function edit($id){

@@ -3,8 +3,8 @@
 
 @section('content')
 
+<?php  $isView = (@$expense->is_view==1) ? 'readonly' : '';   ?>
 @if (count($errors) > 0)
-<?php  $isView = (@$view==1) ? 'readonly' : '';   ?>
 <div id="content" class="padding-20">
 
     <div class="alert alert-danger margin-bottom-30">
@@ -78,7 +78,7 @@
                                     <div class="form-group">
                                             <label class="col-md-2">Date</label>
                                             <div class="col-md-9">
-                                           {!! Form::text('exp_date', null, array('placeholder' => 'dd-mm-yyyy','class' => 'form-control datepicker','required'=>true ,'autocomplete'=>'off')) !!}
+                                           {!! Form::text('exp_date', null, array('placeholder' => 'dd-mm-yyyy','class' => 'form-control datepicker','required'=>true ,'autocomplete'=>'off',$isView =>true)) !!}
                                         
                                           </div>
 
@@ -90,7 +90,7 @@
                                     <div class="form-group">
                                             <label class="col-md-3">Exp Category</label>
                                             <div class="col-md-8">
-                                            <select class=" form-control" required id="exp_category_id" name="exp_category_id">
+                                            <select class=" form-control" {{$isView}} required id="exp_category_id" name="exp_category_id">
                                                 <option></option>
                                                 
                                                 @foreach($exp_categories as $value)
@@ -107,7 +107,7 @@
                                     <div class="form-group">
                                             <label class="col-md-2">Payee</label>
                                             <div class="col-md-9">
-                                          {!! Form::text('payee', null, array('placeholder' => 'Payee Name..','class' => 'form-control' )) !!}
+                                          {!! Form::text('payee', null, array('placeholder' => 'Payee Name..','class' => 'form-control',$isView=>true )) !!}
                                         
                                           </div>
 
@@ -120,7 +120,7 @@
                                     <div class="form-group">
                                             <label class="col-md-3">Project Name</label>
                                             <div class="col-md-8">
-                                            <select class=" form-control"  name="project_id" id="projects">
+                                            <select class=" form-control"   {{$isView}} name="project_id" id="projects">
                                                 <option></option>
                                                 
                                                 @foreach($projects as $value)
@@ -137,7 +137,7 @@
                                     <div class="form-group">
                                             <label class="col-md-2">Block</label>
                                             <div class="col-md-9">
-                                           <select class=" form-control sl"   name="block_id"  id="block">
+                                           <select class=" form-control sl"  {{$isView}}  name="block_id"  id="block">
                                                 <option value=""></option>
                                             </select>
                                        
@@ -157,7 +157,7 @@
                                     <div class="form-group">
                                             <label class="col-md-3">Description</label>
                                             <div class="col-md-8">
-                                            {!! Form::textarea('remarks', null, array('placeholder' => 'Descreption','class' => 'form-control','rows'=>2)) !!}
+                                            {!! Form::textarea('remarks', null, array('placeholder' => 'Descreption','class' => 'form-control','rows'=>2,$isView =>true)) !!}
                                           </div>
                                         
 
@@ -190,11 +190,11 @@
                                     <tr> 
                                         <td class="count center"><?= $key+1 ?></td>
                                         <td>
-                                          <textarea rows="1" type="text" required class="form-control" name="description[]" autocomplete="off">{{ $value->description}}</textarea></td>
-                                           <td><input type="text"  class="form-control" name="reference_no[]" autocomplete="off" value="{{ $value->reference_no}}"></td>
-                                        <td><input type="text"  class="form-control datepicker" placeholder="dd-mm-yyyy" name="reference_date[]" value="{{ $value->reference_date}}" autocomplete="off"></td>
+                                          <textarea rows="1" type="text" {{$isView}} required class="form-control" name="description[]" autocomplete="off">{{ $value->description}}</textarea></td>
+                                           <td><input type="text"  {{$isView}}  class="form-control" name="reference_no[]" autocomplete="off" value="{{ $value->reference_no}}"></td>
+                                        <td><input type="text"  {{$isView}}   class="form-control datepicker" placeholder="dd-mm-yyyy" name="reference_date[]" value="{{ $value->reference_date}}" autocomplete="off"></td>
 
-                                        <td><input type="text" required class="form-control right" name="amount[]" value="{{ $value->amount}}" autocomplete="off"></td>
+                                        <td><input type="text" {{$isView}}  required class="form-control right" name="amount[]" value="{{ $value->amount}}" autocomplete="off"></td>
                                         <td class="center"><button type="button" class="btn btn-default btn-xs removeBtn"><i class="fa fa-trash"></i></button></td>
                                     </tr>
                                   <?php }} else{ ?>
@@ -211,7 +211,8 @@
                                 </tbody>
                               </table>
                           </div>
-                        
+                      
+                        @if($isView=="")
                         <div class="row">
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-info margin-top-30 pull-right">
@@ -219,6 +220,7 @@
                                </button>
                            </div>
                        </div>
+                       @endif
                     
                        {!! Form::close() !!}
                    </div>

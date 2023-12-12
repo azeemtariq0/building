@@ -2,7 +2,7 @@
 
 
 @section('content')
-
+<?php  $isView = (@$block->is_view==1) ? 'readonly' : '';   ?>
 @if (count($errors) > 0)
 <div id="content" class="padding-20">
 
@@ -26,7 +26,7 @@
             <!-- ------ -->
             <div class="panel panel-default">
                 <div class="panel-heading panel-heading-transparent">
-                    <strong>Add Block</strong>
+                    <strong>{{ $data['page_management']['title'] ?? "" }}</strong>
                 </div>
 
                 <div class="panel-body">
@@ -56,7 +56,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Project *</label>
-                                           <select class=" form-control" id="project_id"  required name="project_id">
+                                           <select class=" form-control" {{$isView}} id="project_id"  required name="project_id">
                                             <option value=""></option>
                                             @foreach($projects as $value)
                                                <option {{  $value->id== @$block->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
@@ -73,7 +73,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Block Name *</label>
-                                            {!! Form::text('block_name', null, array('placeholder' => 'Block Name','class' => 'form-control', 'id' => 'block_name')) !!}
+                                            {!! Form::text('block_name', null, array('placeholder' => 'Block Name','class' => 'form-control', 'id' => 'block_name',$isView=>true)) !!}
                                         </div>
 
                                     </div>
@@ -83,7 +83,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Description </label>
-                                            {!! Form::textarea('description', null, array('placeholder' => 'Descreption','class' => 'form-control','rows'=>2)) !!}
+                                            {!! Form::textarea('description', null, array('placeholder' => 'Descreption','class' => 'form-control','rows'=>2,$isView=>true)) !!}
                                         </div>
 
                                     </div>
@@ -94,6 +94,7 @@
 
 
                         </fieldset>
+                        @if($isView=="")
                         <div class="row">
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-info margin-top-30 pull-right">
@@ -101,6 +102,7 @@
                                </button>
                            </div>                       
                          </div>
+                          @endif
                        {!! Form::close() !!}
                    </div>
                </div>

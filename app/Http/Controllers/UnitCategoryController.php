@@ -76,13 +76,14 @@ class UnitCategoryController extends Controller
     }
 
     public function show($id){
-        $permission = UnitCategory::find($id);
-        $data['page_management'] = array(
-            'page_title' => 'Show expense_categories',
-            'slug' => 'Show'
-        );
-
-        return view('unit_categories.show',compact('permission', 'data'));
+         $unitCategory = UnitCategory::find($id);
+         $data['page_management'] = array(
+            'page_title' => 'View Unit Category',
+            'slug' => 'General Setup',
+            'title' => 'View Unit Category',
+        ); 
+         $unitCategory['is_view'] = 1;
+        return view('unit_categories.create',compact('unitCategory', 'data'));
     }
 
     public function edit($id){

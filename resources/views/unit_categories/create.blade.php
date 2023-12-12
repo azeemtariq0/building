@@ -2,7 +2,7 @@
 
 
 @section('content')
-
+<?php  $isView = (@$unitCategory->is_view==1) ? 'readonly' : '';   ?>
 @if (count($errors) > 0)
 <div id="content" class="padding-20">
 
@@ -57,7 +57,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Unit Category *</label>
-                                            {!! Form::text('unit_cat_name', null, array('placeholder' => 'Unit Cat Name','class' => 'form-control' , 'id' => 'unit_cat_name')) !!}
+                                            {!! Form::text('unit_cat_name', null, array('placeholder' => 'Unit Cat Name','class' => 'form-control' , 'id' => 'unit_cat_name',$isView=>1)) !!}
                                         </div>
 
                                     </div>
@@ -67,7 +67,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Monthly Amount *</label>
-                                            {!! Form::text('monthly_amount', null, array('placeholder' => 'Monthly Amount','class' => 'form-control', 'id' => 'monthly_amount')) !!}
+                                            {!! Form::text('monthly_amount', null, array('placeholder' => 'Monthly Amount','class' => 'form-control', 'id' => 'monthly_amount',$isView=>1)) !!}
                                         </div>
 
                                     </div>
@@ -77,7 +77,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Description </label>
-                                            {!! Form::textarea('description', null, array('placeholder' => 'Descreption','class' => 'form-control','rows'=>2)) !!}
+                                            {!! Form::textarea('description', null, array('placeholder' => 'Descreption','class' => 'form-control','rows'=>2,$isView=>1)) !!}
                                         </div>
 
                                     </div>
@@ -88,6 +88,7 @@
 
 
                         </fieldset>
+                        @if($isView=="")
                         <div class="row">
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-info margin-top-30 pull-right">
@@ -95,6 +96,7 @@
                                </button>
                            </div>
                        </div>
+                        @endif
                        {!! Form::close() !!}
                    </div>
                </div>

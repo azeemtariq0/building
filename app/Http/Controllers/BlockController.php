@@ -119,19 +119,14 @@ class BlockController extends Controller
      */
     public function show($id)
     {
-        $permission = Permission::find($id);
-        // $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
-        // ->where("role_has_permissions.role_id",$id)
-        // ->get();
-        
-
+        $block = block::find($id);
+        $projects  =  Project::get();
         $data['page_management'] = array(
-            'page_title' => 'Show Blocks',
-            'slug' => 'Show'
+            'page_title' => 'View Block',
+            'slug' => 'View'
         );
-
-        return view('blocks.show',compact('permission', 'data'));
-    }
+        $block['is_view'] =1; 
+        return view('blocks.create',compact('block','projects', 'data'));    }
     
     /**
      * Show the form for editing the specified resource.
@@ -142,9 +137,9 @@ class BlockController extends Controller
     public function edit($id)
     {
         $block = block::find($id);
-         $projects  =  Project::get();
+        $projects  =  Project::get();
         $data['page_management'] = array(
-            'page_title' => 'Edit Project',
+            'page_title' => 'Edit Block',
             'slug' => 'Edit'
         );
         return view('blocks.create',compact('block','projects', 'data'));

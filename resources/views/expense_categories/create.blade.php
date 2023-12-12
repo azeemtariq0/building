@@ -2,6 +2,7 @@
 
 
 @section('content')
+<?php  $isView = (@$expenseCategory->is_view==1) ? 'readonly' : '';   ?>
 
 @if (count($errors) > 0)
 <div id="content" class="padding-20">
@@ -15,7 +16,6 @@
        </ul>
    </div>
    @endif
-
 
    <div id="content" class="padding-20">
 
@@ -57,7 +57,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Expense Category  *</label>
-                                            {!! Form::text('exp_name', null, array('placeholder' => 'Exp Category Name','class' => 'form-control', 'id' => 'exp_name')) !!}
+                                            {!! Form::text('exp_name', null, array('placeholder' => 'Exp Category Name','class' => 'form-control', 'id' => 'exp_name',$isView=>1)) !!}
                                         </div>
 
                                     </div>
@@ -67,7 +67,7 @@
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
                                             <label>Description </label>
-                                            {!! Form::textarea('description', null, array('placeholder' => 'Descreption','class' => 'form-control','rows'=>2)) !!}
+                                            {!! Form::textarea('description', null, array('placeholder' => 'Descreption','class' => 'form-control','rows'=>2,$isView=>1)) !!}
                                         </div>
 
                                     </div>
@@ -78,6 +78,7 @@
 
 
                         </fieldset>
+                        @if($isView=="")
                         <div class="row">
                             <div class="col-md-2">
                                 <button type="submit" class="btn btn-3d btn-teal btn-sm btn-block margin-top-30">
@@ -85,6 +86,7 @@
                                </button>
                            </div>
                        </div>
+                       @endif
                        {!! Form::close() !!}
                    </div>
                </div>
