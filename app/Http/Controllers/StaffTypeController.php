@@ -29,7 +29,9 @@ class StaffTypeController extends Controller
             return $formatDate;
         })
             ->addColumn('action', function($row){
-              $btn= htmDeleteBtn('staff_types.destroy',$row->id);
+              $btn= "<a href='#' class='btn btn-warning btn-sm add_staff'  data-view=1 data-id=".$row->id."><i class='fa fa-eye'></i></a>";
+              $btn.= "<a href='#' class='btn btn-info btn-sm add_staff' data-view=0  data-id=".$row->id."><i class='fa fa-edit'></i></a>";
+              $btn.= htmDeleteBtn('staff_types.destroy',$row->id);
                return $btn;
            })
             ->rawColumns(['action'])
