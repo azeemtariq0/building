@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Permission;    
 use App\Models\Unit;
 use App\Models\Block;
 use App\Models\Project;
 use App\Models\UnitCategory;
+use App\Models\UnitOwner;
+use App\Models\UnitResident;
 use DB;
 use DataTables, Form;       
 
@@ -74,8 +76,8 @@ class UnitController extends Controller
             'unit_name' => 'required|unique:as_units,unit_name',
         ]);
 
-    
-        Unit::create(
+
+        $unit =  Unit::create(
             [
                 'unit_code' => $request->input('unit_code'),
                 'unit_name' => $request->input('unit_name'),
@@ -88,33 +90,45 @@ class UnitController extends Controller
             ]
         );
 
-        return redirect()->route('units.index')
-        ->with('success','Unit created successfully');
-    }
-
-    public function show($id){
-        $permission = UnitCategory::find($id);
-        $data['page_management'] = array(
-            'page_title' => 'Show expense_categories',
-            'slug' => 'Show'
+        $unitOwner = UnitOwner::create(
+            [
+                'unit_id' => $unit->id
+            ]
         );
 
-        return view('units.show',compact('permission', 'data'));
+        $unitResidence = UnitResident::create(
+            [
+                'unit_id' => $unit->id
+            ]
+        );
+
+
+        return redirect()->route('units.index')
+            ->with('success', 'Unit created successfully');
     }
 
-    public function edit($id){
+    public function edit($id) {
         $unit = Unit::find($id);
-        $unit['ob_date'] =  date('d-m-Y',strtotime($unit['ob_date']));
         $blocks  =  Block::get();
         $unit_categories  =  UnitCategory::get();
         $projects  =  Project::get();
 
-         $data['page_management'] = array(
-            'page_title' => 'Edit Unit',
+        $unit_owner = UnitOwner::where('unit_id', $id)->get()->first();
+
+        $units = Unit::get();
+
+        $data['page_management'] = array(
+            'page_title' => 'Edit Unit Owner',
             'slug' => 'General Setup',
-            'title' => 'Edit Unit',
-        ); 
-        return view('units.create',compact('unit', 'data','blocks','projects','unit_categories'));
+            'title' => 'Edit Unit Owner',
+        );
+
+        //  $data['page_management'] = array(
+        //     'page_title' => 'Edit Unit',
+        //     'slug' => 'General Setup',
+        //     'title' => 'Edit Unit',
+        // ); 
+        return view('units.create', compact('unit', 'data', 'blocks', 'projects', 'unit_categories', 'units', 'unit_owner'));
     }
 
     public function update(Request $request, $id){
@@ -135,6 +149,32 @@ class UnitController extends Controller
         $unitCategory->save();
         return redirect()->route('units.index')
         ->with('success','Unit updated successfully');
+    }
+
+    public function unitOwnerUpate(Request $request){
+
+
+        $this->validate($request, [
+            'owner_name' => 'required',
+        ]);
+        
+
+        $unitOwner = UnitOwner::where('unit_id',$request->unit_id)->get()->first();
+        $unitOwner->owner_name = $request->input('owner_name');
+        $unitOwner->owner_cnic = $request->input('owner_cnic');
+        $unitOwner->owner_email = $request->input('owner_email');
+        $unitOwner->identity_type = $request->input('identity_type');
+        $unitOwner->mobile_no = $request->input('mobile_no');
+        $unitOwner->ptcl_no = $request->input('ptcl_no');
+        // $unitOwner->owner_since = $request->input('owner_since');
+        $unitOwner->current_tenant = $request->input('current_tenant');
+        $unitOwner->owner_address = $request->input('owner_address');
+
+
+         $unitOwner =  $unitOwner->save();
+         echo json_encode($unitOwner);
+        // return redirect()->route('unit_owners.index')
+        // ->with('success','Unit Owner updated successfully');
     }
 
     public function destroy($id){

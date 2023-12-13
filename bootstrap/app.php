@@ -42,7 +42,7 @@ $app->singleton(
 );
 
 // $app->register(Elibyy\TCPDF\ServiceProvider::class);
-        class_alias(Elibyy\TCPDF\Facades\TCPDF::class, 'PDF');
+        // class_alias(Elibyy\TCPDF\Facades\TCPDF::class, 'PDF');
         
 /*
 |--------------------------------------------------------------------------
