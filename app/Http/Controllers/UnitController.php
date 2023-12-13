@@ -62,13 +62,14 @@ class UnitController extends Controller
         $blocks  =  Block::get();
         $unit_categories  =  UnitCategory::get();
         $projects  =  Project::get();
+        $units = Unit::get();
 
          $data['page_management'] = array(
             'page_title' => 'Add Unit',
             'slug' => 'General Setup',
             'title' => 'Add Unit',
         );        
-         return view('units.create', compact('data','blocks','projects','unit_categories'));
+         return view('units.create', compact('data','blocks','projects','unit_categories','units'));
     }
 
     public function store(Request $request){
@@ -114,6 +115,8 @@ class UnitController extends Controller
         $projects  =  Project::get();
 
         $unit_owner = UnitOwner::where('unit_id', $id)->get()->first();
+        $unit_resident = UnitResident::where('unit_id', $id)->get()->first();
+
 
         $units = Unit::get();
 
@@ -128,7 +131,7 @@ class UnitController extends Controller
         //     'slug' => 'General Setup',
         //     'title' => 'Edit Unit',
         // ); 
-        return view('units.create', compact('unit', 'data', 'blocks', 'projects', 'unit_categories', 'units', 'unit_owner'));
+        return view('units.create', compact('unit', 'data', 'blocks', 'projects', 'unit_categories', 'units', 'unit_owner','unit_resident'));
     }
 
     public function update(Request $request, $id){
@@ -166,7 +169,7 @@ class UnitController extends Controller
         $unitOwner->identity_type = $request->input('identity_type');
         $unitOwner->mobile_no = $request->input('mobile_no');
         $unitOwner->ptcl_no = $request->input('ptcl_no');
-        // $unitOwner->owner_since = $request->input('owner_since');
+        $unitOwner->owner_since = date('Y-m-d',strtotime($request->input('owner_since')));
         $unitOwner->current_tenant = $request->input('current_tenant');
         $unitOwner->owner_address = $request->input('owner_address');
 
@@ -175,6 +178,24 @@ class UnitController extends Controller
          echo json_encode($unitOwner);
         // return redirect()->route('unit_owners.index')
         // ->with('success','Unit Owner updated successfully');
+    }
+
+    public function residenyUpdate(Request $request)
+
+    {
+
+        $resident = UnitResident::where('unit_id',$request->unit_id)->get()->first();
+        $resident->resident_name = $request->input('resident_name');
+        $resident->resident_cnic = $request->input('resident_cnic');
+        $resident->resident_mobile = $request->input('resident_mobile');
+        $resident->resident_email = $request->input('resident_email');
+        $resident->residing_since = date('Y-m-d',strtotime($request->input('residing_since')));
+        
+
+
+         $resident =  $resident->save();
+         echo json_encode($resident);
+        
     }
 
     public function destroy($id){
