@@ -91,10 +91,10 @@
                                     <th>Unit Category </th>
                                     <th>Project </th>
                                     <th>Block </th>
-                                    <th>Residential Name </th>
-                                    <th>Outstanding</th>
-                                    <th>Last Amount</th>
-                                    <th>Last Date</th>
+                                    <th>Resident Name </th>
+                                    <th width="8%">Outstanding</th>
+                                    <th width="10%">Last Amount</th>
+                                    <th width="10%">Last Date</th>
                                     <th width="10%">Action</th>
                                   </tr>
                                 </thead>
