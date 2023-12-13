@@ -76,7 +76,7 @@
                                       <li class="{{ \Request::segment(1) == 'units' ? 'active' : '' }}"><a href="{{ route('units.index') }}">Units</a></li>
                                       @endcan
                                       @can('unit-owner-list') 
-                                      <li class="{{ \Request::segment(1) == 'unit_owners' ? 'active' : '' }}"><a href="{{ route('unit_owners.index') }}">unit Owners</a></li>
+                                      <li class="{{ \Request::segment(1) == 'unit_owners' ? 'active' : '' }}"><a href="{{ route('unit_owners.index') }}">Unit Owners</a></li>
                                       @endcan
 
                                      @can('expense-category-list')

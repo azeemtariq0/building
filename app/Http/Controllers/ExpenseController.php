@@ -33,10 +33,16 @@ class ExpenseController extends Controller
                return $formatDate;
             })
             ->addColumn('action', function($row){
-               $btn= "<a target='_blank' href='".url('print-expense/'.$row->id)."' class='btn btn-default btn-sm'><i class='fa fa-print'></i></a>";
-               $btn.= htmlBtn('expenses.show',$row->id,'warning','eye');
-               $btn.=htmlBtn('expenses.edit',$row->id);
-               $btn.= htmDeleteBtn('expenses.destroy',$row->id);
+               $btn= "<a target='_blank' title='Expense Voucher Print' href='".url('print-expense/'.$row->id)."' class='btn btn-default btn-sm'><i class='fa fa-print'></i></a>";
+                $btn.= htmlBtn('expenses.show',$row->id,'warning','eye');
+
+               if($row->status==0){
+                        $btn.= "<a title='Freez Voucher' href='javascript:void(0)' onclick='freezVoucher(".$row->id.")' class='btn btn-success btn-sm'><i class='fa fa-thumbs-up'></i></a>";
+                        $btn.=htmlBtn('expenses.edit',$row->id);
+                        $btn.= htmDeleteBtn('expenses.destroy',$row->id);
+               }
+             
+             
 
 
                return $btn;
@@ -178,9 +184,19 @@ class ExpenseController extends Controller
         return redirect()->route('expenses.index')
         ->with('success','Expense deleted successfully');
     }
-       public function printView($id){
 
 
+    public function feezExpenseVoucher($id){
+        $expense = Expense::where('id', $id)->first();
+        $expense->updated_by =  auth()->user()->id;
+        $expense->updated_at =  date('Y-m-d H:i:s');
+        $expense->status =  1;
+        $expense->update();
+        return response()->json(['msg'=>'Expense Voucher Freez successfully!']);
+        
+    }
+
+    public function printView($id){
      $data = Expense::with('project', 'block','expense_category','expense_detail')->where('id',$id)->first();
         return view('expenses.print', $data);
 

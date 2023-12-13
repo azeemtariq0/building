@@ -103,12 +103,12 @@ $$
 DELIMITER ;
 
 
-
-
-
 ALTER TABLE as_unit_owners  
   ADD COLUMN `is_tenant` TINYINT(2) DEFAULT 0 NULL AFTER `owner_since`;\
 
 ALTER TABLE as_expense_detail
   ADD COLUMN `reference_no` VARCHAR(255) NULL AFTER `description`,
   ADD COLUMN `reference_date` VARCHAR(255) NULL AFTER `reference_no`;
+
+ALTER TABLE as_expenses
+  ADD COLUMN status TINYINT(2) DEFAULT 0 NULL AFTER remarks;

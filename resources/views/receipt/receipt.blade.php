@@ -60,7 +60,7 @@ td { border-color: #DDD; }
 html { font: 16px/1 'Open Sans', sans-serif; overflow: auto; padding: 0.5in; }
 html { background: #999; cursor: default; }
 
-body { box-sizing: border-box; height: 6in; margin: 0 auto; overflow: hidden; padding: 0.5in; width: 8.5in; }
+body { box-sizing: border-box; height: 6.4in; margin: 0 auto; overflow: hidden; padding: 0.5in; width: 8.5in; }
 body { background: #FFF; border-radius: 1px; box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5); }
 
 /* header */
@@ -216,9 +216,13 @@ tr:hover .cut { opacity: 1; }
 					<th><span >Date</span></th>
 					<td><span >{{ date('d M Y',strtotime($receipt_date))}}</span></td>
 				</tr>
-				<tr>
+				<!-- <tr>
 					<th><span >Amount Due</span></th>
 					<td><span id="prefix" >Rs.</span>{{  $amount + $unit['out_standing_amount']}}<span></span></td>
+				</tr> -->
+				<tr>
+					<th><span >Receipt Type</span></th>
+					<td><span >{{ $receipt_type['receipt_name'] }}</span></td>
 				</tr>
 			</table>
 			<table class="inventory">
@@ -239,8 +243,12 @@ tr:hover .cut { opacity: 1; }
 						<td ><span >{{ $unit_category['monthly_amount']}}</span></td>
 						<td><span>{{ $amount}}</span></td>
 					</tr>
+					<tr>
+						<th colspan="5">Amount in Words : <span><?= Number2Words($amount)  ?> Only</span> </th>
+					</tr>
 				</tbody>
 			</table>
+
 			<table class="balance">
 				<tr>
 					<th><span >Balance Amount :</span></th>
@@ -248,20 +256,16 @@ tr:hover .cut { opacity: 1; }
 				</tr>
 			</table>
 		</article>
-		<aside>
-			<!-- <h1><span >Additional Notes</span></h1>
+		<aside style="margin-bottom: 10px">
+			<h1><span  >Notes</span></h1>
 			<div >
-				<p>A finance charge of 1.5% will be made on unpaid balances after 30 days.</p>
-			</div> -->
+				<p>Maintenance Charges is due at the start of each Month. Therefore it is an advance amount.</p>
+			</div>
 		</aside>
         <button border class="btn btn-success" id="printPageButton" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
          <button border class="btn btn-default" id="printPageButton" onclick="window.close()"><i class="fa fa-print"></i> Close</button>
 
-		<script type="text/javascript">
-			
-
-		
-
-		</script>
+	
 	</body>
+	    <script type="text/javascript" src="{{ asset('assets/js/custom.js') }}"></script>
 </html>

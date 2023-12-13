@@ -62,8 +62,15 @@
           @section('pagelevelscript')
           <script type="text/javascript">
             $(function () {
+               reloadTbl();
+            });
 
-              var table = $('.data-table').DataTable({
+
+            function reloadTbl(load=false){
+              if(load){
+                $('.data-table').DataTable().destroy();
+              }
+               var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('expenses.index') }}",
@@ -76,6 +83,35 @@
                 ]
               });
 
+             }
+
+
+
+
+      function freezVoucher(id) {
+         var expense_id = id;
+             swal({
+             title: "Are you sure?",
+             text: "Do You Want to Freez This Voucher!",
+             icon: "info",
+             buttons: true,
+             dangerMode: false,
+           })
+          .then((willDelete) => {
+              
+            $.ajax({
+                  url: '<?= env('APP_BASEURL') ?>/freez-voucher/'+expense_id,
+                  type: 'GET',
+                  dataType: 'json',
+                  success: function(data) {
+                     toastr.success(data.msg);
+                      reloadTbl(true);
+                  }
+              });
+
             });
+     }
+
+
           </script>
           @endsection
