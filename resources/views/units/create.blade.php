@@ -188,6 +188,8 @@
                     </div>
                 </div>
             </div>
+            @if(Route::currentRouteName() == 'units.edit')
+
             <div class="tab-pane    " id="3a">
 
                 <div class="row">
@@ -239,23 +241,19 @@
 
                                             <div class="row">
                                                 <div class="form-group">
-
-                                                    <div class="col-md-3 " style="padding-right: 0px">
+                                                    <div class="col-md-3" style="padding-right: 0px">
                                                         <label>Identity Type *</label>
-                                                        <select class=" form-control" required name="identity_type" id="identity_type">
-                                                            <option {{ $value->id== $unit_owner->identity_type ? 'selected' : '' }} value="cnic">CNIC</option>
-                                                            <option {{ $value->id== $unit_owner->identity_type ? 'selected' : '' }} value="nicop">NICOP</option>
-
-                                                            <option {{ $value->id== $unit_owner->identity_type ? 'selected' : '' }} value="passport">Passport</option>
+                                                        <select class="form-control" required name="identity_type" id="identity_type">
+                                                            <option value="cnic" {{ $unit_owner->identity_type == 'cnic' ? 'selected' : '' }}>CNIC</option>
+                                                            <option value="nicop" {{ $unit_owner->identity_type == 'nicop' ? 'selected' : '' }}>NICOP</option>
+                                                            <option value="passport" {{ $unit_owner->identity_type == 'passport' ? 'selected' : '' }}>Passport</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-md-7">
                                                         <label>CNIC / NICOP / Passport *</label>
-                                                        {!! Form::text('owner_cnic', null, array('placeholder' => 'Identity','class' => 'form-control' ,'id' => 'owner_cnic','required'=>true,'autocomplete'=>'off')) !!}
+                                                        {!! Form::text('owner_cnic', $unit_owner->owner_cnic ?? null, array('placeholder' => 'Identity','class' => 'form-control' ,'id' => 'owner_cnic','required'=>true,'autocomplete'=>'off')) !!}
                                                     </div>
-
                                                 </div>
-
                                             </div>
 
 
@@ -335,7 +333,7 @@
                                                 <div class="form-group">
                                                     <div class="col-md-10 col-sm-10">
                                                         <label>Address </label>
-                                                        {!! Form::textarea('owner_address', null, array('placeholder' => 'Address','class' => 'form-control','rows'=>2)) !!}
+                                                        {!! Form::textarea('owner_address',$unit_owner['owner_address'] ?? null, array('placeholder' => 'Address','class' => 'form-control','rows'=>2)) !!}
                                                     </div>
 
                                                 </div>
@@ -405,7 +403,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-10 col-sm-10">
                                                     <label>Resident Name *</label>
-                                                    {!! Form::text('resident_name', null, array('placeholder' => 'Resident Name','class' => 'form-control' ,'id' => 'resident_name')) !!}
+                                                    {!! Form::text('resident_name',$unit_resident['resident_name'] ?? null, array('placeholder' => 'Resident Name','class' => 'form-control' ,'id' => 'resident_name')) !!}
                                                 </div>
 
                                             </div>
@@ -420,7 +418,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-10 col-sm-10">
                                                     <label>Resident CNIC *</label>
-                                                    {!! Form::text('resident_cnic', null, array('placeholder' => 'Cnic','class' => 'form-control', 'id' => 'resident_cnic')) !!}
+                                                    {!! Form::text('resident_cnic', $unit_resident['resident_cnic'] ?? null, array('placeholder' => 'Cnic','class' => 'form-control', 'id' => 'resident_cnic')) !!}
                                                 </div>
 
                                             </div>
@@ -430,7 +428,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-10 col-sm-10">
                                                     <label>Mobile no *</label>
-                                                    {!! Form::text('resident_mobile', null, array('placeholder' => 'Mobile no','class' => 'form-control', 'id' => 'resident_mobile')) !!}
+                                                    {!! Form::text('resident_mobile', $unit_resident['resident_mobile'] ?? null, array('placeholder' => 'Mobile no','class' => 'form-control', 'id' => 'resident_mobile')) !!}
                                                 </div>
 
                                             </div>
@@ -440,7 +438,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-10 col-sm-10">
                                                     <label>Email *</label>
-                                                    {!! Form::text('resident_email', null, array('placeholder' => 'Owner Email','class' => 'form-control', 'id' => 'resident_email')) !!}
+                                                    {!! Form::text('resident_email',$unit_resident['resident_email'] ?? null, array('placeholder' => 'Owner Email','class' => 'form-control', 'id' => 'resident_email')) !!}
                                                 </div>
 
                                             </div>
@@ -452,7 +450,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-10 col-sm-10">
                                                     <label>Residing Since *</label>
-                                                    {!! Form::date('residing_since', null, array('placeholder' => 'Residing Since','class' => 'form-control', 'id' => 'residing_since')) !!}
+                                                    {!! Form::date('residing_since',$unit_resident['residing_since'] ?? null , array('placeholder' => 'Residing Since','class' => 'form-control', 'id' => 'residing_since')) !!}
                                                 </div>
 
                                             </div>
@@ -484,6 +482,9 @@
             </div>
 
 
+            @endif
+
+
         </div>
     </div>
 </div>
@@ -501,6 +502,28 @@
             success: function(response) {
                 // Handle success response
                 toastr.success('unit owner updated Succesfully');;
+            },
+            error: function(error) {
+                // Handle error
+                toastr.error('something wrong');;
+            }
+        });
+    });
+</script>
+<script>
+    $('#resident').on('submit', function(e) {
+        e.preventDefault();
+
+        var formData = $(this).serialize();
+
+        // Your AJAX request
+        $.ajax({
+            type: "POST",
+            url: '<?= env('APP_BASEURL') ?>/resideny-update',
+            data: formData,
+            success: function(response) {
+                // Handle success response
+                toastr.success('resident owner updated Succesfully');;
             },
             error: function(error) {
                 // Handle error

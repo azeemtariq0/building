@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('products', ProductController::class);
     Route::resource('unit_owners', UnitOwnerController::class);
     Route::post('unit_owners_update', [UnitController::class, 'unitOwnerUpate']);
+    Route::post('resideny-update', [UnitController::class, 'residenyUpdate']);
     Route::resource('expenses', ExpenseController::class);
 
     Route::post('add_or_update_staff_type', [StaffTypeController::class, 'staffTypeSaveOrUpdate']);
