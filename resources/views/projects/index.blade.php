@@ -79,7 +79,7 @@
                 serverSide: true,
                 ajax: "{{ route('projects.index') }}",
                 columns: [
-                {data: 'id', id: 'name'},
+                {data: 'project_code', project_code: 'name'},
                 {data: 'project_name', project_name: 'name'},
                 {data: 'description', description: 'name'},
                 {data: 'action', description: 'action', orderable: false, searchable: false},
