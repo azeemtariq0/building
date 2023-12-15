@@ -108,6 +108,30 @@ class UnitController extends Controller
             ->with('success', 'Unit created successfully');
     }
 
+    public function show($id) {
+        $unit = Unit::find($id);
+        $blocks  =  Block::get();
+        $unit_categories  =  UnitCategory::get();
+        $projects  =  Project::get();
+
+        $unit_owner = UnitOwner::where('unit_id', $id)->get()->first();
+        $unit_resident = UnitResident::where('unit_id', $id)->get()->first();
+
+
+        $units = Unit::get();
+
+        $data['page_management'] = array(
+            'page_title' => 'View Unit Owner',
+            'slug' => 'General Setup',
+            'title' => 'View Unit ',
+            'title1' => 'View Unit Owner',
+            'title2' => 'View Resident',
+        );
+
+        $unit['is_view'] =1;
+
+        return view('units.create', compact('unit', 'data', 'blocks', 'projects', 'unit_categories', 'units', 'unit_owner','unit_resident'));
+    }  
     public function edit($id) {
         $unit = Unit::find($id);
         $blocks  =  Block::get();
@@ -123,16 +147,15 @@ class UnitController extends Controller
         $data['page_management'] = array(
             'page_title' => 'Edit Unit Owner',
             'slug' => 'General Setup',
-            'title' => 'Edit Unit Owner',
+            'title' => 'Edit Unit ',
+            'title1' => 'Edit Unit Owner',
+            'title2' => 'Edit Resident',
         );
 
-        //  $data['page_management'] = array(
-        //     'page_title' => 'Edit Unit',
-        //     'slug' => 'General Setup',
-        //     'title' => 'Edit Unit',
-        // ); 
+
         return view('units.create', compact('unit', 'data', 'blocks', 'projects', 'unit_categories', 'units', 'unit_owner','unit_resident'));
     }
+
 
     public function update(Request $request, $id){
         $this->validate($request, [

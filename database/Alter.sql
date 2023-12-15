@@ -112,3 +112,18 @@ ALTER TABLE as_expense_detail
 
 ALTER TABLE as_expenses
   ADD COLUMN status TINYINT(2) DEFAULT 0 NULL AFTER remarks;
+
+CREATE TABLE `as_unit_resident` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `unit_id` INT(11) NOT NULL,
+  `resident_code` CHAR(40),
+  `resident_name` VARCHAR(255),
+  `resident_mobile` VARCHAR(255),
+  `resident_email` VARCHAR(255),
+  `residing_since` VARCHAR(255),
+  `created_at` TIMESTAMP,
+  `created_by` VARCHAR(255),
+  `updated_at` DATETIME ON UPDATE CURRENT_TIMESTAMP,
+  `updated_by` VARCHAR(255),
+  PRIMARY KEY (`id`)
+);

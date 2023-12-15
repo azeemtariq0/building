@@ -2,7 +2,7 @@
 
 
 @section('content')
-
+<?php  $isView = (@$unit->is_view==1) ? 'readonly' : '';   ?>
 @if (count($errors) > 0)
 <div id="content" class="padding-20">
 
@@ -18,26 +18,29 @@
 
 
     <div id="content" class="padding-20">
-        <ul class="nav nav-pills">
+
+        <div class="tab-content clearfix">
+
+                    <ul class="nav nav-pills ">
             <li class="active">
-                @if(Route::currentRouteName() == 'units.edit')
-                <a href="#1a" data-toggle="tab">Unit Edit</a>
+                @if(Route::currentRouteName() != 'units.create')
+                <a href="#1a" data-toggle="tab">Unit</a>
                 @else
                 <a href="#1a" data-toggle="tab">Add unit</a>
                 @endif
 
             </li>
             </li>
-            @if(Route::currentRouteName() == 'units.edit')
+            @if(Route::currentRouteName() != 'units.create')
 
-            <li><a href="#3a" data-toggle="tab">Unit owner Edit</a>
+            <li><a href="#3a" data-toggle="tab">Unit Owner </a>
             </li>
             <li><a href="#4a" data-toggle="tab">Resident</a>
             </li>
             @endif
 
         </ul>
-        <div class="tab-content clearfix">
+
             <div class="tab-pane active" id="1a">
 
                 <div class="row">
@@ -78,7 +81,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-10 col-sm-10">
                                                     <label>Unit Name *</label>
-                                                    {!! Form::text('unit_name', null, array('placeholder' => 'Unit Name','class' => 'form-control' , 'id' => 'unit_name')) !!}
+                                                    {!! Form::text('unit_name', null, array('placeholder' => 'Unit Name','class' => 'form-control' , 'id' => 'unit_name',$isView=>true)) !!}
                                                 </div>
 
                                             </div>
@@ -88,7 +91,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-10 col-sm-10">
                                                     <label>Project *</label>
-                                                    <select id="project" class=" form-control" required name="project_id">
+                                                    <select id="project" class=" form-control" {{$isView}} required name="project_id">
                                                         <option value=""></option>
                                                         @foreach($projects as $value)
                                                         <option id="projects" {{  $value->id== @$unit->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
@@ -108,7 +111,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-10 col-sm-10">
                                                     <label>Block *</label>
-                                                    <select id="block" class=" form-control" required name="block_id">
+                                                    <select id="block" class=" form-control" required name="block_id" {{$isView}}>
                                                         <option value="">Select block</option>
 
                                                     </select>
@@ -120,7 +123,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-10 col-sm-10">
                                                     <label>Unit Category *</label>
-                                                    <select class=" form-control" required name="unit_category_id">
+                                                    <select class=" form-control" required name="unit_category_id" {{$isView}}>
                                                         <option></option>
                                                         @foreach($unit_categories as $value)
                                                         <option {{  $value->id== @$unit->unit_category_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->unit_cat_name}}</option>
@@ -139,7 +142,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-10 col-sm-10">
                                                     <label>Unit Size *</label>
-                                                    {!! Form::number('unit_size', null, array('placeholder' => '','class' => 'form-control' , 'required'=>'true','type'=>'number')) !!}
+                                                    {!! Form::number('unit_size', null, array('placeholder' => '','class' => 'form-control' , 'required'=>'true','type'=>'number',$isView=>true)) !!}
                                                 </div>
 
                                             </div>
@@ -161,7 +164,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-10 col-sm-10">
                                                     <label>OB Date</label>
-                                                    {!! Form::text('ob_date', null, array('placeholder' => 'dd-mm-yyyy','class' => 'form-control datepicker')) !!}
+                                                    {!! Form::text('ob_date', null, array('placeholder' => 'dd-mm-yyyy','class' => 'form-control datepicker',$isView=>true)) !!}
                                                 </div>
 
                                             </div>
@@ -174,13 +177,19 @@
 
 
                                 </fieldset>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <button type="submit" class="btn btn-info margin-top-30 pull-right">
-                                            <i class="fa fa-check"></i> Save
-                                        </button>
-                                    </div>
-                                </div>
+
+
+
+                                           @if($isView=="")
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <button type="submit" class="btn btn-info margin-top-30 pull-right">
+                                                           <i class="fa fa-check"></i> Save
+                                                       </button>
+                                                   </div>
+                                               </div>
+                                                @endif
+                                           
                                 {!! Form::close() !!}
                             </div>
                         </div>
@@ -188,7 +197,7 @@
                     </div>
                 </div>
             </div>
-            @if(Route::currentRouteName() == 'units.edit')
+            @if(Route::currentRouteName() != 'units.create')
 
             <div class="tab-pane    " id="3a">
 
@@ -199,7 +208,7 @@
                         <!-- ------ -->
                         <div class="panel panel-default">
                             <div class="panel-heading panel-heading-transparent">
-                                <strong>{{ $data['page_management']['title'] ?? "" }}</strong>
+                                <strong>{{ $data['page_management']['title1'] ?? "" }}</strong>
                             </div>
 
                             <div class="panel-body">
@@ -214,7 +223,7 @@
                                                 <div class="form-group">
                                                     <div class="col-md-10 col-sm-10">
                                                         <label>Unit *</label>
-                                                        <select class=" form-control" required name="unit_id" id="unit_id">
+                                                        <select class=" form-control" readonly required name="unit_id" id="unit_id">
                                                             <option value=""></option>
                                                             @foreach($units as $value)
                                                             <option {{  $value->id== @$unit_owner->unit_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->unit_name}}</option>
@@ -232,7 +241,7 @@
                                                 <div class="form-group">
                                                     <div class="col-md-10 col-sm-10">
                                                         <label>Unit Owner Name *</label>
-                                                        {!! Form::text('owner_name', $unit_owner['owner_name'] ?? null, array('placeholder' => 'Owner Name', 'class' => 'form-control', 'id' => 'owner_name', 'autocomplete' => 'off')) !!}
+                                                        {!! Form::text('owner_name', $unit_owner['owner_name'] ?? null, array('placeholder' => 'Owner Name', 'class' => 'form-control', 'id' => 'owner_name', 'autocomplete' => 'off',$isView=>true)) !!}
                                                     </div>
                                                 </div>
                                             </div>
@@ -243,15 +252,15 @@
                                                 <div class="form-group">
                                                     <div class="col-md-3" style="padding-right: 0px">
                                                         <label>Identity Type *</label>
-                                                        <select class="form-control" required name="identity_type" id="identity_type">
-                                                            <option value="cnic" {{ $unit_owner->identity_type == 'cnic' ? 'selected' : '' }}>CNIC</option>
-                                                            <option value="nicop" {{ $unit_owner->identity_type == 'nicop' ? 'selected' : '' }}>NICOP</option>
-                                                            <option value="passport" {{ $unit_owner->identity_type == 'passport' ? 'selected' : '' }}>Passport</option>
+                                                        <select class="form-control" required name="identity_type" id="identity_type" {{$isView}}>
+                                                            <option value="cnic" {{ @$unit_owner->identity_type == 'cnic' ? 'selected' : '' }}>CNIC</option>
+                                                            <option value="nicop" {{ @$unit_owner->identity_type == 'nicop' ? 'selected' : '' }}>NICOP</option>
+                                                            <option value="passport" {{ @$unit_owner->identity_type == 'passport' ? 'selected' : '' }}>Passport</option>
                                                         </select>
                                                     </div>
                                                     <div class="col-md-7">
                                                         <label>CNIC / NICOP / Passport *</label>
-                                                        {!! Form::text('owner_cnic', $unit_owner->owner_cnic ?? null, array('placeholder' => 'Identity','class' => 'form-control' ,'id' => 'owner_cnic','required'=>true,'autocomplete'=>'off')) !!}
+                                                        {!! Form::text('owner_cnic', $unit_owner->owner_cnic ?? null, array('placeholder' => 'Identity','class' => 'form-control' ,'id' => 'owner_cnic','required'=>true,'autocomplete'=>'off',$isView=>true)) !!}
                                                     </div>
                                                 </div>
                                             </div>
@@ -261,7 +270,7 @@
                                                 <div class="form-group">
                                                     <div class="col-md-10 col-sm-10">
                                                         <label>Mobile no *</label>
-                                                        {!! Form::text('mobile_no',$unit_owner['mobile_no'] ?? null, array('placeholder' => 'Mobile no','class' => 'form-control', 'id' => 'mobile_no','autocomplete'=>'off')) !!}
+                                                        {!! Form::text('mobile_no',$unit_owner['mobile_no'] ?? null, array('placeholder' => 'Mobile no','class' => 'form-control', 'id' => 'mobile_no','autocomplete'=>'off',$isView=>true)) !!}
                                                     </div>
 
                                                 </div>
@@ -274,7 +283,7 @@
                                                 <div class="form-group">
                                                     <div class="col-md-10 col-sm-10">
                                                         <label>PTCL no</label>
-                                                        {!! Form::text('ptcl_no',$unit_owner['ptcl_no'] ?? null, array('placeholder' => 'PTCL no','class' => 'form-control' , 'id' => 'ptcl_no','autocomplete'=>'off')) !!}
+                                                        {!! Form::text('ptcl_no',$unit_owner['ptcl_no'] ?? null, array('placeholder' => 'PTCL no','class' => 'form-control' , 'id' => 'ptcl_no','autocomplete'=>'off',$isView=>true)) !!}
                                                     </div>
 
                                                 </div>
@@ -288,7 +297,7 @@
                                                 <div class="form-group">
                                                     <div class="col-md-10 col-sm-10">
                                                         <label>Email</label>
-                                                        {!! Form::email('owner_email',$unit_owner['owner_email'] ?? null, array('placeholder' => 'Owner Email','class' => 'form-control', 'id' => 'owner_email','autocomplete'=>'off')) !!}
+                                                        {!! Form::email('owner_email',$unit_owner['owner_email'] ?? null, array('placeholder' => 'Owner Email','class' => 'form-control', 'id' => 'owner_email','autocomplete'=>'off',$isView=>true)) !!}
                                                     </div>
 
                                                 </div>
@@ -300,7 +309,7 @@
                                                 <div class="form-group">
                                                     <div class="col-md-10 col-sm-10">
                                                         <label>Owner Since *</label>
-                                                        {!! Form::text('owner_since',$unit_owner['owner_since'] ?? null, array('placeholder' => 'dd-mm-yyyy','class' => 'form-control datepicker', 'id' => 'owner_since','autocomplete'=>'off')) !!}
+                                                        {!! Form::text('owner_since',$unit_owner['owner_since'] ?? null, array('placeholder' => 'dd-mm-yyyy','class' => 'form-control datepicker', 'id' => 'owner_since','autocomplete'=>'off',$isView=>true)) !!}
                                                     </div>
 
                                                 </div>
@@ -310,7 +319,7 @@
                                                 <div class="form-group">
                                                     <div class="col-md-10 col-sm-10">
                                                         <label>Current Resident *</label>
-                                                        {!! Form::text('current_tenant',$unit_owner['current_tenant'] ?? null, array('placeholder' => 'Current Resident','class' => 'form-control','autocomplete'=>'off', 'id' => 'current_tenant','required'=>true)) !!}
+                                                        {!! Form::text('current_tenant',$unit_owner['current_tenant'] ?? null, array('placeholder' => 'Current Resident','class' => 'form-control','autocomplete'=>'off', 'id' => 'current_tenant','required'=>true,$isView=>true)) !!}
                                                     </div>
 
                                                 </div>
@@ -321,7 +330,7 @@
                                                 <div class="form-group">
                                                     <div class="col-md-10 col-sm-10">
                                                         <label>Is Tenant &nbsp&nbsp</label>
-                                                        <input type="checkbox" <?= ($unit_owner->is_tenant == 1) ? 'checked' : '' ?> name="is_tenant" value="1">
+                                                        <input type="checkbox" <?= (@$unit_owner->is_tenant == 1) ? 'checked' : '' ?> name="is_tenant" value="1">
                                                     </div>
 
                                                 </div>
@@ -333,19 +342,25 @@
                                                 <div class="form-group">
                                                     <div class="col-md-10 col-sm-10">
                                                         <label>Address </label>
-                                                        {!! Form::textarea('owner_address',$unit_owner['owner_address'] ?? null, array('placeholder' => 'Address','class' => 'form-control','rows'=>2)) !!}
+                                                        {!! Form::textarea('owner_address',$unit_owner['owner_address'] ?? null, array('placeholder' => 'Address','class' => 'form-control','rows'=>2,$isView=>true)) !!}
                                                     </div>
 
                                                 </div>
                                             </div>
 
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <button type="submit" class="btn btn-info margin-top-30 pull-right">
-                                                        <i class="fa fa-check"></i> Save
-                                                    </button>
-                                                </div>
-                                            </div>
+
+
+
+                                           @if($isView=="")
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <button type="submit" class="btn btn-info margin-top-30 pull-right">
+                                                           <i class="fa fa-check"></i> Save
+                                                       </button>
+                                                   </div>
+                                               </div>
+                                                @endif
+                                       
 
                                         </div>
 
@@ -368,7 +383,7 @@
                     <!-- ------ -->
                     <div class="panel panel-default">
                         <div class="panel-heading panel-heading-transparent">
-                            <strong>{{'residency'}}</strong>
+                            <strong>{{ $data['page_management']['title2'] ?? "" }}</strong>
                         </div>
 
                         <div class="panel-body">
@@ -387,10 +402,10 @@
                                             <div class="form-group">
                                                 <div class="col-md-10 col-sm-10">
                                                     <label>Unit *</label>
-                                                    <select class=" form-control" required name="unit_id" id="unit_id">
+                                                    <select readonly class=" form-control" readonly required name="unit_id" id="unit_id">
                                                         <option value=""></option>
                                                         @foreach($units as $value)
-                                                        <option {{  $value->id== @$unit_owner->unit_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->unit_name}}</option>
+                                                        <option {{  $value->id== @$unit_owner->unit_id ? 'selected' : '' }} value="{{ @$value->id}}">{{ $value->unit_name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -403,7 +418,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-10 col-sm-10">
                                                     <label>Resident Name *</label>
-                                                    {!! Form::text('resident_name',$unit_resident['resident_name'] ?? null, array('placeholder' => 'Resident Name','class' => 'form-control' ,'id' => 'resident_name')) !!}
+                                                    {!! Form::text('resident_name',$unit_resident['resident_name'] ?? null, array('placeholder' => 'Resident Name','class' => 'form-control' ,'id' => 'resident_name',$isView=>true)) !!}
                                                 </div>
 
                                             </div>
@@ -412,13 +427,11 @@
 
 
 
-
-
                                         <div class="row">
                                             <div class="form-group">
                                                 <div class="col-md-10 col-sm-10">
                                                     <label>Resident CNIC *</label>
-                                                    {!! Form::text('resident_cnic', $unit_resident['resident_cnic'] ?? null, array('placeholder' => 'Cnic','class' => 'form-control', 'id' => 'resident_cnic')) !!}
+                                                    {!! Form::text('resident_cnic', $unit_resident['resident_cnic'] ?? null, array('placeholder' => 'Cnic','class' => 'form-control', 'id' => 'resident_cnic',$isView=>true)) !!}
                                                 </div>
 
                                             </div>
@@ -428,7 +441,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-10 col-sm-10">
                                                     <label>Mobile no *</label>
-                                                    {!! Form::text('resident_mobile', $unit_resident['resident_mobile'] ?? null, array('placeholder' => 'Mobile no','class' => 'form-control', 'id' => 'resident_mobile')) !!}
+                                                    {!! Form::text('resident_mobile', $unit_resident['resident_mobile'] ?? null, array('placeholder' => 'Mobile no','class' => 'form-control', 'id' => 'resident_mobile',$isView=>true)) !!}
                                                 </div>
 
                                             </div>
@@ -438,7 +451,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-10 col-sm-10">
                                                     <label>Email *</label>
-                                                    {!! Form::text('resident_email',$unit_resident['resident_email'] ?? null, array('placeholder' => 'Owner Email','class' => 'form-control', 'id' => 'resident_email')) !!}
+                                                    {!! Form::text('resident_email',$unit_resident['resident_email'] ?? null, array('placeholder' => 'Owner Email','class' => 'form-control', 'id' => 'resident_email',$isView=>true)) !!}
                                                 </div>
 
                                             </div>
@@ -450,7 +463,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-10 col-sm-10">
                                                     <label>Residing Since *</label>
-                                                    {!! Form::date('residing_since',$unit_resident['residing_since'] ?? null , array('placeholder' => 'Residing Since','class' => 'form-control', 'id' => 'residing_since')) !!}
+                                                    {!! Form::text('residing_since',$unit_resident['residing_since'] ?? null , array('placeholder' => 'dd-mm-yyyy','class' => 'form-control datepicker', 'id' => 'residing_since',$isView=>true)) !!}
                                                 </div>
 
                                             </div>
@@ -460,14 +473,16 @@
 
 
 
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <button type="submit" class="btn btn-3d btn-teal btn-sm btn-block margin-top-30">
-                                                    Submit
-                                                </button>
-                                            </div>
-                                        </div>
-
+                                           @if($isView=="")
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <button type="submit" class="btn btn-info margin-top-30 pull-right">
+                                                           <i class="fa fa-check"></i> Save
+                                                       </button>
+                                                   </div>
+                                               </div>
+                                                @endif
+                                               {!! Form::close() !!}
                                     </div>
 
 
