@@ -195,6 +195,7 @@ class UnitController extends Controller
         $unitOwner->owner_since = date('Y-m-d',strtotime($request->input('owner_since')));
         $unitOwner->current_tenant = $request->input('current_tenant');
         $unitOwner->owner_address = $request->input('owner_address');
+        $unitOwner->is_tenant = $request->input('is_tenant') ? 1 : 0;
 
 
          $unitOwner =  $unitOwner->save();
@@ -204,8 +205,7 @@ class UnitController extends Controller
     }
 
     public function residenyUpdate(Request $request)
-
-    {
+   {
 
         $resident = UnitResident::where('unit_id',$request->unit_id)->get()->first();
         $resident->resident_name = $request->input('resident_name');
@@ -213,6 +213,7 @@ class UnitController extends Controller
         $resident->resident_mobile = $request->input('resident_mobile');
         $resident->resident_email = $request->input('resident_email');
         $resident->residing_since = date('Y-m-d',strtotime($request->input('residing_since')));
+        $resident->identity_type = $request->input('identity_type');
         
 
 

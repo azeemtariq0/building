@@ -427,15 +427,27 @@
 
 
 
-                                        <div class="row">
-                                            <div class="form-group">
-                                                <div class="col-md-10 col-sm-10">
-                                                    <label>Resident CNIC *</label>
-                                                    {!! Form::text('resident_cnic', $unit_resident['resident_cnic'] ?? null, array('placeholder' => 'Cnic','class' => 'form-control', 'id' => 'resident_cnic',$isView=>true)) !!}
-                                                </div>
-
-                                            </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        
+                                        <div class="col-md-3 " style="padding-right: 0px">
+                                            <label>Identity Type *</label>
+                                            <select class=" form-control" required name="identity_type" id="identity_type">
+                                              <option {{ $value->id== @$unit_resident->identity_type ? 'selected' : '' }} value="cnic">CNIC</option>
+                                            <option {{ $value->id== @$unit_resident->identity_type ? 'selected' : '' }} value="nicop">NICOP</option>
+                                            
+                                            <option {{ $value->id== @$unit_resident->identity_type ? 'selected' : '' }} value="passport">Passport</option>
+                                            </select>
                                         </div>
+                                        <div class="col-md-7">
+                                            <label>CNIC / NICOP / Passport *</label>
+                                             {!! Form::text('resident_cnic', $unit_resident['resident_cnic'] ?? null, array('placeholder' => 'Cnic','class' => 'form-control', 'id' => 'resident_cnic',$isView=>true)) !!}
+                                        </div>
+
+                                    </div>
+                                </div>
+                                   
+
 
                                         <div class="row">
                                             <div class="form-group">
