@@ -15,11 +15,14 @@ use DataTables, Form;
 use PDF; // at the top of the file
 class ReceiptController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+     function __construct()
+   {
+    $this->middleware('permission:receipt-list|receipt-create|receipt-edit|receipt-delete', ['only' => ['index','store']]);
+    $this->middleware('permission:receipt-create', ['only' => ['create','store']]);
+    $this->middleware('permission:receipt-edit', ['only' => ['edit','update']]);
+    $this->middleware('permission:receipt-delete', ['only' => ['destroy']]);
+   }
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -45,11 +48,18 @@ class ReceiptController extends Controller
             } else if ($row->status == 0) {
                 $switchClass = "";
             }
-
-
-           $text = '<input class="toggle-switch right"  data-id="'.$row->id.'" '.($checked ? 'disabled' : '').' type="checkbox" '.$checked.'>';
-
-            return $text;
+          
+          $text='';
+          if(empty($checked)){
+            if (auth()->user()->haspermissionTo('receipt-edit') ){
+                    $text = '<input class="toggle-switch right"  data-id="'.$row->id.'"  type="checkbox" '.$checked.'>';
+            }else{
+                 $text = '<span class="text-success"><strong>Pending</strong><span>';
+             }
+           }else{
+               $text = '<input class="toggle-switch right"  data-id="'.$row->id.'" '.($checked ? 'disabled' : '').' type="checkbox" '.$checked.'>';
+           }
+           return $text;
     })
         ->addColumn('action', function($row)
         {

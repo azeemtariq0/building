@@ -2,7 +2,7 @@
 
 @section('content')
  
-<div class="padding-15" style="background-image: ">
+<div class="padding-15"   style="background-image:url('assets/images/background.jpg'); background-size:cover;" >
 
 {{-- <img src="{{asset('frontend/img/Icon awesome-eye.png')}}" class="w-16" alt="eye">--}}
     <div class="login-box">
@@ -42,7 +42,7 @@
                         <label class="input">
                             <i class="icon-append fa fa-envelope"></i>
                              <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                            <span class="tooltip tooltip-top-right">Email Address</span>
+                            <span class="tooltip tooltip-top-right">Emal Address</span>
                         </label>
                     </section>
                     <section>

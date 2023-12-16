@@ -26,7 +26,7 @@
                                 </a>
                             </li>
                            
-                            @can('view-permission')
+                            @can('permission-list')
                             <li class="{{ in_array(\Request::segment(1),array('users', 'roles', 'permissions')) ? 'active' : '' }}">
                                 <a href="#">
                                     <i class="fa fa-menu-arrow pull-right"></i>
@@ -101,8 +101,10 @@
                              
 
                               <ul>
-                            
+                                @can('receipt-list') 
                                     <li class="{{ \Request::segment(1) == 'receipts' ? 'active' : '' }}"><a href="{{ route('receipts.index') }}">Receipts</a></li>
+                                    @endcan
+
                                     <li class="{{ \Request::segment(1) == 'expenses' ? 'active' : '' }}"><a href="{{ route('expenses.index') }}">Expenses</a></li>
                                        
                                   

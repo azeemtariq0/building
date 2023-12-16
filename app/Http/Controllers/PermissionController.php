@@ -169,6 +169,6 @@ class PermissionController extends Controller
     {
         DB::table("permissions")->where('id',$id)->delete();
         return redirect()->route('permissions.index')
-        ->with('success','Role deleted successfully');
+        ->with('success','Permission deleted successfully');
     }
 }

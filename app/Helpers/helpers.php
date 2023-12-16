@@ -6,7 +6,7 @@ function htmlBtn($url,$id,$color='info',$icon='edit'){
         return $btn;
     }
 function htmDeleteBtn($url,$id){
-            $btn= Form::open(['method' => 'DELETE','route' => [$url, $id],'style'=>'display:inline']);
+            $btn= Form::open(['method' => 'DELETE','id'=>'delete-form','route' => [$url, $id],'style'=>'display:inline']);
             $btn.= "<button class='btn btn-danger btn-sm' title='Delete'  type='submit' onclick='rowDetele(event)' ><i class='fa fa-trash'></i></button>";
             $btn.= Form::close();
             return  $btn;
