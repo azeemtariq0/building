@@ -129,3 +129,26 @@ CREATE TABLE `as_unit_resident` (
   `updated_by` VARCHAR(255),
   PRIMARY KEY (`id`)
 );
+
+
+
+
+DELIMITER $$
+DROP TRIGGER /*!50032 IF EXISTS */ `as_unit_resident`$$
+CREATE
+    /*!50017 DEFINER = 'root'@'localhost' */
+    TRIGGER `as_unit_resident` BEFORE INSERT ON `as_unit_resident` 
+    FOR EACH ROW BEGIN
+    UPDATE 
+     `sequence` 
+    SET
+     `executed_record` = @tempVariable := executed_record + 1 
+    WHERE TABLE_NAME = 'as_unit_resident';
+        IF (ROW_COUNT() < 1) THEN 
+         INSERT INTO sequence SET TABLE_NAME = 'as_unit_resident',executed_record = 1;
+         SET @tempVariable = 1;
+    END IF;
+     SET NEW.resident_code = CONCAT('/RS-',LPAD((@tempVariable),4, '0'));
+END;
+$$
+DELIMITER ;

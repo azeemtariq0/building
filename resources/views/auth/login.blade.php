@@ -42,7 +42,7 @@
                         <label class="input">
                             <i class="icon-append fa fa-envelope"></i>
                              <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-                            <span class="tooltip tooltip-top-right">Emal Address</span>
+                            <span class="tooltip tooltip-top-right">Email Address</span>
                         </label>
                     </section>
                     <section>
@@ -62,7 +62,7 @@
                     <button type="submit" class="btn btn-primary pull-right">{{ __('Sign In') }}</button>
                     <div class="forgot-password pull-left">
                        @if (Route::has('password.request'))
-                       <a href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}?</a> <br />
+                       <a href="#">{{ __('Forgot Your Password?') }}?</a> <br />
                        @endif
                        <!-- <a href="page-register.html"><b>Need to Register?</b></a> -->
                    </div>

@@ -14,9 +14,10 @@ class StaffTypeController extends Controller
 {
    function __construct()
    {
-     // $this->middleware('projects:role-create', ['only' => ['create','store']]);
-     // $this->middleware('projects:role-edit', ['only' => ['edit','update']]);
-     // $this->middleware('projects:role-delete', ['only' => ['destroy']]);
+     $this->middleware('permission:staff-type-list|staff-type-create|staff-type-delete|staff-type-edit', ['only' => ['index','store']]);
+    $this->middleware('permission:staff-type-create', ['only' => ['create','store']]);
+    $this->middleware('permission:staff-type-edit', ['only' => ['edit','update']]);
+    $this->middleware('permission:staff-type-create', ['only' => ['destroy']]);
    }
 
     public function index(Request $request){

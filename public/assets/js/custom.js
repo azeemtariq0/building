@@ -25,7 +25,7 @@
   console.log( this.value );
 }); */
 
-    function rowDetele(event) {
+    function rowDetele(event,obj) {
          event.preventDefault(); // prevent form submit
              swal({
              title: "Are you sure?",
@@ -36,7 +36,7 @@
            })
           .then((willDelete) => {
                if (willDelete) {
-                  $('#delete-form').submit()
+                  $(obj).closest('tr').find('form').submit();
                }
             });
     }
