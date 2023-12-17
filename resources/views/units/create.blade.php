@@ -140,15 +140,15 @@
 
                                         <div class="row">
                                             <div class="form-group">
-                                            <div class="col-md-5 col-sm-5">
+                                            <div class="col-md-3 col-sm-3">
                                                     <label>Unit Size Type *</label>
                                                     <select id="unit_size_id" class=" form-control" required name="unit_size_type_id" {{$isView}}>
-                                                        <option value="">select</option>
                                                         @foreach($unit_size as $value)
                                                         <option {{  $value->id== @$unit->unit_size_type_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->title}}</option>
                                                         @endforeach
-                                                    </select>                                                </div>
-                                                <div class="col-md-5 col-sm-5">
+                                                    </select>                                        
+                                                </div>
+                                                <div class="col-md-7 col-sm-7">
                                                     <label>Unit Size *</label>
                                                     {!! Form::number('unit_size', null, array('placeholder' => '','class' => 'form-control' , 'required'=>'true','type'=>'number',$isView=>true)) !!}
                                                 </div>
