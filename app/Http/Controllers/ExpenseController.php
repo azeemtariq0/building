@@ -34,11 +34,16 @@ class ExpenseController extends Controller
             })
             ->addColumn('action', function($row){
                $btn= "<a target='_blank' title='Expense Voucher Print' href='".url('print-expense/'.$row->id)."' class='btn btn-default btn-sm'><i class='fa fa-print'></i></a>";
-                $btn.= htmlBtn('expenses.show',$row->id,'warning','eye');
+
+               if (auth()->user()->haspermissionTo('expense-view') )
+                  $btn.= htmlBtn('expenses.show',$row->id,'warning','eye');
 
                if($row->status==0){
+                       if (auth()->user()->haspermissionTo('expense-freez') )
                         $btn.= "<a title='Freez Voucher' href='javascript:void(0)' onclick='freezVoucher(".$row->id.")' class='btn btn-success btn-sm'><i class='fa fa-thumbs-up'></i></a>";
+                    if (auth()->user()->haspermissionTo('expense-edit') )
                         $btn.=htmlBtn('expenses.edit',$row->id);
+                    if (auth()->user()->haspermissionTo('expense-delete') )
                         $btn.= htmDeleteBtn('expenses.destroy',$row->id);
                }
              

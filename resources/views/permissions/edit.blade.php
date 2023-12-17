@@ -48,10 +48,10 @@
                         </div>
                         </fieldset>
 
-                        <div class="row">
-                            <div class="col-md-10">
-                                <button type="submit" class="btn btn-3d btn-teal btn-sm btn-block margin-top-30">
-                                   Submit
+                          <div class="row">
+                           <div class="col-md-12">
+                                <button type="submit" class="btn btn-info margin-top-30 pull-right">
+                                   <i class="fa fa-check"></i> Save
                                </button>
                            </div>
                        </div>

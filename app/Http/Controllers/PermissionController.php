@@ -13,10 +13,10 @@ class PermissionController extends Controller
 {
    function __construct()
    {
-     $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
-     $this->middleware('permission:role-create', ['only' => ['create','store']]);
-     $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
-     $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+     $this->middleware('permission:permission-list|permission-create|permission-edit|permission-delete', ['only' => ['index','store']]);
+     $this->middleware('permission:permission-create', ['only' => ['create','store']]);
+     $this->middleware('permission:permission-edit', ['only' => ['edit','update']]);
+     $this->middleware('permission:permission-delete', ['only' => ['destroy']]);
  }
 
     /**
@@ -39,9 +39,11 @@ class PermissionController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function($row){
 
-               $btn = htmlBtn('permissions.show',$row->id,'warning','eye');
-               $btn.=htmlBtn('permissions.edit',$row->id);
-               $btn.= htmDeleteBtn('permissions.destroy',$row->id);
+                    $btn = htmlBtn('permissions.show',$row->id,'warning','eye');
+                 if (auth()->user()->haspermissionTo('permission-edit') )
+                    $btn .=htmlBtn('permissions.edit',$row->id);
+                 if (auth()->user()->haspermissionTo('permission-delete') )
+                     $btn .= htmDeleteBtn('permissions.destroy',$row->id);
 
                return $btn;
            })

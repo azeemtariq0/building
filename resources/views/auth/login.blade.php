@@ -2,7 +2,7 @@
 
 @section('content')
  
-<div class="padding-15"   style="background-image:url('assets/images/background.jpg'); background-size:cover;" >
+<div class="padding-15"   >
 
 {{-- <img src="{{asset('frontend/img/Icon awesome-eye.png')}}" class="w-16" alt="eye">--}}
     <div class="login-box">

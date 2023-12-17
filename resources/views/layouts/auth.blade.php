@@ -25,7 +25,7 @@
     <!--
         .boxed = boxed version
     -->
-    <body>
+    <body style="background-image:url('assets/images/background.jpg'); background-size:cover;" >
 
         @yield('content')
         

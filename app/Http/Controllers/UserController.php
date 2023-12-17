@@ -13,18 +13,13 @@ use DataTables, Form;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    /*public function index(Request $request)
-    {
-        $data = User::orderBy('id','DESC')->paginate(5);
-        return view('users.index',compact('data'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
-        }*/
-
+   function __construct()
+   {
+     $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','store']]);
+     $this->middleware('permission:user-create', ['only' => ['create','store']]);
+     $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
+     $this->middleware('permission:user-delete', ['only' => ['destroy']]);
+    }
 
         public function index(Request $request)
         {
@@ -38,6 +33,7 @@ class UserController extends Controller
                  if(!empty($row->getRoleNames())){
                     foreach($row->getRoleNames() as $v){
                         $roles.= '<span class="label label-success label-role current_role"> '.$v.' </span> ';
+                        if (auth()->user()->haspermissionTo('user-edit') )
                         $roles.= ' &nbsp <span class="label label-info label-role assign_role" data-id='.$row->id.'>  Assign Role <i class="fa fa-edit"></> </span>';
                     }
                 }
@@ -46,10 +42,13 @@ class UserController extends Controller
             })
 
                 ->addColumn('action', function($row){
-                 $btn = "";
-               $btn = htmlBtn('users.show',$row->id,'warning','eye');
-               $btn.=htmlBtn('users.edit',$row->id);
-               $btn.= htmDeleteBtn('users.destroy',$row->id);
+                $btn = "";
+                  if(auth()->user()->haspermissionTo('user-view') )
+                    $btn.= htmlBtn('users.show',$row->id,'warning','eye');
+                  if (auth()->user()->haspermissionTo('user-edit') )
+                    $btn.=htmlBtn('users.edit',$row->id);
+                  if(auth()->user()->haspermissionTo('user-delete') )
+                   $btn.= htmDeleteBtn('users.destroy',$row->id);
                  
                  return $btn;
              })

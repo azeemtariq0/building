@@ -72,17 +72,20 @@ class ReceiptController extends Controller
            }
 
                if(auth()->user()->id == $row->created_by && $row->status == 0){
-               $btn.= "<button type='button' onclick='ediReceipt(this,".$row->id.")' 
-               data-outstanding_amount ='".$row->unit->out_standing_amount."' 
-               data-monthly_amount ='".$row->unit_category->monthly_amount."' 
-               data-resident ='".(@$row->unit->unit_name.' / '.@$row->project->project_name.' / '.@$owner['current_tenant'])."' 
-               data-amount ='".$row->amount."'
-               data-receipt_type_id ='".$row->receipt_type_id."'
-               data-description ='".$row->description."'
-               data-receipt_date ='".date('d-m-Y',strtotime($row->receipt_date))."'
-                class='btn btn-info btn-sm'><i class='fa fa-edit'></i></button>";
 
-            
+              if (auth()->user()->haspermissionTo('receipt-edit') ){
+                 $btn.= "<button type='button' onclick='ediReceipt(this,".$row->id.")' 
+                   data-outstanding_amount ='".$row->unit->out_standing_amount."' 
+                   data-monthly_amount ='".$row->unit_category->monthly_amount."' 
+                   data-resident ='".(@$row->unit->unit_name.' / '.@$row->project->project_name.' / '.@$owner['current_tenant'])."' 
+                   data-amount ='".$row->amount."'
+                   data-receipt_type_id ='".$row->receipt_type_id."'
+                   data-description ='".$row->description."'
+                   data-receipt_date ='".date('d-m-Y',strtotime($row->receipt_date))."'
+                    class='btn btn-info btn-sm'><i class='fa fa-edit'></i></button>";
+               }
+
+            if (auth()->user()->haspermissionTo('receipt-delete') )
                $btn.= htmDeleteBtn('receipts.destroy',$row->id);
    
 

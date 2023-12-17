@@ -47,8 +47,10 @@ class RoleController extends Controller
             ->addColumn('action', function($row){
 
             $btn = htmlBtn('roles.show',$row->id,'warning','eye');
-            $btn.=htmlBtn('roles.edit',$row->id);
-            $btn.= htmDeleteBtn('roles.destroy',$row->id);
+            if(auth()->user()->haspermissionTo('role-edit') )
+                $btn.=htmlBtn('roles.edit',$row->id);
+            if(auth()->user()->haspermissionTo('role-edit') )
+                 $btn.= htmDeleteBtn('roles.destroy',$row->id);
 
 
              return $btn;
