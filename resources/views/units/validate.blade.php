@@ -23,6 +23,10 @@
         monthly_amount:{
           required: true,
           noSpace: true // Use the custom rule
+        },
+        unit_size_id:{
+          required: true,
+          noSpace: true
         }
       },
       messages: {

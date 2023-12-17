@@ -12,6 +12,7 @@ use App\Models\Project;
 use App\Models\UnitCategory;
 use App\Models\UnitOwner;
 use App\Models\UnitResident;
+use App\Models\UnitSize;
 use DB;
 use DataTables, Form;       
 
@@ -67,13 +68,15 @@ class UnitController extends Controller
         $unit_categories  =  UnitCategory::get();
         $projects  =  Project::get();
         $units = Unit::get();
+        $unit_size =  UnitSize::get();
+
 
          $data['page_management'] = array(
             'page_title' => 'Add Unit',
             'slug' => 'General Setup',
             'title' => 'Add Unit',
         );        
-         return view('units.create', compact('data','blocks','projects','unit_categories','units'));
+         return view('units.create', compact('data','blocks','projects','unit_categories','units','unit_size'));
     }
 
     public function store(Request $request){
@@ -90,10 +93,12 @@ class UnitController extends Controller
                 'block_id' => $request->input('block_id'),
                 'unit_category_id' => $request->input('unit_category_id'),
                 'unit_size' => $request->input('unit_size'),
+                'unit_size_type_id' => $request->input('unit_size_type_id'),
                 'out_standing_amount' => $request->input('out_standing_amount'),
                 'ob_date' => $request->input('ob_date')
             ]
         );
+        
 
         $unitOwner = UnitOwner::create(
             [
@@ -120,7 +125,7 @@ class UnitController extends Controller
 
         $unit_owner = UnitOwner::where('unit_id', $id)->get()->first();
         $unit_resident = UnitResident::where('unit_id', $id)->get()->first();
-
+        $unit_size = UnitSize::get();
 
         $units = Unit::get();
 
@@ -134,10 +139,12 @@ class UnitController extends Controller
 
         $unit['is_view'] =1;
 
-        return view('units.create', compact('unit', 'data', 'blocks', 'projects', 'unit_categories', 'units', 'unit_owner','unit_resident'));
+        $unit_size = UnitSize::get();
+        return view('units.create', compact('unit', 'data', 'blocks', 'projects', 'unit_categories', 'units', 'unit_owner','unit_resident','unit_size'));
     }  
     public function edit($id) {
         $unit = Unit::find($id);
+        $unit_size = UnitSize::get();
         $blocks  =  Block::get();
         $unit_categories  =  UnitCategory::get();
         $projects  =  Project::get();
@@ -157,7 +164,7 @@ class UnitController extends Controller
         );
 
 
-        return view('units.create', compact('unit', 'data', 'blocks', 'projects', 'unit_categories', 'units', 'unit_owner','unit_resident'));
+        return view('units.create', compact('unit', 'data', 'blocks', 'projects', 'unit_categories', 'units', 'unit_owner','unit_resident','unit_size'));
     }
 
 
@@ -173,6 +180,7 @@ class UnitController extends Controller
         $unitCategory->block_id = $request->input('block_id');
         $unitCategory->unit_category_id = $request->input('unit_category_id');
         $unitCategory->unit_size = $request->input('unit_size');
+        $unitCategory->unit_size_type_id = $request->input('unit_size_type_id');
         $unitCategory->out_standing_amount = $request->input('out_standing_amount');
         $unitCategory->ob_date = $request->input('ob_date');
 

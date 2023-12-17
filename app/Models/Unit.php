@@ -22,6 +22,7 @@ class Unit extends Model
         'block_id',
         'unit_category_id',
         'unit_size',
+        'unit_size_type_id',
         'out_standing_amount',
         'ob_date',
         'current_owner',
