@@ -51,10 +51,10 @@ class ReceiptController extends Controller
           
           $text='';
           if(empty($checked)){
-            if (auth()->user()->haspermissionTo('receipt-edit') ){
+            if (auth()->user()->haspermissionTo('receipt-approve') ){
                     $text = '<input class="toggle-switch right"  data-id="'.$row->id.'"  type="checkbox" '.$checked.'>';
             }else{
-                 $text = '<span class="text-success"><strong>Pending</strong><span>';
+                 $text = '<span class="text-success btn btn-default btn-xs"><strong>PENDING</strong><span>';
              }
            }else{
                $text = '<input class="toggle-switch right"  data-id="'.$row->id.'" '.($checked ? 'disabled' : '').' type="checkbox" '.$checked.'>';
@@ -71,9 +71,8 @@ class ReceiptController extends Controller
                $btn.= "<a target='_blank' href='".url('print-receipt/'.$row->id)."' class='btn btn-default btn-sm'><i class='fa fa-print'></i></a>";
            }
 
-               if(auth()->user()->id == $row->created_by && $row->status == 0){
 
-              if (auth()->user()->haspermissionTo('receipt-edit') ){
+             if (auth()->user()->haspermissionTo('receipt-view') ){
                  $btn.= "<button type='button' onclick='ediReceipt(this,".$row->id.")' 
                    data-outstanding_amount ='".$row->unit->out_standing_amount."' 
                    data-monthly_amount ='".$row->unit_category->monthly_amount."' 
@@ -82,8 +81,28 @@ class ReceiptController extends Controller
                    data-receipt_type_id ='".$row->receipt_type_id."'
                    data-description ='".$row->description."'
                    data-receipt_date ='".date('d-m-Y',strtotime($row->receipt_date))."'
+                   data-view ='1'
+                    class='btn btn-warning btn-sm'><i class='fa fa-eye'></i></button>";
+               }
+
+
+
+
+               if(auth()->user()->id == $row->created_by && $row->status == 0){
+
+               if (auth()->user()->haspermissionTo('receipt-edit') ){
+                 $btn.= "<button type='button' onclick='ediReceipt(this,".$row->id.")' 
+                   data-outstanding_amount ='".$row->unit->out_standing_amount."' 
+                   data-monthly_amount ='".$row->unit_category->monthly_amount."' 
+                   data-resident ='".(@$row->unit->unit_name.' / '.@$row->project->project_name.' / '.@$owner['current_tenant'])."' 
+                   data-amount ='".$row->amount."'
+                   data-receipt_type_id ='".$row->receipt_type_id."'
+                   data-description ='".$row->description."'
+                   data-receipt_date ='".date('d-m-Y',strtotime($row->receipt_date))."'
+                   data-view ='0'
                     class='btn btn-info btn-sm'><i class='fa fa-edit'></i></button>";
                }
+
 
             if (auth()->user()->haspermissionTo('receipt-delete') )
                $btn.= htmDeleteBtn('receipts.destroy',$row->id);

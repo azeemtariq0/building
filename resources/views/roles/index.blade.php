@@ -6,18 +6,6 @@
 
   <div id="content" class="padding-20">
 
-          <!-- 
-            PANEL CLASSES:
-              panel-default
-              panel-danger
-              panel-warning
-              panel-info
-              panel-success
-
-            INFO:   panel collapse - stored on user localStorage (handled by app.js _panels() function).
-                All pannels should have an unique ID or the panel collapse status will not be stored!
-              -->
-
               @if ($message = Session::get('success'))
               <div class="alert alert-success">
                 <p>{{ $message }}</p>

@@ -30,8 +30,12 @@ class ReceiptTypeController extends Controller
             return $formatDate;
         })
             ->addColumn('action', function($row){
-               $btn = htmlBtn('receipt_types.show',$row->id,'warning','eye');
+            $btn="";
+            if (auth()->user()->haspermissionTo('receipt-type-view') )
+               $btn .= htmlBtn('receipt_types.show',$row->id,'warning','eye');
+            if (auth()->user()->haspermissionTo('receipt-type-edit') )
                $btn.=htmlBtn('receipt_types.edit',$row->id);
+            if (auth()->user()->haspermissionTo('receipt-type-delete') )
                $btn.= htmDeleteBtn('receipt_types.destroy',$row->id);
 
                return $btn;

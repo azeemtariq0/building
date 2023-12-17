@@ -30,9 +30,13 @@ class UnitCategoryController extends Controller
             return $formatDate;
         })
             ->addColumn('action', function($row){
-               $btn = htmlBtn('unit_categories.show',$row->id,'warning','eye');
-               $btn.=htmlBtn('unit_categories.edit',$row->id);
-               $btn.= htmDeleteBtn('unit_categories.destroy',$row->id);
+              $btn ='';
+              if (auth()->user()->haspermissionTo('unit-category-view') )
+                $btn .= htmlBtn('unit_categories.show',$row->id,'warning','eye');
+              if (auth()->user()->haspermissionTo('unit-category-edit') )
+                $btn.=htmlBtn('unit_categories.edit',$row->id);
+              if (auth()->user()->haspermissionTo('unit-category-delete') )
+                $btn.= htmDeleteBtn('unit_categories.destroy',$row->id);
                return $btn;
            })
             ->rawColumns(['action'])

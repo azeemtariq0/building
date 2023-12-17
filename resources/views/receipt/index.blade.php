@@ -304,8 +304,12 @@
              }
 
               function ediReceipt(obj,id){
-                  $('#monthly_amount').val($(obj).data('monthly_amount'));
-                  $('#outstanding_amount').val( $(obj).data('outstanding_amount'));
+                  var is_view = $(obj).data('view');
+                  $('#myModal').find('button[type="submit"]').show();
+                   $("#myModal input,select,textarea").attr('readonly',false);
+
+                  $('#monthly_amount').val($(obj).data('monthly_amount')).attr('readonly',true);
+                  $('#outstanding_amount').val( $(obj).data('outstanding_amount')).attr('readonly',true);
                   $('#amount').val( $(obj).data('amount'));
                   $('#receipt_date').val( $(obj).data('date'));
                   $('#description').val( $(obj).data('description'));
@@ -313,6 +317,10 @@
                   $('#resident').text($(obj).data('resident'));
                   $('#id').val(id);
                   $('#myModal').modal('show');
+                  if(is_view==1){
+                    $('#myModal').find('button[type="submit"]').hide();
+                    $("#myModal input,select,textarea").attr('readonly',true);
+                  }
             }
 
 </script>

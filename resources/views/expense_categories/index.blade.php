@@ -19,13 +19,13 @@
 
                   <!-- right options -->
                   <ul class="options pull-right list-inline">
-                    @if (auth()->user()->haspermissionTo('expense-category-create') )
+                  @can('expense-category-create')
                     <li>
                       <a href="{{ route('expense_categories.create')}}" class="btn btn-sm btn-success btn_create_new_user">
                         <span>{{ $data['page_management']['add'] ?? "" }}</span>
                       </a>
                     </li>
-                     @endif
+                    @endcan
                     <li><a href="#" class="opt panel_colapse" data-toggle="tooltip" title="Colapse" data-placement="bottom"></a></li>
                     <li><a href="#" class="opt panel_fullscreen hidden-xs" data-toggle="tooltip" title="Fullscreen" data-placement="bottom"><i class="fa fa-expand"></i></a></li>
                     <li><a href="#" class="opt panel_close" data-confirm-title="Confirm" data-confirm-message="Are you sure you want to remove this panel?" data-toggle="tooltip" title="Close" data-placement="bottom"><i class="fa fa-times"></i></a></li>

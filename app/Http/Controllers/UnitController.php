@@ -35,8 +35,12 @@ class UnitController extends Controller
             return $formatDate;
         })
             ->addColumn('action', function($row){
+               $btn = '';
+              if (auth()->user()->haspermissionTo('unit-view') )
                $btn = htmlBtn('units.show',$row->id,'warning','eye');
+              if (auth()->user()->haspermissionTo('unit-edit') )
                $btn.=htmlBtn('units.edit',$row->id);
+              if (auth()->user()->haspermissionTo('unit-delete') )
                $btn.= htmDeleteBtn('units.destroy',$row->id);
 
                return $btn;

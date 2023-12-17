@@ -19,27 +19,16 @@ class PermissionController extends Controller
      $this->middleware('permission:permission-delete', ['only' => ['destroy']]);
  }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    /*public function index(Request $request)
-    {
-         $permissions = Permission::orderBy('id','DESC')->paginate(5);
-        return view('permissions.index',compact('permissions'))
-        ->with('i', ($request->input('page', 1) - 1) * 5);
-    }*/
-    
-    public function index(Request $request)
-    {
+  public function index(Request $request)
+  {
         if ($request->ajax()) {
             $data = Permission::select('*');
             return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function($row){
-
-                    $btn = htmlBtn('permissions.show',$row->id,'warning','eye');
+                 $btn="";
+                if (auth()->user()->haspermissionTo('permission-view') )
+                    $btn .= htmlBtn('permissions.show',$row->id,'warning','eye');
                  if (auth()->user()->haspermissionTo('permission-edit') )
                     $btn .=htmlBtn('permissions.edit',$row->id);
                  if (auth()->user()->haspermissionTo('permission-delete') )

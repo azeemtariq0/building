@@ -26,8 +26,12 @@ class ExpenseCategoryController extends Controller
             return Datatables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function($row){
-               $btn = htmlBtn('expense_categories.show',$row->id,'warning','eye');
+               $btn ='';
+               if (auth()->user()->haspermissionTo('expense-category-view') )
+               $btn .= htmlBtn('expense_categories.show',$row->id,'warning','eye');
+               if (auth()->user()->haspermissionTo('expense-category-view') )
                $btn.=htmlBtn('expense_categories.edit',$row->id);
+               if (auth()->user()->haspermissionTo('expense-category-view') )
                $btn.= htmDeleteBtn('expense_categories.destroy',$row->id);
 
                return $btn;

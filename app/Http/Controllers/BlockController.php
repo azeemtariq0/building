@@ -44,9 +44,12 @@ class BlockController extends Controller
             return $formatDate;
         })
             ->addColumn('action', function($row){
-
-               $btn = htmlBtn('blocks.show',$row->id,'warning','eye');
+              $btn ='';
+              if (auth()->user()->haspermissionTo('block-view') )
+               $btn .= htmlBtn('blocks.show',$row->id,'warning','eye');
+              if (auth()->user()->haspermissionTo('block-edit') )
                $btn.=htmlBtn('blocks.edit',$row->id);
+              if (auth()->user()->haspermissionTo('block-delete') )
                $btn.= htmDeleteBtn('blocks.destroy',$row->id);
 
                return $btn;

@@ -46,7 +46,9 @@ class RoleController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function($row){
 
-            $btn = htmlBtn('roles.show',$row->id,'warning','eye');
+             $btn = ""; 
+            if (auth()->user()->haspermissionTo('role-view') )
+            $btn .= htmlBtn('roles.show',$row->id,'warning','eye');
             if(auth()->user()->haspermissionTo('role-edit') )
                 $btn.=htmlBtn('roles.edit',$row->id);
             if(auth()->user()->haspermissionTo('role-edit') )

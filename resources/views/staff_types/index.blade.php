@@ -19,12 +19,14 @@
 
                   <!-- right options -->
                   <ul class="options pull-right list-inline">
+                     @can('staff-type-create')
                     <li>
                       <a href="#" class="btn btn-sm btn-success btn_create_new_user add_staff">
                         <!-- <i class="et-megaphone"></i> -->
                         <span>{{ $data['page_management']['add'] ?? "" }}</span>
                       </a>
                     </li>
+                     @endcan
                     <li><a href="#" class="opt panel_colapse" data-toggle="tooltip" title="Colapse" data-placement="bottom"></a></li>
                     <li><a href="#" class="opt panel_fullscreen hidden-xs" data-toggle="tooltip" title="Fullscreen" data-placement="bottom"><i class="fa fa-expand"></i></a></li>
                     <li><a href="#" class="opt panel_close" data-confirm-title="Confirm" data-confirm-message="Are you sure you want to remove this panel?" data-toggle="tooltip" title="Close" data-placement="bottom"><i class="fa fa-times"></i></a></li>
@@ -120,12 +122,19 @@
               });
 
               $(document).on('click','.add_staff',function(){
+                var is_view = $(this).data('view');
+                $('#myModal').find('button[type="submit"]').show();
+                $("#staff_name").attr('readonly',false);
                 $('#id').val('');
                 $('#staff_name').val('');
                   $('#myModal').modal('show');
                   $('#id').val($(this).attr('data-id'));
                   if($(this).attr('data-id')){
                     $("#staff_name").val($(this).closest('tr').find('td:eq(0)').text());
+                  }
+                  if(is_view==1){
+                    $('#myModal').find('button[type="submit"]').hide();
+                    $("#staff_name").attr('readonly',true);
                   }
               });
 

@@ -17,10 +17,10 @@ class ExpenseController extends Controller
 {
    function __construct()
    {
-    // $this->middleware('permission:expense-category-list|expense-category-create|expense-category-delete|expense-category-edit', ['only' => ['index','store']]);
-    // $this->middleware('permission:expense-category-create', ['only' => ['create','store']]);
-    // $this->middleware('permission:expense-category-edit', ['only' => ['edit','update']]);
-    // $this->middleware('permission:expense-category-create', ['only' => ['destroy']]);
+    $this->middleware('permission:expense-list|expense-create|expense-delete|expense-edit', ['only' => ['index','store']]);
+    $this->middleware('permission:expense-create', ['only' => ['create','store']]);
+    $this->middleware('permission:expense-edit', ['only' => ['edit','update']]);
+    $this->middleware('permission:expense-create', ['only' => ['destroy']]);
    }
 
     public function index(Request $request){
