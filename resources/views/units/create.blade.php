@@ -18,10 +18,10 @@
 
 
     <div id="content" class="padding-20">
-
         <div class="tab-content clearfix">
-
-                    <ul class="nav nav-pills ">
+<div class="row">
+    <div class="col-md-11">
+        <ul class="nav nav-pills ">
             <li class="active">
                 @if(Route::currentRouteName() != 'units.create')
                 <a href="#1a" data-toggle="tab">Unit</a>
@@ -38,8 +38,13 @@
             <li><a href="#4a" data-toggle="tab">Resident</a>
             </li>
             @endif
-
         </ul>
+    </div>
+    <div class="col-md-1">
+    <a href="{{ url('units') }}" class="btn btn-success">Back</a>
+        
+    </div>
+</div>
 
             <div class="tab-pane active" id="1a">
 

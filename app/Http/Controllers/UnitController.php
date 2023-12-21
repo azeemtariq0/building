@@ -113,8 +113,8 @@ class UnitController extends Controller
         );
 
 
-        return redirect()->route('units.index')
-            ->with('success', 'Unit created successfully');
+        return redirect()->route('units.edit',$unit->id)
+        ->with('success', 'Unit created successfully');
     }
 
     public function show($id) {
