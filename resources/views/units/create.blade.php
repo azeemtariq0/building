@@ -529,8 +529,7 @@
     </div>
 </div>
 <script>
-    $('#myForm').on('submit', function(e) {
-        e.preventDefault();
+    $('#myForm').on('submit', function() {
 
         var formData = $(this).serialize();
 
@@ -541,7 +540,8 @@
             data: formData,
             success: function(response) {
                 // Handle success response
-                toastr.success('unit owner updated Succesfully');;
+                toastr.success('unit owner updated Succesfully');
+                
             },
             error: function(error) {
                 // Handle error
