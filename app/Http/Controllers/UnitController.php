@@ -130,7 +130,7 @@ class UnitController extends Controller
         $units = Unit::get();
 
         $data['page_management'] = array(
-            'page_title' => 'View Unit Owner',
+            'page_title' => 'View Unit',
             'slug' => 'General Setup',
             'title' => 'View Unit ',
             'title1' => 'View Unit Owner',
@@ -156,7 +156,7 @@ class UnitController extends Controller
         $units = Unit::get();
 
         $data['page_management'] = array(
-            'page_title' => 'Edit Unit Owner',
+            'page_title' => 'Edit Unit',
             'slug' => 'General Setup',
             'title' => 'Edit Unit ',
             'title1' => 'Edit Unit Owner',
