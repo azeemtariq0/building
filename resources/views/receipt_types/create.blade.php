@@ -16,7 +16,12 @@
    </div>
    @endif
 
-
+   <div class="colm-md-12 row" style="margin-top: 10px;">
+    <div class="col-md-11"></div>
+    <div class="col-md-1  ">
+        <a href="{{ url('receipt_types') }}" class="btn btn-success mt-3">Back</a>
+    </div>
+</div>
    <div id="content" class="padding-20">
 
     <div class="row">
