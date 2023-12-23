@@ -38,9 +38,7 @@ label.error {
 
 <div class="colm-md-12 row" style="margin-top: 10px;">
     <div class="col-md-11"></div>
-    <div class="col-md-1  ">
-        <a href="{{ url('projects') }}" class="btn btn-success mt-3">Back</a>
-    </div>
+    
 </div>
    <div id="content" class="padding-20">
 
@@ -51,7 +49,10 @@ label.error {
             <!-- ------ -->
             <div class="panel panel-default">
                 <div class="panel-heading panel-heading-transparent">
-                    <strong>{{ $data['page_management']['title'] ?? "" }}</strong>
+                    <strong>{{ $data['page_management']['title'] ?? "" }} 
+                    
+            </strong>
+
                 </div>
 
                 <div class="panel-body">

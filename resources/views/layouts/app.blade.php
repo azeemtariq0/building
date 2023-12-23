@@ -89,16 +89,22 @@ if(!empty($data)){
 
                     <?php 
                     echo $page_title;
-                ?></h1>
+                ?>
+            @if(Request::segment(2)!='')
+                <a href="{{url('/').'/'.\Request::segment(1)}}" class="btn btn-default" style="float: right;"><i class="fa fa-undo"></i> Back</a>
+                @endif
+
+            </h1>
                 <ol class="breadcrumb">
                     <li><a href="{{url('/').'/'.\Request::segment(1)}}">{{ucfirst(\Request::segment(1));}}</a></li>
                     @if(!empty($slug))
-                    <li class="active">{{ucfirst($slug);}}</li>
+                    <li class="active">{{ucfirst($slug);}} </li>
                     @endif
 
 
-                    
+                      
                 </ol>
+
             </header>
             <!-- /page title -->
 
