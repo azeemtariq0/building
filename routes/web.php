@@ -19,7 +19,8 @@ use App\Http\Controllers\StaffTypeController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UnitOwnerController;
 use App\Http\Controllers\ExpenseController;
-  
+use App\Http\Controllers\apploginController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -66,7 +67,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     //  GET ROUTES
     Route::get('get-units', [ReceiptController::class, 'getUnits']);
-    Route::get('/all_block/{id}', [BlockController::class, 'allBlocks']);
+    Route::get('/all_block/{id}', [BlockControllerre::class, 'allBlocks']);
     Route::get('/freez-voucher/{id}', [ExpenseController::class, 'feezExpenseVoucher']);
 
 
@@ -75,5 +76,22 @@ Route::group(['middleware' => ['auth']], function() {
 
 
 });
+
+
+
+
+
+Route::get('/api/login', [apploginController::class, 'login']);
+
+Route::middleware('cors')->group(function(){
+Route::group(['middleware' => ['jwt.verify']],   function() {
+    
+Route::any('api/logout', [apploginController::class, 'logout']);
+
+
+    });
+});
+
+
 
 // Route::get('users', [UserController::class, 'index'])->name('users.index');

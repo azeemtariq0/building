@@ -178,6 +178,9 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Yajra\Oci8\Oci8ServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+
+        
 
 
     ],
@@ -235,8 +238,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
-        'PDF' => Elibyy\TCPDF\Facades\TCPDF::class
-
+        'PDF' => Elibyy\TCPDF\Facades\TCPDF::class,
+        'JWTAuth'=>Tymon\JWTAuth\Facades\JWTAuth::class,
 
     ],
 
