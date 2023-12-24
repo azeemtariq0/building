@@ -57,6 +57,7 @@
                     <option value="1">Approved</option>
                   </select>
                 </div>
+                @can('receipt-approve')
                  <div class="col-md-3 mb-2" style="margin-bottom: 10px">
                      <strong>Total Amount</strong>
                   <input class="form-control" id="total_amount" readonly value="0" />
@@ -65,6 +66,7 @@
                 <div class="col-md-3 mb-2" style="margin-bottom: 10px;margin-top: 20px">
                   <button class="btn btn-success mt-4" onclick="payAmount()"  />Pay Amount</div>
                 </div>
+                @endcan
                   <table class="table table-striped table-bordered table-hover table-responsive data-table" width="100%">
                     <thead>
                       <tr>
@@ -77,7 +79,11 @@
                         <th> Unit </th>
                         <th>Description</th>
                         <th width="8%">Amount </th>
-                        <th width="11%"><input type="checkbox" onclick="checkAll(this)" id="all_check">  Approved ? </th> 
+                        <th width="11%">
+                           @can('receipt-approve')
+                          <input type="checkbox" onclick="checkAll(this)" id="all_check"> 
+                          @endcan
+                           Approved ? </th> 
                         <th width="10%">Action</th>
                       </tr>
                     </thead>
