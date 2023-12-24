@@ -28,6 +28,9 @@ class ReceiptController extends Controller
         if ($request->ajax()) {
 
        $data = Receipt::with('project', 'block', 'unit','unit_category','receipt_type');
+       if($request->status!=""){
+         $data = $data->where('status',$request->status); 
+        }
         $data = $data->get(); 
         return Datatables::of($data)
 
@@ -52,7 +55,7 @@ class ReceiptController extends Controller
           $text='';
           if(empty($checked)){
             if (auth()->user()->haspermissionTo('receipt-approve') ){
-                    $text = '<input class="toggle-switch right"  data-id="'.$row->id.'"  type="checkbox" '.$checked.'>';
+                    $text = '<input class="toggle-switch_pending right" data-amount="'.$row->amount.'" data-id="'.$row->id.'" onclick="calculteAmount()"  type="checkbox" '.$checked.'>';
             }else{
                  $text = '<span class="text-success btn btn-default btn-xs"><strong>PENDING</strong><span>';
              }
@@ -239,18 +242,18 @@ class ReceiptController extends Controller
     }
     public function updateStatus(Request $request){
         $_return = ['success'=>true,'msg'=>'Status Updated Successfully!'];
-        $receipt = receipt::where('id',$request->id)->first();
 
-        // Unit Outsatding Amount update
-        $unit = Unit::where('id',$receipt->unit_id)->first();
-        $unit->out_standing_amount =  $unit->out_standing_amount  - $receipt->amount;
-        $unit->update();
-
-         // Receipt Status update
-        $receipt->status =  $request->status;
-        $receipt->update();
-
-
+        foreach ($request->id as $key => $value) {
+            $receipt = receipt::where('id',$value)->first();
+            // Unit Outsatding Amount update
+            $unit = Unit::where('id',$receipt->unit_id)->first();
+            $unit->out_standing_amount =  $unit->out_standing_amount  - $receipt->amount;
+            $unit->update();
+            // Receipt Status update
+            $receipt->status = 1;
+            $receipt->update();
+          
+        }
         echo json_encode($_return);
         exit;
     }

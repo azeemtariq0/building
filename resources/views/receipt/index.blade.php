@@ -49,7 +49,22 @@
 
                 <!-- panel content -->
                 <div class="panel-body">
-
+                  <div class="col-md-3 mb-2" style="margin-bottom: 10px">
+                     <strong>Status</strong>
+                  <select class="form-control select2" id="status">
+                    <option value="">All</option>
+                    <option value="0">Pending</option>
+                    <option value="1">Approved</option>
+                  </select>
+                </div>
+                 <div class="col-md-3 mb-2" style="margin-bottom: 10px">
+                     <strong>Total Amount</strong>
+                  <input class="form-control" id="total_amount" readonly value="0" />
+                  <label class="text-danger _error"></label>
+                </div>
+                <div class="col-md-3 mb-2" style="margin-bottom: 10px;margin-top: 20px">
+                  <button class="btn btn-success mt-4" onclick="payAmount()"  />Pay Amount</div>
+                </div>
                   <table class="table table-striped table-bordered table-hover table-responsive data-table" width="100%">
                     <thead>
                       <tr>
@@ -62,7 +77,7 @@
                         <th> Unit </th>
                         <th>Description</th>
                         <th width="8%">Amount </th>
-                        <th width="5%"> Approved ? </th> 
+                        <th width="11%"><input type="checkbox" onclick="checkAll(this)" id="all_check">  Approved ? </th> 
                         <th width="10%">Action</th>
                       </tr>
                     </thead>
@@ -191,6 +206,26 @@
           <!-- Include jQuery library -->
 
           <script>
+
+
+    function checkAll(obj){
+       if($(obj).is(':checked')==true){
+         $('table .toggle-switch_pending').prop('checked',true);
+
+       }else{
+        $('table .toggle-switch_pending').prop('checked',false);
+       }
+       calculteAmount();
+    }
+
+    function calculteAmount(){
+      var amount = 0;
+        $.each( $('table .toggle-switch_pending:checked'),function(i,elem){
+          amount += parseInt($(elem).data('amount'));
+        });
+      $('#total_amount').val(amount || 0);
+    }
+
     $(document).ready(function() {
       reloadTbl();
          $("#form1").submit(function (event) {
@@ -261,6 +296,47 @@
 
     });
 
+        function  payAmount(){
+          $('._error').text();
+          if($('#total_amount').val()==0){
+              $('._error').text('Total amount should be greater than zero!');
+          }else{
+            swal({
+               title: "Are you sure?",
+               text: "Do you want to approve this Receipt ?",
+               icon: "warning",
+               buttons: true,
+               dangerMode: true,
+             })
+            .then((willConfirm) => {
+                 if (willConfirm) {
+
+                  var ids = {};
+                  $.each( $('table .toggle-switch_pending:checked'),function(i,elem){
+                    ids[i] = $(elem).data('id');
+                  });
+                    $.ajax({
+                      type: 'POST',
+                      url: '{{ url("receipt-status") }}', // Update with your actual endpoint
+                      data: {
+                          id: ids,
+                          _token: $("input[name=_token").val()
+                      },
+                       dataType: "json",
+                       encode: true,
+                      success: function(response) {
+
+                            toastr.success(response.msg);
+                            reloadTbl(true);
+                      },
+                      error: function(error) {
+                          console.log(error);
+                      }
+                  });
+                 }
+          });
+        }
+}
 
     function rowDetele(event) {
          event.preventDefault(); // prevent form submit
@@ -287,7 +363,15 @@
                var table = $('.data-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('receipts.index') }}",
+                ajax: {
+                  url: "{{ route('receipts.index') }}",
+                   complete: function (data) {
+                        calculteAmount();
+                        $('#all_check').prop('checked',false);
+                    },
+                data: function (d) {
+                    d.status = $('#status').val()
+                }},
                 columns: [
                 {data: 'receipt_code', receipt_code: 'name'},
                 {data: 'receipt_type.receipt_name', receipt_code: 'name'},
@@ -297,10 +381,11 @@
                 {data: 'unit.unit_name', unit_id: 'name'},
                 {data: 'description', description: 'name'},
                 {data: 'amount', amount: 'name'},
-                {data: 'status', status: 'name'},
+                {data: 'status', status: 'name',orderable: false, searchable: false},
                 {data: 'action', description: 'action', orderable: false, searchable: false},
                 ]
               });
+                
              }
 
               function ediReceipt(obj,id){
@@ -322,6 +407,10 @@
                     $("#myModal input,select,textarea").attr('readonly',true);
                   }
             }
+
+            $(document).on('change','#status',function() {
+                $('table th:eq(1)').trigger('click');
+            });
 
 </script>
           @endsection
