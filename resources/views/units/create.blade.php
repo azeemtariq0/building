@@ -342,7 +342,7 @@
                                             <div class="row">
                                                 <div class="form-group">
                                                     <div class="col-md-10 col-sm-10">
-                                                        <label>Is Tenant &nbsp&nbsp</label>
+                                                        <label>Is Resident &nbsp&nbsp</label>
                                                         <input type="checkbox" <?= (@$unit_owner->is_tenant == 1) ? 'checked' : '' ?> name="is_tenant" value="1">
                                                     </div>
 
@@ -529,8 +529,8 @@
     </div>
 </div>
 <script>
-    $('#myForm').on('submit', function() {
-
+    $('#myForm').on('submit', function(e) {
+         e.preventDefault();
         var formData = $(this).serialize();
 
         // Your AJAX request
