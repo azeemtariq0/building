@@ -77,7 +77,7 @@ class ReceiptController extends Controller
 
              if (auth()->user()->haspermissionTo('receipt-view') ){
                  $btn.= "<button type='button' onclick='ediReceipt(this,".$row->id.")' 
-                   data-outstanding_amount ='".$row->unit->out_standing_amount."' 
+                   data-outstanding_amount ='".(@$row->unit->out_standing_amount || 0)."' 
                    data-monthly_amount ='".$row->unit_category->monthly_amount."' 
                    data-resident ='".(@$row->unit->unit_name.' / '.@$row->project->project_name.' / '.@$owner['current_tenant'])."' 
                    data-amount ='".$row->amount."'
