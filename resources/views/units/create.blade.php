@@ -19,9 +19,8 @@
 
     <div id="content" class="padding-20">
         <div class="tab-content clearfix">
-<div class="row">
-    <div class="col-md-11">
-        <ul class="nav nav-pills ">
+
+                    <ul class="nav nav-pills ">
             <li class="active">
                 @if(Route::currentRouteName() != 'units.create')
                 <a href="#1a" data-toggle="tab">Unit</a>
@@ -38,13 +37,8 @@
             <li><a href="#4a" data-toggle="tab">Resident</a>
             </li>
             @endif
+
         </ul>
-    </div>
-    <div class="col-md-1">
-    <a href="{{ url('units') }}" class="btn btn-success">Back</a>
-        
-    </div>
-</div>
 
             <div class="tab-pane active" id="1a">
 
@@ -342,7 +336,7 @@
                                             <div class="row">
                                                 <div class="form-group">
                                                     <div class="col-md-10 col-sm-10">
-                                                        <label>Is Tenant &nbsp&nbsp</label>
+                                                        <label>Is Resident &nbsp&nbsp</label>
                                                         <input type="checkbox" <?= (@$unit_owner->is_tenant == 1) ? 'checked' : '' ?> name="is_tenant" value="1">
                                                     </div>
 
@@ -529,8 +523,8 @@
     </div>
 </div>
 <script>
-    $('#myForm').on('submit', function() {
-
+    $('#myForm').on('submit', function(e) {
+         e.preventDefault();
         var formData = $(this).serialize();
 
         // Your AJAX request
@@ -540,8 +534,7 @@
             data: formData,
             success: function(response) {
                 // Handle success response
-                toastr.success('unit owner updated Succesfully');
-                
+                toastr.success('unit owner updated Succesfully');;
             },
             error: function(error) {
                 // Handle error

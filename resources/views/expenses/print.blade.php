@@ -205,7 +205,7 @@ tr:hover .cut { opacity: 1; }
 			<h2>Expense </h2>
 			<address contenteditable>
 				
-				<p>Project / Block: {{ @$project['project_name']}}  <?php if(@$block['block_name']){  echo ' / '.$block['block_name'] } ?></p>
+				<p>Project / Block: {{ @$project['project_name']}}  <?php if(@$block['block_name']){  echo ' / '.$block['block_name']; } ?></p>
 			</address>
 		    <?php } ?>
 			<table class="meta">

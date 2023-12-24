@@ -36,10 +36,7 @@ label.error {
 }
     </style>
 
-<div class="colm-md-12 row" style="margin-top: 10px;">
-    <div class="col-md-11"></div>
-    
-</div>
+
    <div id="content" class="padding-20">
 
     <div class="row">
@@ -49,10 +46,7 @@ label.error {
             <!-- ------ -->
             <div class="panel panel-default">
                 <div class="panel-heading panel-heading-transparent">
-                    <strong>{{ $data['page_management']['title'] ?? "" }} 
-                    
-            </strong>
-
+                    <strong>{{ $data['page_management']['title'] ?? "" }}</strong>
                 </div>
 
                 <div class="panel-body">

@@ -312,7 +312,7 @@
                text: "Do you want to approve this Receipt ?",
                icon: "warning",
                buttons: true,
-               dangerMode: true,
+               dangerMode: false,
              })
             .then((willConfirm) => {
                  if (willConfirm) {

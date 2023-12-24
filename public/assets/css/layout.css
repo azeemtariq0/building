@@ -294,7 +294,7 @@ body.boxed #asidebg {
 		font-weight: 300;
 		text-shadow: #fff 0 1px;
 		font-size: 22px;
-		/*line-height: 22px;*/
+		line-height: 22px;
 		width: 100%;
 		margin: 2px 0;
 	}
