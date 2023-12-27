@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Block;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\Project;
@@ -187,8 +188,19 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        DB::table("as_projects")->where('id',$id)->delete();
-        return redirect()->route('projects.index')
-        ->with('success','Project deleted successfully');
+        $block = Block::where('project_id', $id)->count();
+
+        if($block == 0)
+        {
+            DB::table("as_projects")->where('id',$id)->delete();
+            return redirect()->route('projects.index')
+            ->with('success','Project deleted successfully');
+        }
+        else{
+            return redirect()->route('projects.index')
+            ->with('error','BLock exist for this Id,project can not be deleted ');
+        }
+        
+       
     }
 }
