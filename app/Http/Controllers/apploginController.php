@@ -7,10 +7,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+
+use App\Models\Receipt;
+use App\Models\Unit;
+use App\Models\Block;
+use App\Models\Project;
+use App\Models\UnitCategory;
+use App\Models\ReceiptType;
+
+
 use Validator;
 use DB;
 
-class apploginController extends Controller
+class ApploginController extends Controller
 {
     
     public function login(Request $request)
@@ -30,13 +39,14 @@ class apploginController extends Controller
             $checkPass = Hash::check($request->password, $email->password);
             if ($checkPass) {
                 try {
-                    $token = JWTAuth::attempt($credentials);
+                    // $token = JWTAuth::attempt($credentials);
 
-                    if (!$token) {
-                        return response()->json(['error' => 'Invalid Login credentials'], 400);
-                    } else {
-                        return response()->json(['token' => $token], 200);
-                    }
+                    // if (!$token) {
+                        // return response()->json(['error' => 'Invalid Login credentials'], 400);
+                    // } else {
+                        return response()->json(['success'=>true,'status'=>200,'response' => $email], 200);
+                        // return response()->json(['token' => $token], 200);
+                    // }
 
                 } catch (JWTException $e) {
                     return response()->json(['error' => $e->getMessage()], 400);
@@ -50,6 +60,14 @@ class apploginController extends Controller
         return response()->json(['token' => $token], 200);
     }
 
+    public function getReceipts(Request $request){
+        $data = Receipt::with('project', 'block', 'unit','unit_category','receipt_type');
+        $data = $data->where('status',0); 
+        $data = $data->paginate(10); 
+         return response()->json(['success'=>true,'status'=>200,'response' => $data], 200);
+
+
+    }
     public function logout(Request $request)
     {
         $validate = Validator::make($request->only('token'), [
@@ -59,7 +77,7 @@ class apploginController extends Controller
             return response()->json($validate->errors(), 400);
         }
         try {
-            JWTAuth::invalidate($request->token);
+            // JWTAuth::invalidate($request->token);
             return response()->json(['success' => 'logged out successfully'], 200);
         } catch (JWTException $ex) {
             return response()->json($ex->getMessage(), 400);

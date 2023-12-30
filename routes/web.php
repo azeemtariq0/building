@@ -19,7 +19,8 @@ use App\Http\Controllers\StaffTypeController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UnitOwnerController;
 use App\Http\Controllers\ExpenseController;
-use App\Http\Controllers\apploginController;
+use App\Http\Controllers\ApploginController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,7 +68,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     //  GET ROUTES
     Route::get('get-units', [ReceiptController::class, 'getUnits']);
-    Route::get('/all_block/{id}', [BlockControllerre::class, 'allBlocks']);
+    Route::get('/all_block/{id}', [BlockController::class, 'allBlocks']);
     Route::get('/freez-voucher/{id}', [ExpenseController::class, 'feezExpenseVoucher']);
 
 
@@ -75,22 +76,28 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/print-expense/{id}', [ExpenseController::class, 'printView']);
 
 
-});
-
-
-
-
-
-Route::get('/api/login', [apploginController::class, 'login']);
-
-Route::middleware('cors')->group(function(){
-Route::group(['middleware' => ['jwt.verify']],   function() {
+    //  Report Controller
     
-Route::any('api/logout', [apploginController::class, 'logout']);
+    Route::get('/monthly-report', [ReportController::class, 'index']);
+    Route::get('/print-report', [ReportController::class, 'printReport']);
 
-
-    });
 });
+
+
+
+
+
+Route::get('/api/login', [ApploginController::class, 'login']);
+Route::get('/api/get-receipts', [ApploginController::class, 'getReceipts']);
+Route::any('api/logout', [apploginController::class, 'logout']);
+// Route::middleware('cors')->group(function(){
+// Route::group(['middleware' => ['jwt.verify']],   function() {
+    
+// Route::any('api/logout', [apploginController::class, 'logout']);
+
+
+//     });
+// });
 
 
 
