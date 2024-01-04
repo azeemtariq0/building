@@ -1336,9 +1336,10 @@ body.boxed #asidebg {
 	*/
 	label.error {
 		font-size:12px;
-		color: #fff;
+		color: red;
+
 		display: inline-block;
-		background-color: #ee9393;
+		/*background-color: #ee9393;*/
 	}
 
 	/* force background colors */
@@ -2598,4 +2599,10 @@ a.btn.btn-sm.btn-success.btn_create_new_user {
 /*datatable role label on homepage*/
 span.label.label-success.label-role {
     margin-left: 5px;
+}
+.select2-container .select2-selection--single{
+height: 37px !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 33px !important;
 }

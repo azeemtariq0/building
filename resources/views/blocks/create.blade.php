@@ -33,7 +33,7 @@
                   @if(!isset($block->id))
                    {!! Form::open(array('route' => 'blocks.store','method'=>'POST', 'id' => 'block_form')) !!}
                    @else
-                     {!! Form::model($block, ['method' => 'PATCH','route' => ['blocks.update', $block->id]]) !!}
+                     {!! Form::model($block, ['id' => 'block_form','method' => 'PATCH','route' => ['blocks.update', $block->id]]) !!}
                     @endif
                    <!-- <form class="validate" action="{{ route('users.store')}}" method="post" data-success="Sent! Thank you!" data-toastr-position="top-right"> -->
                     <fieldset>
@@ -55,9 +55,9 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Project *</label>
-                                           <select class=" form-control" {{$isView}} id="project_id"  required name="project_id">
-                                            <option value=""></option>
+                                            <label>Project Name<span class="text-danger">*</span></label>
+                                           <select class=" form-control web-select2" {{$isView}} id="project_id"  required name="project_id">
+                                            <option value="">Selec an option</option>
                                             @foreach($projects as $value)
                                                <option {{  $value->id== @$block->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
                                                @endforeach
@@ -72,7 +72,7 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Block Name *</label>
+                                            <label>Block Name <span class="text-danger">*</span></label>
                                             {!! Form::text('block_name', null, array('placeholder' => 'Block Name','class' => 'form-control', 'id' => 'block_name',$isView=>true)) !!}
                                         </div>
 

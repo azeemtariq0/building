@@ -41,3 +41,7 @@
             });
     }
 
+  $.validator.addMethod("noSpace", function(value, element) {
+      return value.trim() !== ""; // Check if the value contains non-space characters.
+    }, "This field cannot be blank or contain only spaces.");
+    

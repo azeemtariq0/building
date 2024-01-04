@@ -33,7 +33,7 @@
                   @if(!isset($expenseCategory->id))
                    {!! Form::open(array('route' => 'expense_categories.store','method'=>'POST' , 'id' => 'expense_form')) !!}
                    @else
-                     {!! Form::model($expenseCategory, ['method' => 'PATCH','route' => ['expense_categories.update', $expenseCategory->id ]]) !!}
+                     {!! Form::model($expenseCategory, ['id' => 'expense_form','method' => 'PATCH','route' => ['expense_categories.update', $expenseCategory->id ]]) !!}
                     @endif
                    <!-- <form class="validate" action="{{ route('users.store')}}" method="post" data-success="Sent! Thank you!" data-toastr-position="top-right"> -->
                     <fieldset>

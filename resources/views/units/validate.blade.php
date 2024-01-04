@@ -38,10 +38,144 @@
         }
         
       },
+        errorPlacement: function(label, element) {
+      if (element.hasClass('web-select2')) {
+        label.insertAfter(element.next('.select2-container')).addClass('mt-2 text-danger');
+        select2label = label
+      } else {
+        label.addClass('mt-2 text-danger');
+        label.insertAfter(element);
+      }
+      },
+      highlight: function(element) {
+        $(element).parent().addClass('is-invalid')
+        $(element).addClass('form-control-danger')
+      },
+      success: function(label, element) {
+        $(element).parent().removeClass('is-invalid')
+        $(element).removeClass('form-control-danger')
+        label.remove();
+      },
       submitHandler: function(form) {
         // Handle the form submission if it's valid
         $('#units_form' ).submit();
       }
     });
+
+
+  $("#resident").validate({
+      rules: {
+        resident_name: {
+          required: true,
+          noSpace: true // Use the custom rule
+        },
+        resident_cnic: {
+          required: true,
+        },
+        resident_mobile:{
+          required: true,
+          noSpace: true // Use the custom rule
+        },
+        email:{
+          required: true,
+          noSpace: true
+        }
+      },
+      messages: {
+        resident_mobile: {
+          required: "Resident Mobile field is required."
+        }, 
+        resident_name: {
+          required: "Resident Name field is required."
+        },resident_cnic: {
+          required: "Resident CNIC field is required."
+        }, 
+        email: {
+          required: "Email field is required."
+        }
+        
+      },
+        errorPlacement: function(label, element) {
+      if (element.hasClass('web-select2')) {
+        label.insertAfter(element.next('.select2-container')).addClass('mt-2 text-danger');
+        select2label = label
+      } else {
+        label.addClass('mt-2 text-danger');
+        label.insertAfter(element);
+      }
+      },
+      highlight: function(element) {
+        $(element).parent().addClass('is-invalid')
+        $(element).addClass('form-control-danger')
+      },
+      success: function(label, element) {
+        $(element).parent().removeClass('is-invalid')
+        $(element).removeClass('form-control-danger')
+        label.remove();
+      }
+    });
+
+
+  $("#unit_owner_form").validate({
+      rules: {
+        owner_name: {
+          required: true,
+          noSpace: true // Use the custom rule
+        },
+        owner_cnic: {
+          required: true,
+        },
+        mobile_no: {
+          required: true,
+        },
+        owner_since:{
+          required: true,
+          noSpace: true // Use the custom rule
+        },
+        current_tenant:{
+          required: true,
+          noSpace: true
+        }
+      },
+      messages: {
+        owner_name: {
+          required: "Owner Name field is required."
+        }, 
+        owner_mobile: {
+          required: "Owner Mobile field is required."
+        }, 
+        owner_since: {
+          required: "Owner Since field is required."
+        }, 
+        current_tenant: {
+          required: "Current Resident is required."
+        },
+        owner_cnic: {
+          required: "Owner CNIC / NICOP / Passport is required."
+        }
+        
+      },
+        errorPlacement: function(label, element) {
+      if (element.hasClass('web-select2')) {
+        label.insertAfter(element.next('.select2-container')).addClass('mt-2 text-danger');
+        select2label = label
+      } else {
+        label.addClass('mt-2 text-danger');
+        label.insertAfter(element);
+      }
+      },
+      highlight: function(element) {
+        $(element).parent().addClass('is-invalid')
+        $(element).addClass('form-control-danger')
+      },
+      success: function(label, element) {
+        $(element).parent().removeClass('is-invalid')
+        $(element).removeClass('form-control-danger')
+        label.remove();
+      }
+    });
+
+
+
   });
 </script>

@@ -78,8 +78,12 @@ Route::group(['middleware' => ['auth']], function() {
 
     //  Report Controller
     
-    Route::get('/monthly-report', [ReportController::class, 'index']);
-    Route::get('/print-report', [ReportController::class, 'printReport']);
+    Route::get('/defaulter-report', [ReportController::class, 'defaulter']);
+     Route::get('/defaulter-print', [ReportController::class, 'defaulterPrint']);
+
+
+    Route::get('/receivable-report', [ReportController::class, 'index']);
+    Route::get('/receivable-print', [ReportController::class, 'printReport']);
 
 });
 
@@ -90,6 +94,11 @@ Route::group(['middleware' => ['auth']], function() {
 Route::get('/api/login', [ApploginController::class, 'login']);
 Route::get('/api/get-receipts', [ApploginController::class, 'getReceipts']);
 Route::any('api/logout', [apploginController::class, 'logout']);
+
+
+// Process For Fee Receivable
+Route::get('/api/receivable-process', [ApploginController::class, 'receivableProcess']);
+
 // Route::middleware('cors')->group(function(){
 // Route::group(['middleware' => ['jwt.verify']],   function() {
     

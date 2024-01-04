@@ -38,13 +38,18 @@ if(!empty($data)){
         <link href="{{ asset('assets/css/layout.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/plugins/toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/css/color_scheme/green.css') }}" rel="stylesheet" type="text/css" id="color_scheme" />
-
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
         <!-- Call Jquery -->
         <script type="text/javascript" src="{{ asset('assets/plugins/jquery/jquery-2.1.4.min.js')}}"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
         <script type="text/javascript" src="{{ asset('assets/plugins/toastr/toastr.js')}}"></script>
         <script type="text/javascript" src="{{ asset('assets/plugins\sweetAlert\sweetalert.min.js')}}"></script>
         <script type="text/javascript" src="{{ asset('assets/plugins\bootstrap.datepicker/js/bootstrap-datepicker.min.js')}}"></script>
+       <script src="{{ asset('assets/plugins/jquery/jquery-validate.min.js') }}"></script>
 
 
         @yield('pagelevelstyle')
@@ -134,6 +139,8 @@ if(!empty($data)){
             });    
          } 
          datepicker();
+
+        $('.web-select2').select2();
 
         // $('.alert').delay(5000).fadeOut('slow');
     </script>

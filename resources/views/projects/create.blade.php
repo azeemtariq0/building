@@ -17,14 +17,7 @@
    @endif
 
    <style>
-form label {
-  display: inline-block;
-  width: 100px;
-}
 
-form div {
-  margin-bottom: 10px;
-}
 
 .error {
   color: red;
@@ -53,7 +46,7 @@ label.error {
                 @if(!isset($project->id))
                    {!! Form::open(array('route' => 'projects.store','method'=>'POST' , 'id' => 'first_form')) !!}
                 @else
-                   {!! Form::model($project, ['method' => 'PATCH','route' => ['projects.update', $project->id]]) !!}
+                   {!! Form::model($project, [ 'id' => 'first_form','method' => 'PATCH','route' => ['projects.update', $project->id]]) !!}
                 @endif
                    <!-- <form class="validate" action="{{ route('users.store')}}" method="post" data-success="Sent! Thank you!" data-toastr-position="top-right"> -->
                     <fieldset>
@@ -76,7 +69,7 @@ label.error {
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Project Name </label>
+                                            <label>Project Name <span class="text-danger">*</span></label>
                                             {!! Form::text('project_name', null, array('placeholder' => 'Project Name','class' => 'form-control' , 'id' => 'project_name',$isView=>true)) !!}
                                         </div>
 
@@ -97,7 +90,7 @@ label.error {
                                      <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Union Name *</label>
+                                            <label>Union Name <span class="text-danger">*</span></label>
                                             {!! Form::text('union_name', null, array('placeholder' => 'Union Name','class' => 'form-control',$isView=>true)) !!}
                                         </div>
 
@@ -156,7 +149,7 @@ label.error {
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Union Accountant </label>
+                                            <label>Union Accountant <span class="text-danger">*</span></label>
                                             {!! Form::text('union_accountant', null, array('placeholder' => 'Union Accountant','class' => 'form-control' , 'id' => 'union_accountant',$isView=>true)) !!}
                                         </div>
 

@@ -68,6 +68,21 @@ class ApploginController extends Controller
 
 
     }
+    public function receivableProcess(){
+        $current_date = date('Y-m-d',strtotime(NOW()));
+        $day = (int) date('d',strtotime(NOW()));
+        $units = Unit::with('unit_category')->where('last_updated','!=',$current_date)->get();
+        $count = 0;
+        foreach ($units as $key => $value) {
+            
+            $unit = Unit::where('id',$value->id)->first();
+            $unit->out_standing_amount = $unit->out_standing_amount+$value->unit_category->monthly_amount ?? 0;
+            $unit->last_updated =  $current_date;
+            $unit->update();
+            $count++;
+        }
+        return response()->json(['success'=>true,'status'=>200,'response' => ['no_of_record'=>$count]], 200);
+    }
     public function logout(Request $request)
     {
         $validate = Validator::make($request->only('token'), [

@@ -56,7 +56,7 @@
                                 @if(!isset($unit->id))
                                 {!! Form::open(array('route' => 'units.store','method'=>'POST', 'id' => 'units_form')) !!}
                                 @else
-                                {!! Form::model($unit, ['method' => 'PATCH','route' => ['units.update', $unit->id]]) !!}
+                                {!! Form::model($unit, ['id'=>'units_form','method' => 'PATCH','route' => ['units.update', $unit->id]]) !!}
                                 @endif
                                 <!-- <form class="validate" action="{{ route('users.store')}}" method="post" data-success="Sent! Thank you!" data-toastr-position="top-right"> -->
                                 <fieldset>
@@ -90,7 +90,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-10 col-sm-10">
                                                     <label>Project *</label>
-                                                    <select id="project" class=" form-control" {{$isView}} required name="project_id">
+                                                    <select id="project" class=" form-control web-select2" {{$isView}} required name="project_id">
                                                         <option value=""></option>
                                                         @foreach($projects as $value)
                                                         <option id="projects" {{  $value->id== @$unit->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
@@ -110,7 +110,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-10 col-sm-10">
                                                     <label>Block *</label>
-                                                    <select id="block" class=" form-control" required name="block_id" {{$isView}}>
+                                                    <select id="block" class="web-select2 form-control" required name="block_id" {{$isView}}>
                                                         <option value="">Select block</option>
 
                                                     </select>
@@ -122,7 +122,7 @@
                                             <div class="form-group">
                                                 <div class="col-md-10 col-sm-10">
                                                     <label>Unit Category *</label>
-                                                    <select class=" form-control" required name="unit_category_id" {{$isView}}>
+                                                    <select class=" form-control web-select2" required name="unit_category_id" {{$isView}}>
                                                         <option></option>
                                                         @foreach($unit_categories as $value)
                                                         <option {{  $value->id== @$unit->unit_category_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->unit_cat_name}}</option>
@@ -219,7 +219,7 @@
                             </div>
 
                             <div class="panel-body">
-                                <form id="myForm">
+                                <form id="unit_owner_form">
                                     @csrf
                                     <!-- <form class="validate" action="{{ route('users.store')}}" method="post" data-success="Sent! Thank you!" data-toastr-position="top-right"> -->
                                     <fieldset>
@@ -523,11 +523,12 @@
     </div>
 </div>
 <script>
-    $('#myForm').on('submit', function(e) {
+    $('#unit_owner_form').on('submit', function(e) {
          e.preventDefault();
         var formData = $(this).serialize();
-
+      
         // Your AJAX request
+        if($("#unit_owner_form").valid()){
         $.ajax({
             type: "POST",
             url: '<?= env('APP_BASEURL') ?>/unit_owners_update',
@@ -541,28 +542,91 @@
                 toastr.error('something wrong');;
             }
         });
+       }
     });
 </script>
 <script>
     $('#resident').on('submit', function(e) {
         e.preventDefault();
 
-        var formData = $(this).serialize();
 
+          $("#resident").validate({
+      rules: {
+        resident_name: {
+          required: true,
+          noSpace: true // Use the custom rule
+        },
+        identity_type: {
+          required: true,
+        },
+        resident_cnic: {
+          required: true,
+        },
+        project_id: {
+          required: true,
+        },
+        resident_mobile:{
+          required: true,
+          noSpace: true // Use the custom rule
+        },
+        email:{
+          required: true,
+          noSpace: true
+        }
+      },
+      messages: {
+        resident_mobile: {
+          required: "Resident Mobile field is required."
+        }, 
+        resident_name: {
+          required: "Resident Mobile field is required."
+        }, 
+        email: {
+          required: "Email field is required."
+        }
+        
+      },
+        errorPlacement: function(label, element) {
+      if (element.hasClass('web-select2')) {
+        label.insertAfter(element.next('.select2-container')).addClass('mt-2 text-danger');
+        select2label = label
+      } else {
+        label.addClass('mt-2 text-danger');
+        label.insertAfter(element);
+      }
+      },
+      highlight: function(element) {
+        $(element).parent().addClass('is-invalid')
+        $(element).addClass('form-control-danger')
+      },
+      success: function(label, element) {
+        $(element).parent().removeClass('is-invalid')
+        $(element).removeClass('form-control-danger')
+        label.remove();
+      },
+      submitHandler: function(form) {
+        // Handle the form submission if it's valid
+        $('#units_form' ).submit();
+      }
+    });
+
+        var formData = $(this).serialize();
+       if($("#resident").valid()==true){
         // Your AJAX request
-        $.ajax({
-            type: "POST",
-            url: '<?= env('APP_BASEURL') ?>/resideny-update',
-            data: formData,
-            success: function(response) {
-                // Handle success response
-                toastr.success('resident owner updated Succesfully');;
-            },
-            error: function(error) {
-                // Handle error
-                toastr.error('something wrong');;
-            }
-        });
+            $.ajax({
+                type: "POST",
+                url: '<?= env('APP_BASEURL') ?>/resideny-update',
+                data: formData,
+                success: function(response) {
+                    // Handle success response
+                    toastr.success('resident owner updated Succesfully');;
+                },
+                error: function(error) {
+                    // Handle error
+                    toastr.error('something wrong');;
+                }
+            });
+        }
     });
 </script>
 <script>

@@ -26,22 +26,29 @@
             <!-- ------ -->
             <div class="panel panel-default">
                 <div class="panel-heading panel-heading-transparent">
-                    <strong>Monthly Report</strong>
+                    <strong>Receivable Report</strong>
                 </div>
 
                 <div class="panel-body">
 
-                   {!! Form::open(array('url' => 'print-report','method'=>'GET')) !!}
-                   <!-- <form class="validate" action="{{ route('users.store')}}" method="post" data-success="Sent! Thank you!" data-toastr-position="top-right"> -->
+                   {!! Form::open(array('url' => 'receivable-print','method'=>'GET','target'=>'_blank')) !!}
                     <fieldset>
-                        <!-- required [php action request] -->
                         <input type="hidden" name="action" value="contact_send" />
 
                         <div class="row">
                             <div class="form-group">
-                                <div class="col-md-10 col-sm-10">
-                                    <label>Permission Name *</label>
-                                    {!! Form::text('name', null, array('placeholder' => 'Permission Name','class' => 'form-control')) !!}
+                                <div class="col-md-10 col-sm-10 mt-4">
+                                    <label>From Date*</label>
+                                    {!! Form::text('from_date', null, array('placeholder' => 'dd-mm-yyyy','class' => 'form-control datepicker','required'=>true ,'autocomplete'=>'off')) !!}
+                                </div>
+
+                            </div>
+                            </div>
+                            <div class="row">
+                            <div class="form-group mt-4" >
+                                <div class="col-md-10 col-sm-10 ">
+                                    <label>To Date *</label>
+                                   {!! Form::text('to_date', null, array('placeholder' => 'dd-mm-yyyy','class' => 'form-control datepicker','required'=>true ,'autocomplete'=>'off')) !!}
                                 </div>
 
                             </div>

@@ -152,3 +152,18 @@ CREATE
 END;
 $$
 DELIMITER ;
+
+
+ALTER TABLE `as_units`   
+  ADD COLUMN `last_update` DATE NULL AFTER `ob_date`;
+
+
+CREATE TABLE `as_generate_receivables` (  
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `unit_id` INT(11),
+  `last_amount` VARCHAR(255),
+  `actual_amount` VARCHAR(255),
+  `date` VARCHAR(255),
+  `create_at` DATETIME,
+  PRIMARY KEY (`id`)
+);

@@ -112,6 +112,29 @@
 
                         </li>
 
+
+                        <li class="{{ in_array(\Request::segment(1),array(
+                             'receivable-report',
+                             'defaulter-report',
+                              )) ? 'active' : '' }}">
+                             <a href="#">
+                                    <i class="fa fa-menu-arrow pull-right"></i>
+                                    <i class="main-icon fa fa-users"></i> <span>Reports</span>
+                                </a>
+                             
+
+                              <ul>
+                                @can('receivable-report') 
+                                    <li class="{{ \Request::segment(1) == 'receivable-report' ? 'active' : '' }}"><a href="{{ route('reports.index') }}">Receivable Report</a></li>
+                                    @endcan
+
+                                    <li class="{{ \Request::segment(1) == 'defaulter-report' ? 'active' : '' }}"><a href="{{ url('defaulter-report') }}">Defaulter Report</a></li>
+                                       
+                                  
+                                </ul>
+
+                        </li>
+
                            
                              <li ><!-- dashboard -->
                                 <a class="dashboard" href="{{ route('logout') }}"

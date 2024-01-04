@@ -7,6 +7,12 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 define('LARAVEL_START', microtime(true));
 
+if (version_compare(PHP_VERSION, '8.1', '<')) {
+  echo "PHP Version 8.1 is required for this Project!.";
+  exit;
+}
+
+
 /*
 |--------------------------------------------------------------------------
 | Check If The Application Is Under Maintenance
