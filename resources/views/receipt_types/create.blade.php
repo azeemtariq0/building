@@ -56,7 +56,7 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Receipt Name *</label>
+                                            <label>Receipt Type <span class="text-danger">*</span></label>
                                             {!! Form::text('receipt_name', null, array('placeholder' => 'Receipt Name','class' => 'form-control' , 'id' => 'receipt_name',$isView=>1)) !!}
                                         </div>
 

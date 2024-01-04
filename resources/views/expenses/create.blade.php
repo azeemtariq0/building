@@ -52,7 +52,7 @@
                   @if(!isset($expense->id))
                    {!! Form::open(array('route' => 'expenses.store','method'=>'POST' , 'id' => 'expense_form')) !!}
                    @else
-                     {!! Form::model($expense, ['method' => 'PATCH','route' => ['expenses.update', $expense->id ]]) !!}
+                     {!! Form::model($expense, ['id' => 'expense_form','method' => 'PATCH','route' => ['expenses.update', $expense->id ]]) !!}
                     @endif
                    <!-- <form class="validate" action="{{ route('users.store')}}" method="post" data-success="Sent! Thank you!" data-toastr-position="top-right"> -->
                     <fieldset>
@@ -90,8 +90,8 @@
                                     <div class="form-group">
                                             <label class="col-md-3">Exp Category</label>
                                             <div class="col-md-8">
-                                            <select class=" form-control" {{$isView}} required id="exp_category_id" name="exp_category_id">
-                                                <option></option>
+                                            <select class=" form-control web-select2" {{$isView}} required id="exp_category_id" name="exp_category_id">
+                                                <option value="">Select an option</option>
                                                 
                                                 @foreach($exp_categories as $value)
                                                 <option {{  $value->id== @$expense->exp_category_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->exp_name}}</option>
@@ -120,7 +120,7 @@
                                     <div class="form-group">
                                             <label class="col-md-3">Project Name</label>
                                             <div class="col-md-8">
-                                            <select class=" form-control"   {{$isView}} name="project_id" id="projects">
+                                            <select class=" form-control web-select2"   {{$isView}} name="project_id" id="projects">
                                                 <option></option>
                                                 
                                                 @foreach($projects as $value)
@@ -137,7 +137,7 @@
                                     <div class="form-group">
                                             <label class="col-md-2">Block</label>
                                             <div class="col-md-9">
-                                           <select class=" form-control sl"  {{$isView}}  name="block_id"  id="block">
+                                           <select class=" form-control web-select2"  {{$isView}}  name="block_id"  id="block">
                                                 <option value=""></option>
                                             </select>
                                        

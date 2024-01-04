@@ -56,7 +56,7 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Expense Category  *</label>
+                                            <label>Expense Category  <span class="text-danger">*</span></label>
                                             {!! Form::text('exp_name', null, array('placeholder' => 'Exp Category Name','class' => 'form-control', 'id' => 'exp_name',$isView=>1)) !!}
                                         </div>
 
@@ -78,11 +78,11 @@
 
 
                         </fieldset>
-                        @if($isView=="")
+                         @if($isView=="")
                         <div class="row">
-                            <div class="col-md-2">
-                                <button type="submit" class="btn btn-3d btn-teal btn-sm btn-block margin-top-30">
-                                   Submit
+                           <div class="col-md-12">
+                                <button type="submit" class="btn btn-info margin-top-30 pull-right">
+                                   <i class="fa fa-check"></i> Save
                                </button>
                            </div>
                        </div>
