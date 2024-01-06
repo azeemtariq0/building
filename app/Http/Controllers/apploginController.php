@@ -14,6 +14,7 @@ use App\Models\Block;
 use App\Models\Project;
 use App\Models\UnitCategory;
 use App\Models\ReceiptType;
+use App\Models\GenerateReceivable;
 
 
 use Validator;
@@ -76,9 +77,18 @@ class ApploginController extends Controller
         foreach ($units as $key => $value) {
             
             $unit = Unit::where('id',$value->id)->first();
+            $last_amount = $unit->out_standing_amount;
+            $actual_amount = $last_amount + +$value->unit_category->monthly_amount ?? 0;
             $unit->out_standing_amount = $unit->out_standing_amount+$value->unit_category->monthly_amount ?? 0;
             $unit->last_updated =  $current_date;
             $unit->update();
+
+            GenerateReceivable::create([
+                                'unit_id'=>$value->id,
+                                'last_amount'=> $last_amount,
+                                'actual_amount'=> $actual_amount,
+                                'date'=>$current_date,
+            ]);
             $count++;
         }
         return response()->json(['success'=>true,'status'=>200,'response' => ['no_of_record'=>$count]], 200);

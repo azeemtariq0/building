@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Receipt;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use App\Models\Unit;
 use App\Models\Block;
 use App\Models\Project;
@@ -259,15 +260,43 @@ class ReceiptController extends Controller
     }
     public function printView($id){
 
+     $data = Receipt::with('project', 'block', 'unit','unit_category','receipt_type')->where('id',$id)->first();
+     $data['owner']  = UnitOwner::select('*')->where('unit_id',$data->unit->id)->first();
+// dd($data);
+   // return view('receipt.receipt', $data);
+   // return view('receipt.receipt_whatsapp', $data);
+        $filename = 'hello_world4.pdf';
+        $filename = 'hello_world4.pdf';
+        $data['title'] = 'Hello world!'
+        ;
+        $view = \View::make('receipt.receipt_whatsapp', $data);
+        // return $view->render();
+        $html = $view->render();
+
+        $pdf = new PDF;
+        // $pdf::SetMargins(15, .5, 15);
+        $pdf::SetMargins(2, .5, 2);
+        $pdf::SetTitle('Receipt Voucher');
+        $pdf::AddPage('P', array(200,300));
+        // $pdf::AddPage('L', array(200,300));
+        $pdf::writeHTML($html, true, false, true, false, '');
+        $pdf::Output($filename);
+        // $pdf::Output($_SERVER['DOCUMENT_ROOT']."/assets/images/".$filename,'F');
+    }
+
+
+
+     public function DownloadReceipt($id){
+
 
      $data = Receipt::with('project', 'block', 'unit','unit_category','receipt_type')->where('id',$id)->first();
      $data['owner']  = UnitOwner::select('*')->where('unit_id',$data->unit->id)->first();
 // dd($data);
-   return view('receipt.receipt', $data);
-        $filename = 'hello_world.pdf';
+   // return view('receipt.receipt', $data);
+        $filename = 'hello_world4.pdf';
         $data['title'] = 'Hello world!'
         ;
-        $view = \View::make('receipt.pdf2', $data);
+        $view = \View::make('receipt.receipt', $data);
         // return $view->render();
         $html = $view->render();
 
@@ -275,9 +304,14 @@ class ReceiptController extends Controller
         $pdf::SetTitle('Receipt Voucher');
         $pdf::AddPage();
         $pdf::writeHTML($html, true, false, true, false, '');
-        $pdf::Output($filename);
+        $pdf::Output($_SERVER['DOCUMENT_ROOT']."/assets/images/".$filename,'F');
 
     }
+
+
+
+    
+
     
 
 
