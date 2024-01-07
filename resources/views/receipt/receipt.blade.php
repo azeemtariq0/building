@@ -201,7 +201,7 @@ tr:hover .cut { opacity: 1; }
 		<article>
 			<h1>Recipient</h1>
 			<address contenteditable>
-				<p>Residentail : {{ @$owner->owner_name}}</p>
+				<p>Resident : {{ @$owner->owner_name}}</p>
 				<p>Address : {{ @$owner->owner_address}}</p>
 				<p>Mobile No : {{ @$owner->mobile_no}}</p>
 

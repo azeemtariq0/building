@@ -135,7 +135,7 @@ article{background-color: blue;width:100%;}
 	        
 		</article>
     <h4 class="mt-4" style="margin-top: 20px;font-size: 18px;color: #707070;text-decoration: underline;">* <?= ($status==0) ? 'Provisional' : 'Actual' ?> Receipt </h4>
- <h4 class="mt-4" style="margin-top: 20px;font-size: 18px;color: #707070;text-decoration: underline;text-align: center;"> Receipt Detail</h4>
+ <!-- <h4 class="mt-4" style="margin-top: 20px;font-size: 18px;color: #707070;text-decoration: underline;text-align: center;"> Receipt Detail</h4> -->
 			
 			<table class="inventory" style="margin-top: 20px">
 				<thead>
@@ -169,10 +169,8 @@ article{background-color: blue;width:100%;}
 				</tr>
 			</table>
 		<aside style="margin-bottom: 5px">
-			<h1 class="left"><span  >Notes :</span></h1>
-			<div >
-				<p>Maintenance Charges is due at the start of each Month. Therefore it is an advance amount.</p>
-			</div>
+			<h2 class="left"><span  >Notes :</span></h2>
+				<span>Maintenance Charges is due at the start of each Month. Therefore it is an advance amount.</span>
 		</aside>
        
 	
