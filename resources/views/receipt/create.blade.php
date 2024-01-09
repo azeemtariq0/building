@@ -15,7 +15,10 @@
        </ul>
    </div>
    @endif
+ @php 
 
+ $project_id = auth()->user()->project_id;
+ @endphp
 
    <div id="content" class="padding-20">
 
@@ -49,7 +52,7 @@
                                             <select id="filter_project_id"  class=" form-control select2" required name="project_id">
                                                 <option value=""></option>
                                                 @foreach($projects as $value)
-                                                <option id="projects" {{  $value->id== @$unit->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
+                                                <option id="projects" {{  $value->id== @$project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
                                                 @endforeach
 
 

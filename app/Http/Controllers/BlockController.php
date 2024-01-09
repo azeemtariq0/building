@@ -36,7 +36,12 @@ class BlockController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Block::with('project')->select('*');
+            $data = Block::with('project');
+            if(auth()->user()->project_id){
+                 $data->where('project_id',auth()->user()->project_id);
+            }
+             $data =  $data->select('*');
+            
             return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('created_at', function($model){
@@ -77,7 +82,11 @@ class BlockController extends Controller
 
         // $permission = Permission::get();
         // return view('permissions.create',compact('permission'));
-         $projects  =  Project::get();
+         $projects  = new Project;
+        if(auth()->user()->project_id){
+               $projects =  $projects->where('id',auth()->user()->project_id);
+        }
+        $projects = $projects ->get();
         $data['page_management'] = array(
             'page_title' => 'Create New Block',
             'slug' => 'Create'

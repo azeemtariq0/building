@@ -28,7 +28,12 @@ class UnitController extends Controller
 
     public function index(Request $request){
         if ($request->ajax()) {
-            $data = Unit::with('project','block','unit_category')->get();
+              $data = Unit::with('project','block','unit_category');
+            if(auth()->user()->project_id){
+                 $data->where('project_id',auth()->user()->project_id);
+            }
+             $data =  $data->select('*');
+
             return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('created_at', function($model){

@@ -71,6 +71,23 @@
                             </div>
 
 
+                              <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-12 col-sm-12">
+                                        <label>Project Name</label>
+                                                    <select id="project" class=" form-control web-select2"  name="project_id">
+                                                        <option value=""></option>
+                                                        @foreach($projects as $value)
+                                                        <option id="projects" {{  $value->id== @$user->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
+                                                        @endforeach
+
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-md-6 col-sm-6">
@@ -89,11 +106,11 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-3d btn-teal btn-xlg btn-block margin-top-30">
-                                   Submit
-                                </button>
-                            </div>
-                        </div>
+                                <button type="submit" class="btn btn-info margin-top-30 pull-right">
+                                   <i class="fa fa-check"></i> Save
+                               </button>
+                           </div>
+                       </div>
 
                         {!! Form::close() !!}
 

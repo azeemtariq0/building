@@ -31,6 +31,9 @@ class ReceiptController extends Controller
        if($request->status!=""){
          $data = $data->where('status',$request->status); 
         }
+        if(auth()->user()->project_id){
+               $data =  $data->where('project_id',auth()->user()->project_id);
+        }
         $data = $data->get(); 
         return Datatables::of($data)
 
@@ -73,7 +76,9 @@ class ReceiptController extends Controller
             if($row->status == 1){
                $btn.= "<a target='_blank' href='".url('print-receipt/'.$row->id)."' class='btn btn-default btn-sm'><i class='fa fa-print'></i></a>";
            }
+            
 
+              $btn.= "<a target='_blank' href='".url('print-receipt-new/'.$row->id)."' class='btn btn-default btn-sm'><i class='fa fa-print'></i></a>";
 
              if (auth()->user()->haspermissionTo('receipt-view') ){
                  $btn.= "<button type='button' onclick='ediReceipt(this,".$row->id.")' 
@@ -144,7 +149,11 @@ class ReceiptController extends Controller
     {
         $blocks  =  Block::get();
         $unit_categories  =  UnitCategory::get();
-        $projects  =  Project::get();
+        $projects  =  new Project;
+        if(auth()->user()->project_id){
+               $projects =  $projects->where('id',auth()->user()->project_id);
+        }
+        $projects = $projects->get();
         $receiptType = ReceiptType::get();
         $data['page_management'] = array(
             'page_title' => 'Create New Receipt',
@@ -159,7 +168,10 @@ class ReceiptController extends Controller
 
         if ($request->ajax()) {
         $units = Unit::with('project','block','unit_category');
-         if(!empty($request->project_id)){
+        if(auth()->user()->project_id){
+               $units->where('project_id',auth()->user()->project_id);
+        }
+        else if(!empty($request->project_id)){
                 $units->where('project_id',$request->project_id);
         }
         if(!empty($request->block_id)){
@@ -285,7 +297,7 @@ class ReceiptController extends Controller
 
 
 
-     public function DownloadReceipt($id){
+     public function downloadReceipt($id){
 
      $data = Receipt::with('project', 'block', 'unit','unit_category','receipt_type')->where('id',$id)->first();
      $data['owner']  = UnitOwner::select('*')->where('unit_id',$data->unit->id)->first();

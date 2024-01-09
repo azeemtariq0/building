@@ -88,7 +88,7 @@
         resident_name: {
           required: "Resident Name field is required."
         },resident_cnic: {
-          required: "Resident CNIC field is required."
+          required: "Resident CNIC / NICOP / Passport is required."
         }, 
         email: {
           required: "Email field is required."

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Arr;
+use App\Models\Project;
 use Hash;
 use DB;
 use DataTables, Form;
@@ -32,7 +33,9 @@ class UserController extends Controller
                  $roles = "";
                  if(!empty($row->getRoleNames())){
                     foreach($row->getRoleNames() as $v){
+                        if($v!="View Only"){
                         $roles.= '<span class="label label-success label-role current_role"> '.$v.' </span> ';
+                         }
                         if (auth()->user()->haspermissionTo('user-edit') )
                         $roles.= ' &nbsp <span class="label label-info label-role assign_role" data-id='.$row->id.'>  Assign Role <i class="fa fa-edit"></> </span>';
                     }
@@ -86,12 +89,13 @@ class UserController extends Controller
 
     public function create()
     {
+        $projects  =  Project::get();
         $data['page_management'] = array(
                 'page_title' => 'Create New User',
                 'slug'=>'Create',
             );
         $roles = Role::pluck('name','name')->all();
-        return view('users.create',compact('roles', 'data'));
+        return view('users.create',compact('roles', 'projects','data'));
     }
     
     /**
@@ -143,6 +147,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $projects  =  Project::get();
         $user = User::find($id);
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
@@ -152,7 +157,7 @@ class UserController extends Controller
                 'slug'=>'Edit',
             );
         
-        return view('users.edit',compact('user','roles','userRole', 'data'));
+        return view('users.edit',compact('user','roles','userRole', 'projects','data'));
     }
     
     /**

@@ -58,7 +58,7 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Unit Category *</label>
+                                            <label>Unit Category <span class="text-danger">*</span></label>
                                             {!! Form::text('unit_cat_name', null, array('placeholder' => 'Unit Cat Name','class' => 'form-control' , 'id' => 'unit_cat_name',$isView=>1)) !!}
                                         </div>
 
@@ -68,7 +68,7 @@
                                 <div class="row">
                                     <div class="form-group">
                                         <div class="col-md-10 col-sm-10">
-                                            <label>Monthly Amount *</label>
+                                            <label>Monthly Amount <span class="text-danger">*</span></label>
                                             {!! Form::text('monthly_amount', null, array('placeholder' => 'Monthly Amount','class' => 'form-control', 'id' => 'monthly_amount',$isView=>1)) !!}
                                         </div>
 

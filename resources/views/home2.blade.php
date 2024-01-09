@@ -22,7 +22,7 @@
 
 
                     <!-- BOXES -->
-                    <div class="row">
+                    <div class="row" style="display: none;">
 
                         <!-- Feedback Box -->
                         <div class="col-md-3 col-sm-6">
@@ -120,11 +120,11 @@
                     <!-- /BOXES -->
 
 
-                     <div id="panel-1" class="panel panel-default" style="display:none; ;">
+                     <div id="panel-1" class="panel panel-default" style="display:; ;">
                                 <div class="panel-heading">
                                     <span class="title elipsis">
-                                        <strong>SALES SUMMARY</strong> <!-- panel title -->
-                                        <small class="size-12 weight-300 text-mutted hidden-xs">2015</small>
+                                        <strong>RECEIPT SUMMARY</strong> <!-- panel title -->
+                                        <small class="size-12 weight-300 text-mutted hidden-xs">2024</small>
                                     </span>
 
                                     <!-- right options -->
@@ -142,7 +142,7 @@
                                      <ul class="easypiecharts list-unstyled">
                                 <li class="clearfix">
                                     <span class="stat-number">2</span>
-                                    <span class="stat-title">Total Projects</span>
+                                    <span class="stat-title">Total Receipts</span>
 
                                     <span class="easyPieChart" data-percent="86" data-easing="easeOutBounce" data-barColor="#F8CB00" data-trackColor="#dddddd" data-scaleColor="#dddddd" data-size="60" data-lineWidth="4">
                                         <span class="percent"></span>
@@ -150,7 +150,7 @@
                                 </li>
                                 <li class="clearfix">
                                     <span class="stat-number">2</span>
-                                    <span class="stat-title">Total Blocks</span>
+                                    <span class="stat-title">Provisional Receipts</span>
 
                                     <span class="easyPieChart" data-percent="59.83" data-easing="easeOutBounce" data-barColor="#F86C6B" data-trackColor="#dddddd" data-scaleColor="#dddddd" data-size="60" data-lineWidth="4">
                                         <span class="percent"></span>
@@ -158,7 +158,7 @@
                                 </li>
                                 <li class="clearfix">
                                    <span class="stat-number">2</span>
-                                    <span class="stat-title">Total Unit Catagories</span>
+                                    <span class="stat-title">Actual Receipts</span>
 
                                     <span class="easyPieChart" data-percent="12" data-easing="easeOutBounce" data-barColor="#98AD4E" data-trackColor="#dddddd" data-scaleColor="#dddddd" data-size="60" data-lineWidth="4">
                                         <span class="percent"></span>
@@ -166,7 +166,7 @@
                                 </li>
                                 <li class="clearfix">
                                     <span class="stat-number">5</span>
-                                    <span class="stat-title">Total Blocks</span>
+                                    <span class="stat-title">Total Units</span>
 
                                     <span class="easyPieChart" data-percent="97" data-easing="easeOutBounce" data-barColor="#0058AA" data-trackColor="#dddddd" data-scaleColor="#dddddd" data-size="60" data-lineWidth="4">
                                         <span class="percent"></span>

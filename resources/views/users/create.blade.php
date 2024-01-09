@@ -41,7 +41,7 @@
 
                             <div class="row">
                                 <div class="form-group">
-                                    <div class="col-md-6 col-sm-6">
+                                    <div class="col-md-12 col-sm-12">
                                         <label>Name *</label>
 <!--                                         <input type="text" name="contact[first_name]" value="" class="form-control required"> -->
                                         {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control required')) !!}
@@ -52,10 +52,26 @@
 
                             <div class="row">
                                 <div class="form-group">
-                                    <div class="col-md-6 col-sm-6">
+                                    <div class="col-md-12 col-sm-12">
                                         <label>Email *</label>
                                         <!-- <input type="email" name="contact[email]" value="" class="form-control required"> -->
                                         {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control required')) !!}
+                                    </div>
+                                </div>
+                            </div>
+
+                              <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-12 col-sm-12">
+                                        <label>Project Name</label>
+                                                    <select id="project" class=" form-control web-select2"  name="project_id">
+                                                        <option value=""></option>
+                                                        @foreach($projects as $value)
+                                                        <option id="projects" {{  $value->id== @$unit->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
+                                                        @endforeach
+
+
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -83,7 +99,7 @@
                                    <i class="fa fa-check"></i> Save
                                </button>
                            </div>
-                        </div>
+                       </div>
 
                         {!! Form::close() !!}
 

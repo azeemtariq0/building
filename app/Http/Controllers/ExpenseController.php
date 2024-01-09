@@ -25,7 +25,11 @@ class ExpenseController extends Controller
 
     public function index(Request $request){
         if ($request->ajax()) {
-            $data = Expense::with('expense_category','expense_detail')->get();
+            $data = Expense::with('expense_category','expense_detail');
+            if(auth()->user()->project_id){
+                 $data->where('project_id',auth()->user()->project_id);
+            }
+             $data =  $data->select('*');
             return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('exp_date', function($model){
@@ -67,7 +71,11 @@ class ExpenseController extends Controller
 
     public function create(){
          $exp_categories  =  ExpenseCategory::get();
-         $projects  =  Project::get();
+         $projects  = new Project;
+        if(auth()->user()->project_id){
+               $projects =  $projects->where('id',auth()->user()->project_id);
+        }
+        $projects = $projects->get();
 
          $data['page_management'] = array(
             'page_title' => 'Add Expense Voucher',

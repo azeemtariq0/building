@@ -125,10 +125,12 @@
 
                               <ul>
                                 @can('receivable-report') 
-                                    <li class="{{ \Request::segment(1) == 'receivable-report' ? 'active' : '' }}"><a href="{{ route('reports.index') }}">Receivable Report</a></li>
-                                    @endcan
+                                    <li class="{{ \Request::segment(1) == 'receivable-report' ? 'active' : '' }}"><a href="{{ url('receivable-report') }}">Receivable Report</a></li>
+                                @endcan
 
+                                @can('defaulter-report') 
                                     <li class="{{ \Request::segment(1) == 'defaulter-report' ? 'active' : '' }}"><a href="{{ url('defaulter-report') }}">Defaulter Report</a></li>
+                                @endcan
                                        
                                   
                                 </ul>

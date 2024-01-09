@@ -120,11 +120,11 @@
                                     <div class="form-group">
                                             <label class="col-md-3">Project Name</label>
                                             <div class="col-md-8">
-                                            <select class=" form-control web-select2"   {{$isView}} name="project_id" id="projects">
+                                            <select class=" form-control web-select2"  {{$isView}} name="project_id" id="projects">
                                                 <option></option>
                                                 
                                                 @foreach($projects as $value)
-                                                <option id="projects" {{  $value->id== @$expense->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
+                                                <option id="projects" {{  ($value->id== @$expense->project_id )? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
                                                 @endforeach
                                             </select>
                                             

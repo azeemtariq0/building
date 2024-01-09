@@ -19,12 +19,23 @@ class ReportController extends Controller
 {
    
     public function index(Request $request){
+
+
+       $blocks  =  Block::get();
+        $unit_categories  =  UnitCategory::get();
+        $projects  =  new Project;
+        if(auth()->user()->project_id){
+                $projects = $projects->where('id',auth()->user()->project_id);
+        }
+        $projects  = $projects->get();
+
+
         $data['page_management'] = array(
             'page_title' => 'Receivable List Report',
             'slug' => 'Report',
             'title' => 'Receivable List Report'
         );
-        return view('reports.receivable', compact('data'));
+        return view('reports.receivable', compact('data','blocks','unit_categories','projects'));
     }
     public function printReportw(Request $request){
         // return view('reports/monthly_print');
@@ -49,24 +60,47 @@ public function defaulter(){
             'slug' => 'Report',
             'title' => 'Defaulter List Report'
         );
-        return view('reports.defaulter', compact('data'));
+
+       $blocks  =  Block::get();
+        $unit_categories  =  UnitCategory::get();
+        $projects  =  new Project;
+        if(auth()->user()->project_id){
+                $projects = $projects->where('id',auth()->user()->project_id);
+        }
+        $projects  = $projects->get();
+
+        return view('reports.defaulter', compact('data','blocks','unit_categories','projects'));
 
 }
 public function printReport(Request $request){
 
+
         $units = Unit::with('project','block','unit_category');
-         if(!empty($request->project_id)){
+
+        if(auth()->user()->project_id){
+               $units->where('project_id',auth()->user()->project_id);
+        }
+        else if(!empty($request->project_id)){
                 $units->where('project_id',$request->project_id);
         }
         if(!empty($request->block_id)){
                 $units->where('block_id',$request->block_id);
         }
-        if(!empty($request->unit_category_id)){ 
+        if(!empty($request->unit_category_id)){
                 $units->where('unit_category_id',$request->unit_category_id);
         }
+
         $rows = $units->get();
 
-       $customPaper = array(0,0,567.00,283.80);
+
+
+        if(empty($rows->toArray())){
+            return back()
+            ->withErrors(['' => 'Record Not Found!']);
+             
+        }
+
+        $customPaper = array(0,0,567.00,283.80);
         $pdf = new Receivable('landscape', PDF_UNIT,$customPaper, true, 'UTF-8', false);
         // $pdf::setPaper($customPaper, 'landscape');
 
@@ -140,7 +174,10 @@ public function printReport(Request $request){
     public function defaulterPrint(Request $request){
 
         $units = Unit::with('project','block','unit_category');
-         if(!empty($request->project_id)){
+        if(auth()->user()->project_id){
+               $units->where('project_id',auth()->user()->project_id);
+        }
+        else if(!empty($request->project_id)){
                 $units->where('project_id',$request->project_id);
         }
         if(!empty($request->block_id)){
@@ -150,6 +187,12 @@ public function printReport(Request $request){
                 $units->where('unit_category_id',$request->unit_category_id);
         }
         $rows = $units->get();
+
+        if(empty($rows->toArray())){
+            return back()
+            ->withErrors(['' => 'Record Not Found!']);    
+        }
+
 
         $customPaper = array(0,0,567.00,283.80);
         $pdf = new Defaulter('landscape', PDF_UNIT,$customPaper, true, 'UTF-8', false);

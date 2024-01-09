@@ -73,6 +73,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 
     Route::get('/print-receipt/{id}', [ReceiptController::class, 'printView']);
+    Route::get('/print-receipt-new/{id}', [ReceiptController::class, 'downloadReceipt']);
     Route::get('/print-expense/{id}', [ExpenseController::class, 'printView']);
 
 

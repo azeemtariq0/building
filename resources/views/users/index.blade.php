@@ -91,7 +91,9 @@
                                     <select required name="role_id" id="role_id" class=" form-control col-md-12">
                                       <option value=""></option>
                                       @foreach($role_list as $value)
-                                       <option value="{{$value->id}}">{{$value->name}}</option>
+                                        @if($value->name!='View Only')
+                                          <option value="{{$value->id}}">{{$value->name}}</option>
+                                        @endif
                                       @endforeach
                                      
                                     </select>
