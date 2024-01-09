@@ -124,7 +124,7 @@
                                                 <option></option>
                                                 
                                                 @foreach($projects as $value)
-                                                <option id="projects" {{  ($value->id== @$expense->project_id )? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
+                                                <option {{  ($value->id== @$expense->project_id )? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
                                                 @endforeach
                                             </select>
                                             
@@ -291,7 +291,7 @@ removeDiv();
     });
    </script>
 </div>
-@include('expense_categories/validate')
+@include('expenses/validate')
 @endsection
 
 

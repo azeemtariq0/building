@@ -42,7 +42,7 @@
                                                     <select id="project" class=" form-control web-select2"  name="project_id">
                                                         <option value=""></option>
                                                         @foreach($projects as $value)
-                                                        <option id="projects" {{  $value->id== @$unit->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
+                                                        <option  {{  $value->id== @$unit->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
                                                         @endforeach
 
 
@@ -101,6 +101,7 @@
                 dataType: 'json',
                 success: function(data) {
                     $('#block').empty();
+                     $('#block').append('<option value=""></option>');
                     $.each(data, function(key, value) {
                         $('#block').append('<option value="' + value.id + '">' + value.block_name + '</option>');
                     });

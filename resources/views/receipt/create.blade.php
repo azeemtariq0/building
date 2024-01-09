@@ -49,10 +49,10 @@
                                     <div class="form-group">
                                         <div class="col-md-3">
                                             <label>Project *</label>
-                                            <select id="filter_project_id"  class=" form-control select2" required name="project_id">
+                                            <select id="filter_project_id"  class=" form-control web-select2" required name="project_id">
                                                 <option value=""></option>
                                                 @foreach($projects as $value)
-                                                <option id="projects" {{  $value->id== @$project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
+                                                <option  {{  $value->id== @$project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
                                                 @endforeach
 
 
@@ -315,6 +315,7 @@
 
           </script>
 </div>
+@include('receipt/validate')
 @endsection
 
 

@@ -7,7 +7,7 @@
     
     $("#expense_form").validate({
        rules: {
-        "exp_category_id": {
+        "receipt_type_id": {
              required: true,
              minlength: 5,
              digits: true
@@ -32,7 +32,7 @@
         label.remove();
       },
       submitHandler: function(form) {
-        $('#expense_form').submit();
+       
       }
     });
   });
