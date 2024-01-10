@@ -2,7 +2,12 @@
 
 @section('content')
 
-@php $total_receipt = ($receitStatus['approved']+$receitStatus['pending']) ?? 0;    @endphp
+@php 
+$total_receipt = ($receitStatus['approved']+$receitStatus['pending']) ?? 0;
+$pending = ($total_receipt!=0) ? 100*$receitStatus['pending']/$total_receipt   : 0;
+$approved = ($total_receipt!=0) ? 100*$receitStatus['approved']/$total_receipt   : 0;
+
+    @endphp
 
 <div id="content" class="dashboard padding-20">
 
@@ -43,7 +48,7 @@
                                     <span class="stat-number">{{ $receitStatus['pending'] }}</span>
                                     <span class="stat-title">Pending Receipts</span>
 
-                                    <span class="easyPieChart" data-percent="{{ 100*$receitStatus['pending']/($total_receipt ?? 1) }}" data-easing="easeOutBounce" data-barColor="#F86C6B" data-trackColor="#dddddd" data-scaleColor="#dddddd" data-size="60" data-lineWidth="4">
+                                    <span class="easyPieChart" data-percent="{{ $pending }}" data-easing="easeOutBounce" data-barColor="#F86C6B" data-trackColor="#dddddd" data-scaleColor="#dddddd" data-size="60" data-lineWidth="4">
                                         <span class="percent"></span>
                                     </span> 
                                 </li>
@@ -51,7 +56,7 @@
                                    <span class="stat-number">{{ $receitStatus['approved'] }}</span>
                                     <span class="stat-title">Approved Receipts</span>
 
-                                    <span class="easyPieChart" data-percent="{{ 100*$receitStatus['approved']/($total_receipt ?? 1) }}" data-easing="easeOutBounce" data-barColor="#98AD4E" data-trackColor="#dddddd" data-scaleColor="#dddddd" data-size="60" data-lineWidth="4">
+                                    <span class="easyPieChart" data-percent="{{ $approved }}" data-easing="easeOutBounce" data-barColor="#98AD4E" data-trackColor="#dddddd" data-scaleColor="#dddddd" data-size="60" data-lineWidth="4">
                                         <span class="percent"></span>
                                     </span> 
                                 </li>

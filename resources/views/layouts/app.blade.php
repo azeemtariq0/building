@@ -1,4 +1,4 @@
-<?php 
+  <?php 
 $page_title = "";
 $slug = "";
 if(!empty($data)){
@@ -34,8 +34,8 @@ if(!empty($data)){
         <link href="{{ asset('assets/plugins/bootstrap.datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
 
         <!-- THEME CSS -->
-        <link href="{{ asset('assets/css/essentials.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('assets/css/layout.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/css/essentials.css?v=1.1') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/css/layout.css?v=1.1') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/plugins/toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/css/color_scheme/green.css') }}" rel="stylesheet" type="text/css" id="color_scheme" />
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -126,8 +126,8 @@ if(!empty($data)){
     <!--     <script type="text/javascript">var plugin_path = 'assets/plugins/';</script> -->
     <script type="text/javascript">var plugin_path = "{{ URL::asset('assets/plugins/') }}/";</script>
     <!-- <script type="text/javascript" src="{{ asset('assets/plugins/jquery/jquery-2.1.4.min.js')}}"></script> -->
-    <script type="text/javascript" src="{{ asset('assets/js/app.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('assets/js/custom.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/app.js?v=1.1') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/custom.js?v=1.1') }}"></script>
     <!-- STYLESWITCHER - REMOVE -->
     <!-- <script async type="text/javascript" src="{{ asset('assets/plugins/styleswitcher/styleswitcher.js') }}"></script> -->
     <script>
