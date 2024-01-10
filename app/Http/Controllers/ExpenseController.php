@@ -99,7 +99,7 @@ class ExpenseController extends Controller
                 'block_id' => $request->block_id,
                 'exp_category_id' => $request->exp_category_id,
                 'payee' => $request->payee,
-                'exp_date' => $request->exp_date,
+                'exp_date' => date('Y-m-d',strtotime($request->exp_date)),
                 'year' => date('y'),
                 'remarks' => $request->remarks,
                 'created_by' =>  auth()->user()->id
@@ -167,7 +167,7 @@ class ExpenseController extends Controller
         $expense->block_id = $request->block_id;
         $expense->exp_category_id = $request->exp_category_id;
         $expense->payee = $request->payee;
-        $expense->exp_date = $request->exp_date;
+        $expense->exp_date = date('Y-m-d',strtotime($request->exp_date));
         $expense->remarks = $request->remarks;
         $expense->updated_by =  auth()->user()->id;
         $expense->save();
