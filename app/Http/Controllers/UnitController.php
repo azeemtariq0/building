@@ -100,7 +100,8 @@ class UnitController extends Controller
                 'unit_size' => $request->input('unit_size'),
                 'unit_size_type_id' => $request->input('unit_size_type_id'),
                 'out_standing_amount' => $request->input('out_standing_amount'),
-                'ob_date' => $request->input('ob_date')
+                'ob_date' => $request->input('ob_date'),
+                'created_by' => auth()->user()->id,
             ]
         );
         
@@ -188,7 +189,7 @@ class UnitController extends Controller
         $unitCategory->unit_size_type_id = $request->input('unit_size_type_id');
         $unitCategory->out_standing_amount = $request->input('out_standing_amount');
         $unitCategory->ob_date = $request->input('ob_date');
-
+        $unitCategory->updated_by =  auth()->user()->id;
         $unitCategory->save();
         return redirect()->route('units.index')
         ->with('success','Unit updated successfully');
@@ -212,6 +213,7 @@ class UnitController extends Controller
         $unitOwner->current_tenant = $request->input('current_tenant');
         $unitOwner->owner_address = $request->input('owner_address');
         $unitOwner->is_tenant = $request->input('is_tenant') ? 1 : 0;
+        $unitOwner->updated_by =  auth()->user()->id;
 
 
          $unitOwner =  $unitOwner->save();
@@ -225,6 +227,7 @@ class UnitController extends Controller
             $resident->resident_email = $request->input('owner_email');
             $resident->residing_since = date('Y-m-d',strtotime($request->input('owner_since')));
             $resident->identity_type = $request->input('identity_type');
+            $resident->updated_by =  auth()->user()->id;
             
     
     
@@ -248,7 +251,7 @@ class UnitController extends Controller
         $resident->resident_email = $request->input('resident_email');
         $resident->residing_since = date('Y-m-d',strtotime($request->input('residing_since')));
         $resident->identity_type = $request->input('identity_type');
-        
+        $resident->updated_by =  auth()->user()->id;
 
 
          $resident =  $resident->save();

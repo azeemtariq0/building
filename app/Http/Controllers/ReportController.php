@@ -72,6 +72,14 @@ public function defaulter(){
         return view('reports.defaulter', compact('data','blocks','unit_categories','projects'));
 
 }
+public function dayDiff($dateFrom,$dateTo){
+
+    $now = strtotime($dateFrom); // or your date as well
+    $your_date = strtotime($dateTo);
+    $datediff = $now - $your_date;
+   return  ($datediff / (60 * 60 * 24));
+
+}
 public function printReport(Request $request){
 
 
@@ -105,9 +113,11 @@ public function printReport(Request $request){
         // $pdf::setPaper($customPaper, 'landscape');
 
         //Set Header
-        $pdf->data = array(
+         $pdf->data= array(
             'company_name' =>'Apni Soceity Development',
             'report_name' => 'Receivable List Report',
+            'block' => $request->block_id ? $rows[0]->block->block_name : '( All )' ,
+            'project' =>  $request->project_id ? $rows[0]->project->project_name : '( All )' ,
             // 'display_filter' => $display_filter,
         );
 
@@ -119,7 +129,7 @@ public function printReport(Request $request){
 
         // set margins
         //$pdf::SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-        $pdf::SetMargins(10, 34, 5);
+        $pdf::SetMargins(5, 34, 5);
         $pdf::SetHeaderMargin(PDF_MARGIN_HEADER);
         $pdf::SetFooterMargin(PDF_MARGIN_FOOTER);
 
@@ -135,21 +145,25 @@ public function printReport(Request $request){
         $pdf->Header();
         $pdf::SetFont('freesans', '', 9);
         $k = 0;
+        $currentDate = date('Y-m-d');
 
         foreach($rows As $k => $row){
             $owner  = UnitOwner::select('owner_name')->where('unit_id',$row->id)->first();
             $resident  = UnitOwner::select('owner_name')->where('unit_id',$row->id)->first();
             $lastReceipt  = Receipt::select('receipt_date','amount')->where('unit_id',$row->id)->orderBy('created_at','DESC')->first();
+
             $date= @$lastReceipt->receipt_date ? date('d-m-Y',strtotime($lastReceipt->receipt_date)) : '';
+            $noOfDays = $this->dayDiff($currentDate, $date);
 
             $pdf::Cell( 10, 7, $k+1, 1, false, 'C', 0, '', 0, false, 'M', 'M');
             $pdf::Cell( 15, 7, $row->block->block_name, 1, false, 'C', 0, '', 0, false, 'M', 'M');
             $pdf::Cell( 30, 7, $row->unit_name, 1, false, 'L', 0, '', 0, false, 'M', 'M');
-            $pdf::Cell( 50, 7, @$owner->owner_name, 1, false, 'L', 0, '', 0, false, 'M', 'M');
-            $pdf::Cell( 50, 7, @$resident->resident_name, 1, false, 'L', 0, '', 0, false, 'M', 'M');
-            $pdf::Cell( 20, 7, 0, 1, false, 'L', 0, '', 0, false, 'M', 'M');
-            $pdf::Cell( 20, 7, 0, 1, false, 'L', 0, '', 0, false, 'M', 'M');
-            $pdf::Cell( 20, 7, 0, 1, false, 'L', 0, '', 0, false, 'M', 'M');
+            $pdf::Cell( 45, 7, @$owner->owner_name, 1, false, 'L', 0, '', 0, false, 'M', 'M');
+            $pdf::Cell( 45, 7, @$resident->resident_name, 1, false, 'L', 0, '', 0, false, 'M', 'M');
+            $pdf::Cell( 30, 7, @$row->out_standing_amount, 1, false, 'R', 0, '', 0, false, 'M', 'M');
+            $pdf::Cell( 18, 7, (($date && $noOfDays > 30 ) ? 1 : 0),1, false, 'C', 0, '', 0, false, 'M', 'M');
+            $pdf::Cell( 18, 7, (($date && $noOfDays > 60 ) ? 1 : 0),1, false, 'C', 0, '', 0, false, 'M', 'M');
+            $pdf::Cell( 18, 7, (($date && $noOfDays > 90 ) ? 1 : 0),1, false, 'C', 0, '', 0, false, 'M', 'M');
 
 
             $pdf::Cell( 33, 7, number_format(@$lastReceipt->amount,2), 1, false, 'R', 0, '', 0, false, 'M', 'M');
@@ -202,6 +216,9 @@ public function printReport(Request $request){
         $pdf->data = array(
             'company_name' =>'Apni Soceity Development',
             'report_name' => 'Defaulter List Report',
+            'block' => $request->block_id ? $rows[0]->block->block_name : '( All )' ,
+            'project' =>  $request->project_id ? $rows[0]->project->project_name : '( All )' ,
+            'report_type' => ($request->report_type==1 ? "Greater Than 90 Days" : "Amount Greater Than 10 Thousand" ),
             // 'display_filter' => $display_filter,
         );
 
@@ -222,27 +239,34 @@ public function printReport(Request $request){
 
         // set font
         // $pdf::AddPage();
-        $pdf::AddPage('P', 'A4');
+        $pdf::AddPage('L', 'A4');
         $pdf::setHeaderTemplateAutoreset(true);
         $sr = 0;
 
         $pdf->Header();
         $pdf::SetFont('freesans', '', 9);
         $k = 0;
-
+         $currentDate = date('Y-m-d');
         foreach($rows As $k => $row){
             $owner  = UnitOwner::select('owner_name')->where('unit_id',$row->id)->first();
             $resident  = UnitOwner::select('owner_name')->where('unit_id',$row->id)->first();
             $lastReceipt  = Receipt::select('receipt_date','amount')->where('unit_id',$row->id)->orderBy('created_at','DESC')->first();
             $date= @$lastReceipt->receipt_date ? date('d-m-Y',strtotime($lastReceipt->receipt_date)) : '';
+            $noOfDays = $this->dayDiff($currentDate, $date);
+
+            if(!$date  || ($request->report_type==1 && $noOfDays<90) || ($request->report_type==2 && $row->out_standing_amount<1000 ) ){
+                continue;
+            }
+
 
             $pdf::Cell( 10, 7, $k+1, 1, false, 'C', 0, '', 0, false, 'M', 'M');
-            $pdf::Cell( 15, 7, $row->block->block_name, 1, false, 'C', 0, '', 0, false, 'M', 'M');
-            $pdf::Cell( 30, 7, $row->unit_name, 1, false, 'L', 0, '', 0, false, 'M', 'M');
+            $pdf::Cell( 25, 7, $row->block->block_name, 1, false, 'C', 0, '', 0, false, 'M', 'M');
+            $pdf::Cell( 40, 7, $row->unit_name, 1, false, 'L', 0, '', 0, false, 'M', 'M');
             $pdf::Cell( 43, 7, @$owner->owner_name, 1, false, 'L', 0, '', 0, false, 'M', 'M');
             $pdf::Cell( 43, 7, @$resident->resident_name, 1, false, 'L', 0, '', 0, false, 'M', 'M');
-            $pdf::Cell( 29, 7, number_format(@$lastReceipt->amount,2), 1, false, 'R', 0, '', 0, false, 'M', 'M');
-            $pdf::Cell( 25, 7, $date, 1, false, 'C', 0, '', 0, false, 'M', 'M');
+            $pdf::Cell( 40, 7, @$row->out_standing_amount, 1, false, 'R', 0, '', 0, false, 'M', 'M');
+            $pdf::Cell( 35, 7, number_format(@$lastReceipt->amount,2), 1, false, 'R', 0, '', 0, false, 'M', 'M');
+            $pdf::Cell( 35, 7, $date, 1, false, 'C', 0, '', 0, false, 'M', 'M');
           
           
              if( $k==18){
@@ -280,7 +304,7 @@ class Receivable extends PDF {
         $this::Cell(280, 10, $this->data['report_name'], 0, false, 'C', 0, '', 0, false, 'M', 'M');
         $this::Ln(7);
         $this::SetFont('freesans', '', 10);
-        $this::Cell(280, 10, 'Date From 21-02-2023 To 21-02-2023', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this::Cell(280, 10,  'Project Name : '.$this->data['project'].'  | Block : '.$this->data['block'], 0, false, 'C', 0, '', 0, false, 'M', 'M');
         $this::SetFont('freesans', '', 11);
         $this::Ln(2);
         $this::Cell(0, 10, '', 0, false, 'C', 0, '', 0, false, 'M', 'M');
@@ -289,11 +313,12 @@ class Receivable extends PDF {
         $this::Cell( 10, 7, 'Sr.', 1, false, 'C', 0, '', 0, false, 'M', 'M');
         $this::Cell( 15, 7, 'Block', 1, false, 'C', 0, '', 0, false, 'M', 'M');
         $this::Cell( 30, 7, 'Unit', 1, false, 'C', 0, '', 0, false, 'M', 'M');
-        $this::Cell( 50, 7, 'Owner Name', 1, false, 'C', 0, '', 0, false, 'M', 'M');
-        $this::Cell( 50, 7, 'Resident Name', 1, false, 'C', 0, '', 0, false, 'M', 'M');
-        $this::Cell( 20, 7, '30 Days', 1, false, 'C', 0, '', 0, false, 'M', 'M');
-        $this::Cell( 20, 7, '60 Days', 1, false, 'C', 0, '', 0, false, 'M', 'M');
-        $this::Cell( 20, 7, '90 Days', 1, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this::Cell( 45, 7, 'Owner Name', 1, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this::Cell( 45, 7, 'Resident Name', 1, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this::Cell( 30, 7, 'Outstanding', 1, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this::Cell( 18, 7, '30 Days', 1, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this::Cell( 18, 7, '60 Days', 1, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this::Cell( 18, 7, '90 Days', 1, false, 'C', 0, '', 0, false, 'M', 'M');
         $this::Cell( 33, 7, 'Last Paid Amount', 1, false, 'C', 0, '', 0, false, 'M', 'M');
         $this::Cell( 25, 7, 'Last Paid Date', 1, false, 'C', 0, '', 0, false, 'M', 'M');
          $this::ln(7);
@@ -323,25 +348,26 @@ class Defaulter extends PDF {
         $this::Ln(-20);
         // Title
         $this::SetFont('freesans', 'B', 14);
-        $this::Cell(190, 10,$this->data['company_name'], 0, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this::Cell(280, 10,$this->data['company_name'], 0, false, 'C', 0, '', 0, false, 'M', 'M');
         $this::Ln(7);
         $this::SetFont('freesans', 'B', 12);
-        $this::Cell(190, 10, $this->data['report_name'], 0, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this::Cell(280, 10, $this->data['report_name'], 0, false, 'C', 0, '', 0, false, 'M', 'M');
         $this::Ln(7);
         $this::SetFont('freesans', '', 10);
-        $this::Cell(190, 10, 'Date From 21-02-2023 To 21-02-2023', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this::Cell(280, 10, 'Project Name : '.$this->data['project'].'  | Block : '.$this->data['block'].'   | Repoty Type : '.$this->data['report_type'], 0, false, 'C', 0, '', 0, false, 'M', 'M');
         $this::SetFont('freesans', '', 11);
         $this::Ln(2);
         $this::Cell(0, 10, '', 0, false, 'C', 0, '', 0, false, 'M', 'M');
         $this::ln(12);
         $this::SetFont('freesans', 'B', 9);
         $this::Cell( 10, 7, 'Sr.', 1, false, 'C', 0, '', 0, false, 'M', 'M');
-        $this::Cell( 15, 7, 'Block', 1, false, 'C', 0, '', 0, false, 'M', 'M');
-        $this::Cell( 30, 7, 'Unit', 1, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this::Cell( 25, 7, 'Block', 1, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this::Cell( 40, 7, 'Unit', 1, false, 'C', 0, '', 0, false, 'M', 'M');
         $this::Cell( 43, 7, 'Owner Name', 1, false, 'C', 0, '', 0, false, 'M', 'M');
         $this::Cell( 43, 7, 'Resident Name', 1, false, 'C', 0, '', 0, false, 'M', 'M');;
-        $this::Cell( 29, 7, 'Last Paid Amount', 1, false, 'C', 0, '', 0, false, 'M', 'M');
-        $this::Cell( 25, 7, 'Last Paid Date', 1, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this::Cell( 40, 7, 'Outstanding Amount', 1, false, 'C', 0, '', 0, false, 'M', 'M');;
+        $this::Cell( 35, 7, 'Last Paid Amount', 1, false, 'C', 0, '', 0, false, 'M', 'M');
+        $this::Cell( 35, 7, 'Last Paid Date', 1, false, 'C', 0, '', 0, false, 'M', 'M');
          $this::ln(7);
 
       

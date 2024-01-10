@@ -22,7 +22,8 @@ class UnitResident extends Model
         'resident_mobile',
         'resident_email',
         'residing_since',
-        'identity_type'
+        'identity_type',
+        'updated_by',
     ];
 
    public function unit(){

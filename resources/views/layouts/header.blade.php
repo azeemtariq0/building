@@ -1,5 +1,5 @@
 <!-- HEADER -->
-<header id="header">
+<header id="header" style="position: fixed;width: 100%;">
 
     <!-- Mobile Button -->
     <button id="mobileMenuBtn"></button>

@@ -52,7 +52,7 @@
 
 
 
-                         <div class="col-md-12" style="margin-top:10px ">
+                                                <div class="col-md-12" style="margin-top:10px ">
                                                     <label>Block </label>
                                                     <select id="block" class="web-select2 form-control"  name="block_id">
                                                         <option value="">Select block</option>
@@ -69,6 +69,14 @@
                                                         <option {{  $value->id== @$unit->unit_category_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->unit_cat_name}}</option>
                                                         @endforeach
                                                     </select>
+                                                </div>
+
+
+                                                <div class="col-md-12" style="margin-top:10px ">
+                                                     <input type="radio" checked name="report_type" id="day_wise" value="1">
+                                                      <label for="day_wise">Greater Than 90 Days</label>&nbsp&nbsp&nbsp
+                                                     <input type="radio" name="report_type" id="amount_wise" value="2">
+                                                     <label for="amount_wise"> Amount Greater Than 10 Thousand</label>
                                                 </div>
                                                 
                         </div>

@@ -26,6 +26,7 @@ class UnitOwner extends Model
         'owner_contact',
         'owner_email',
         'owner_since',
+        'updated_by',
     ];
 
    public function unit(){

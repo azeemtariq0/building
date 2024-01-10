@@ -89,7 +89,7 @@ if(!empty($data)){
             <section id="middle">
 
               <!-- page title -->
-              <header id="page-header">
+              <header id="page-header" style="margin-top: 55px !important;">
                 <h1>
 
                     <?php 

@@ -27,6 +27,8 @@ class Unit extends Model
         'ob_date',
         'current_owner',
         'current_tenant',
+         'created_by',
+        'updated_by',
     ];
 
     public function project(){

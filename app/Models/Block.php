@@ -20,6 +20,8 @@ class Block extends Model
         'block_code',
         'block_name',
         'description',
+        'created_by',
+        'updated_by',
     ];
 
     public function project(){
