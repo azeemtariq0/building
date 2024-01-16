@@ -228,6 +228,7 @@ class ReceiptController extends Controller
         if(empty($request->id)){
             receipt::create(
                     [
+                        'soceity_id' => $request->input('soceity_id'),
                         'unit_id' => $request->input('unit_id'),
                         'project_id' => $request->input('project_id'),
                         'block_id' => $request->input('block_id'),

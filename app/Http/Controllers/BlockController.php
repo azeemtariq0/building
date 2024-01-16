@@ -113,6 +113,7 @@ class BlockController extends Controller
                 'project_id' => $request->input('project_id'),
                 'block_name' => $request->input('block_name'),
                 'description' => $request->input('description'),
+                'soceity_id'   => auth()->user()->soceity_id,
                 'created_by'   => auth()->user()->id
             ]
         );
@@ -174,6 +175,7 @@ class BlockController extends Controller
         $block->project_id = $request->input('project_id');
         $block->block_name = $request->input('block_name');
         $block->description = $request->input('description');
+        $block->soceity_id = auth()->user()->soceity_id;
         $block->updated_by = auth()->user()->id;
         $block->save();
         

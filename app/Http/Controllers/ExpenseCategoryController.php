@@ -67,7 +67,8 @@ class ExpenseCategoryController extends Controller
             [
                 'exp_code' => $request->input('exp_code'),
                 'exp_name' => $request->input('exp_name'),
-                'description' => $request->input('description')
+                'description' => $request->input('description'),
+                'soceity_id' => $request->input('soceity_id')
             ]
         );
 
@@ -105,6 +106,7 @@ class ExpenseCategoryController extends Controller
         $expCat->exp_code = $request->input('exp_code');
         $expCat->exp_name = $request->input('exp_name');
         $expCat->description = $request->input('description');
+        $expCat->soceity_id = auth()->user()->soceity_id;
         $expCat->save();
 
         return redirect()->route('expense_categories.index')

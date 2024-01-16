@@ -68,6 +68,7 @@ class UnitCategoryController extends Controller
 
         UnitCategory::create(
             [
+                'soceity_id' => $request->input('soceity_id'),
                 'unit_cat_code' => $request->input('unit_cat_code'),
                 'unit_cat_name' => $request->input('unit_cat_name'),
                 'monthly_amount' => $request->input('monthly_amount'),
@@ -106,6 +107,7 @@ class UnitCategoryController extends Controller
         ]);
 
         $unitCategory = UnitCategory::find($id);
+        $unitCategory->soceity_id = $request->input('soceity_id');
         $unitCategory->unit_cat_code = $request->input('unit_cat_code');
         $unitCategory->unit_cat_name = $request->input('unit_cat_name');
         $unitCategory->monthly_amount = $request->input('monthly_amount');

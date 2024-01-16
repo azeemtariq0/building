@@ -73,6 +73,7 @@ class UnitOwnerController extends Controller
     
         UnitOwner::create(
             [
+                'soceity_id' => $request->input('soceity_id'),
                 'unit_id' => $request->input('unit_id'),
                 'owner_name' => $request->input('owner_name'),
                 'owner_cnic' => $request->input('owner_cnic'),

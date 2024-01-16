@@ -7,6 +7,7 @@ use App\Models\Receipt;
 use App\Models\Expense;
 use App\Models\ReceiptType;
 use App\Models\ExpenseCategory;
+use App\Models\Unit;
 use DB;
 class HomeController extends Controller
 {
@@ -33,6 +34,14 @@ class HomeController extends Controller
             );
         $expense_categories = ExpenseCategory::get();
         $receipt_type = ReceiptType::get();
+
+        $units = new Unit;
+        if(@auth()->user()->project_id){
+            $units  = $units->where('project_id',auth()->user()->project_id);
+        }
+        $no_of_units = $units->count();
+
+
 
         // Receipt Data
         $receipts = new Receipt;
@@ -75,7 +84,7 @@ class HomeController extends Controller
         $receitStatus['approved'] =  array_sum(array_column($receiptMonthWise ,'approved'));
         $receitStatus['pending'] =  array_sum(array_column($receiptMonthWise ,'pending'));
         $receiptMonthWise  = array_column($receiptMonthWise ,'amount','month'); 
-        return view('home2', compact('data','receitStatus','receipt_type','expense_categories','receipts','expenses','receiptMonthWise','expenseMonthWise','month'));
+        return view('home2', compact('data','receitStatus','receipt_type','expense_categories','receipts','expenses','receiptMonthWise','expenseMonthWise','month','no_of_units'));
     
 
 
