@@ -273,3 +273,15 @@ ALTER TABLE `as_receipts`
 ALTER TABLE `as_generate_receivables`   
   ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
 
+  //yasir 
+
+  CREATE TABLE construction.Society(  
+  id INT NOT NULL AUTO_INCREMENT,
+  Society_code VARCHAR(240),
+  society_title VARCHAR(240),
+  society_image VARCHAR(240),
+  created_at TIMESTAMP,
+  updated_at TIMESTAMP,
+  PRIMARY KEY (id)
+);
+
