@@ -164,6 +164,112 @@ CREATE TABLE `as_generate_receivables` (
   `last_amount` VARCHAR(255),
   `actual_amount` VARCHAR(255),
   `date` VARCHAR(255),
-  `create_at` DATETIME,
+  `created_at` DATETIME,
+  `updated_at` DATETIME ON UPDATE CURRENT_TIMESTAMP NULL ,
   PRIMARY KEY (`id`)
 );
+
+
+ALTER TABLE `users`   
+  ADD COLUMN `project_id` INT(11) NULL AFTER `id`;
+
+
+ALTER TABLE `as_projects`   
+  ADD COLUMN `created_by` int(11) NULL AFTER `union_other_4`,
+  ADD COLUMN `updated_by` int(11) NULL AFTER `created_at`;
+
+ALTER TABLE `as_receipt_types`   
+  ADD COLUMN `created_by` int(11) NULL AFTER `description`,
+  ADD COLUMN `updated_by` int(11) NULL AFTER `created_at`;
+
+
+ALTER TABLE `as_unit_owners`   
+  ADD COLUMN `created_by` INT(11) NULL AFTER `is_tenant`,
+  ADD COLUMN `updated_by` INT(11) NULL AFTER `created_at`;
+
+ALTER TABLE `as_units`   
+  ADD COLUMN `created_by` INT(11) NULL AFTER `ob_date`,
+  ADD COLUMN `updated_by` INT(11) NULL AFTER `created_at`;
+
+ALTER TABLE `as_blocks`   
+  ADD COLUMN `created_by` INT(11) NULL AFTER `description`,
+  ADD COLUMN `updated_by` INT(11) NULL AFTER `created_at`,
+  CHANGE `updated_at` `updated_at` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NULL;
+
+
+ALTER TABLE `as_expense_categories`   
+  ADD COLUMN `created_by` INT(11) NULL AFTER `description`,
+  CHANGE `created_at` `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  ADD COLUMN `update_by` INT(11) NULL AFTER `created_at`,
+  CHANGE `updated_at` `updated_at` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NULL;
+
+
+ALTER TABLE `as_expenses`   
+  CHANGE `created_at` `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL,
+  CHANGE `updated_at` `updated_at` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NULL;
+
+
+
+ALTER TABLE `as_projects`   
+  CHANGE `created_by` `created_by` INT(11) NULL,
+  CHANGE `created_at` `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NULL,
+  CHANGE `updated_by` `updated_by` INT(11) NULL,
+  CHANGE `updated_at` `updated_at` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NULL;
+
+
+ALTER TABLE `as_unit_owners`   
+  CHANGE `created_by` `created_by` INT(11) NULL,
+  CHANGE `created_at` `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP NULL,
+  CHANGE `updated_by` `updated_by` INT(11) NULL,
+  CHANGE `updated_at` `updated_at` DATETIME ON UPDATE CURRENT_TIMESTAMP NULL;
+
+
+
+ALTER TABLE `as_unit_resident`   
+  CHANGE `created_at` `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP NULL,
+  CHANGE `created_by` `created_by` INT(11) NULL,
+  CHANGE `updated_by` `updated_by` INT(11) NULL;
+
+
+--  Add Soceity Code
+
+ALTER TABLE `users`   
+  ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`,
+  ADD COLUMN `block_id` INT(11) NULL AFTER `project_id`;
+
+ALTER TABLE `as_staff_type`   
+  ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
+
+ALTER TABLE `as_projects`   
+  ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
+
+ALTER TABLE `as_blocks`   
+  ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
+
+ALTER TABLE `as_unit_categories`   
+  ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
+
+ALTER TABLE `as_units`   
+  ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
+
+ALTER TABLE `as_unit_owners`   
+  ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
+
+ALTER TABLE `as_unit_resident`   
+  ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
+
+ALTER TABLE `as_expense_categories`   
+  ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
+
+ALTER TABLE `as_expenses`   
+  ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
+
+ALTER TABLE `as_receipt_types`   
+  ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
+
+ALTER TABLE `as_receipts`   
+  ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
+
+ALTER TABLE `as_generate_receivables`   
+  ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
+
