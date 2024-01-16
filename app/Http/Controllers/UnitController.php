@@ -92,6 +92,7 @@ class UnitController extends Controller
 
         $unit =  Unit::create(
             [
+                'soceity_id' => $request->input('soceity_id'),
                 'unit_code' => $request->input('unit_code'),
                 'unit_name' => $request->input('unit_name'),
                 'project_id' => $request->input('project_id'),
@@ -180,6 +181,7 @@ class UnitController extends Controller
         ]);
 
         $unitCategory = Unit::find($id);
+        $unitCategory->soceity_id = $request->input('soceity_id');
         $unitCategory->unit_code = $request->input('unit_code');
         $unitCategory->unit_name = $request->input('unit_name');
         $unitCategory->project_id = $request->input('project_id');

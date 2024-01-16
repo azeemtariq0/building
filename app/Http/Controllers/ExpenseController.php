@@ -95,6 +95,7 @@ class ExpenseController extends Controller
 
         $expense_id = Expense::insertGetId(
             [
+                'soceity_id' =>  auth()->user()->soceity_id,
                 'project_id' => $request->project_id,
                 'block_id' => $request->block_id,
                 'exp_category_id' => $request->exp_category_id,
@@ -163,6 +164,7 @@ class ExpenseController extends Controller
 
 
         $expense = Expense::find($id);
+        $expense->soceity_id = $request->soceity_id;
         $expense->project_id = $request->project_id;
         $expense->block_id = $request->block_id;
         $expense->exp_category_id = $request->exp_category_id;

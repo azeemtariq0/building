@@ -89,6 +89,7 @@ class ProjectController extends Controller
 
         $role = Project::create(
             [
+                'soceity_id' => $request->input('soceity_id'),
                 'project_code' => $request->input('project_code'),
                 'project_name' => $request->input('project_name'),
                 'union_name' => $request->input('union_name'),
@@ -159,6 +160,7 @@ class ProjectController extends Controller
         ]);
         
         $project = Project::find($id);
+        $project->soceity_id = $request->input('soceity_id');
         $project->project_name = $request->input('project_name');
         $project->union_name = $request->input('union_name');
         $project->union_president = $request->input('union_president');

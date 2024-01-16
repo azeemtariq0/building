@@ -61,7 +61,7 @@ $approved = ($total_receipt!=0) ? 100*$receitStatus['approved']/$total_receipt  
                                     </span> 
                                 </li>
                                 <li class="clearfix">
-                                    <span class="stat-number">5</span>
+                                    <span class="stat-number">{{ $no_of_units }}</span>
                                     <span class="stat-title">Total Units</span>
 
                                     <span class="easyPieChart" data-percent="100" data-easing="easeOutBounce" data-barColor="#0058AA" data-trackColor="#dddddd" data-scaleColor="#dddddd" data-size="60" data-lineWidth="4">

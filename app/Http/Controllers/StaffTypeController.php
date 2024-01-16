@@ -58,6 +58,7 @@ class StaffTypeController extends Controller
         if(!$request->id){
             StaffType::create(
                 [
+                    'soceity_id' => $request->input('soceity_id'),
                     'staff_name' => $request->input('staff_name'),
                 ]
             );
