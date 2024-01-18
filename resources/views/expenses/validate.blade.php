@@ -9,7 +9,7 @@
        rules: {
         "exp_category_id": {
              required: true,
-             minlength: 5,
+             // minlength: 5,
              digits: true
          }
       },

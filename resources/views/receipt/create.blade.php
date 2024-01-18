@@ -243,6 +243,7 @@
 <script type="text/javascript">
             $(function () {
               reloadTbl();
+              $('#filter_project_id').trigger('change');
               $("#form1").submit(function (event) {
                     var formData = {
                       receipt_type_id: $("#receipt_type_id").val(),

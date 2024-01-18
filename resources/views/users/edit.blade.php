@@ -78,7 +78,7 @@
                                                     <select id="project" class=" form-control web-select2"  name="project_id">
                                                         <option value=""></option>
                                                         @foreach($projects as $value)
-                                                        <option id="projects" {{  $value->id== @$user->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
+                                                        <option  {{  $value->id== @$user->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
                                                         @endforeach
 
 

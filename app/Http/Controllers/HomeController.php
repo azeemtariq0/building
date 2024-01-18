@@ -8,6 +8,8 @@ use App\Models\Expense;
 use App\Models\ReceiptType;
 use App\Models\ExpenseCategory;
 use App\Models\Unit;
+use App\Models\block;
+use App\Models\Project;
 use DB;
 class HomeController extends Controller
 {
@@ -129,6 +131,17 @@ class HomeController extends Controller
            $record[$value->$type] = $amount;
        }
          return $record;
+    }
+
+      public function allBlocks($id){
+
+        $blocks = block::where('project_id', $id);
+        if(auth()->user()->block_id){
+             $blocks = $blocks->where('id', auth()->user()->block_id);
+        }
+        $blocks = $blocks->get();
+        return response()->json($blocks);
+        
     }
 
 }

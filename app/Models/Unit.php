@@ -16,6 +16,7 @@ class Unit extends Model
      * @var array
      */
     protected $fillable = [
+        'soceity_id',
         'unit_code',
         'unit_name',
         'project_id',

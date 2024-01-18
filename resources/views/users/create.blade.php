@@ -33,18 +33,27 @@
 
                     <div class="panel-body">
 
-                       {!! Form::open(array('route' => 'users.store','method'=>'POST', 'data-success' => 'Sent! Thank you!', 'data-toastr-position' => 'top-right')) !!}
+                    
+                             @if(!isset($user->id))
+                                {!! Form::open(array('route' => 'users.store','method'=>'POST', 'id' => 'users_form')) !!}
+                                @else
+                                {!! Form::model($user, ['id'=>'users_form','method' => 'PATCH','route' => ['users.update', $user->id]]) !!}
+                                @endif
                        <!-- <form class="validate" action="{{ route('users.store')}}" method="post" data-success="Sent! Thank you!" data-toastr-position="top-right"> -->
                         <fieldset>
                             <!-- required [php action request] -->
-                            <input type="hidden" name="action" value="contact_send" />
-
+                            <input type="hidden" id="soceity_id" name="soceity_id" value="{{ auth()->user()->soceity_id }}" />
+                            <input type="hidden" id="block_hidden" value="{{ @$user->block_id }}" />
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-md-12 col-sm-12">
                                         <label>Name *</label>
 <!--                                         <input type="text" name="contact[first_name]" value="" class="form-control required"> -->
                                         {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control required')) !!}
+
+
+
+
                                     </div>
 
                                 </div>
@@ -67,12 +76,26 @@
                                                     <select id="project" class=" form-control web-select2"  name="project_id">
                                                         <option value=""></option>
                                                         @foreach($projects as $value)
-                                                        <option id="projects" {{  $value->id== @$unit->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
+                                                        <option  {{  $value->id== @$user->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
                                                         @endforeach
 
 
                                         </select>
                                     </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-md-12 col-sm-12">
+                                        <label>Block</label>
+                                        <select id="block" class="web-select2 form-control"  name="block_id" >
+                                            <option value="">Select block</option>
+
+                                        </select>
+                                    </div>
+
                                 </div>
                             </div>
 
@@ -123,6 +146,33 @@
 
 
 
+<script type="text/javascript">
+    
+        $('#project').on('change', function() {
+        var countryId = $(this).val();
+        if (countryId) {
+            $.ajax({
+                url: '<?= env('APP_BASEURL') ?>/all_block/' + countryId,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    $('#block').empty();
+                    $('#block').append('<option value="">Select Block</option>');
+                    $.each(data, function(key, value) {
+                        $('#block').append('<option value="' + value.id + '">' + value.block_name + '</option>');
+                    });
+                    $('#block').val($('#block_hidden').val()).trigger('change');;
+                }
+            });
+        } else {
+            $('#block').empty();
+        }
+    });
+
+    $(document).ready(function() {
+        $('#project').trigger('change');
+    });
+</script>
 
 
 

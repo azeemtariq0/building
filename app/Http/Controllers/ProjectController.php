@@ -26,7 +26,7 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Project::select('*');
+            $data = Project::where('soceity_id',auth()->user()->soceity_id)->get();
             return Datatables::of($data)
             ->addIndexColumn()
             ->editColumn('created_at', function($model){
@@ -89,7 +89,7 @@ class ProjectController extends Controller
 
         $role = Project::create(
             [
-                'soceity_id' => $request->input('soceity_id'),
+                'soceity_id' => auth()->user()->soceity_id,
                 'project_code' => $request->input('project_code'),
                 'project_name' => $request->input('project_name'),
                 'union_name' => $request->input('union_name'),
@@ -160,7 +160,7 @@ class ProjectController extends Controller
         ]);
         
         $project = Project::find($id);
-        $project->soceity_id = $request->input('soceity_id');
+        $project->soceity_id = auth()->user()->soceity_id;
         $project->project_name = $request->input('project_name');
         $project->union_name = $request->input('union_name');
         $project->union_president = $request->input('union_president');

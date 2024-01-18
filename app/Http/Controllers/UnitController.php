@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+// use App\Interfaces\OrderRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
@@ -18,19 +19,27 @@ use DataTables, Form;
 
 class UnitController extends Controller
 {
+    // private OrderRepositoryInterface $orderRepository;
+
+   // function __construct(OrderRepositoryInterface $orderRepository)
    function __construct()
    {
     $this->middleware('permission:unit-list|unit-create|unit-edit|unit-delete', ['only' => ['index','store']]);
     $this->middleware('permission:unit-create', ['only' => ['create','store']]);
     $this->middleware('permission:unit-edit', ['only' => ['edit','update']]);
     $this->middleware('permission:unit-delete', ['only' => ['destroy']]);
+    // $this->orderRepository = $orderRepository;
    }
 
     public function index(Request $request){
         if ($request->ajax()) {
-              $data = Unit::with('project','block','unit_category');
+            $data = Unit::with('project','block','unit_category');
+            $data =  $data->where('soceity_id',auth()->user()->soceity_id);
             if(auth()->user()->project_id){
-                 $data->where('project_id',auth()->user()->project_id);
+                $data = $data->where('project_id',auth()->user()->project_id);
+            }
+            if(auth()->user()->block_id){
+                $data = $data->where('block_id',auth()->user()->block_id);
             }
              $data =  $data->select('*');
 
@@ -69,10 +78,9 @@ class UnitController extends Controller
     }
 
     public function create(){
-        $blocks  =  Block::get();
         $unit_categories  =  UnitCategory::get();
-        $projects  =  Project::get();
-        $units = Unit::get();
+        $projects  =  Project::where('soceity_id',auth()->user()->soceity_id)->get();
+        // $units = Unit::get();
         $unit_size =  UnitSize::get();
 
 
@@ -81,7 +89,7 @@ class UnitController extends Controller
             'slug' => 'General Setup',
             'title' => 'Add Unit',
         );        
-         return view('units.create', compact('data','blocks','projects','unit_categories','units','unit_size'));
+         return view('units.create', compact('data','projects','unit_categories','unit_size'));
     }
 
     public function store(Request $request){
@@ -92,7 +100,7 @@ class UnitController extends Controller
 
         $unit =  Unit::create(
             [
-                'soceity_id' => $request->input('soceity_id'),
+                'soceity_id' => auth()->user()->soceity_id,
                 'unit_code' => $request->input('unit_code'),
                 'unit_name' => $request->input('unit_name'),
                 'project_id' => $request->input('project_id'),
@@ -109,13 +117,15 @@ class UnitController extends Controller
 
         $unitOwner = UnitOwner::create(
             [
-                'unit_id' => $unit->id
+                'unit_id' => $unit->id,
+                'soceity_id' => auth()->user()->soceity_id,
             ]
         );
 
         $unitResidence = UnitResident::create(
             [
-                'unit_id' => $unit->id
+                'unit_id' => $unit->id,
+                'soceity_id' => auth()->user()->soceity_id,
             ]
         );
 
@@ -126,9 +136,8 @@ class UnitController extends Controller
 
     public function show($id) {
         $unit = Unit::find($id);
-        $blocks  =  Block::get();
         $unit_categories  =  UnitCategory::get();
-        $projects  =  Project::get();
+        $projects  =  Project::where('soceity_id',auth()->user()->soceity_id)->get();
 
         $unit_owner = UnitOwner::where('unit_id', $id)->get()->first();
         $unit_resident = UnitResident::where('unit_id', $id)->get()->first();
@@ -147,14 +156,13 @@ class UnitController extends Controller
         $unit['is_view'] =1;
 
         $unit_size = UnitSize::get();
-        return view('units.create', compact('unit', 'data', 'blocks', 'projects', 'unit_categories', 'units', 'unit_owner','unit_resident','unit_size'));
+        return view('units.create', compact('unit', 'data', 'projects', 'unit_categories', 'units', 'unit_owner','unit_resident','unit_size'));
     }  
     public function edit($id) {
         $unit = Unit::find($id);
         $unit_size = UnitSize::get();
-        $blocks  =  Block::get();
         $unit_categories  =  UnitCategory::get();
-        $projects  =  Project::get();
+         $projects  =  Project::where('soceity_id',auth()->user()->soceity_id)->get();
 
         $unit_owner = UnitOwner::where('unit_id', $id)->get()->first();
         $unit_resident = UnitResident::where('unit_id', $id)->get()->first();
@@ -171,7 +179,7 @@ class UnitController extends Controller
         );
 
 
-        return view('units.create', compact('unit', 'data', 'blocks', 'projects', 'unit_categories', 'units', 'unit_owner','unit_resident','unit_size'));
+        return view('units.create', compact('unit', 'data', 'projects', 'unit_categories', 'units', 'unit_owner','unit_resident','unit_size'));
     }
 
 
@@ -181,7 +189,6 @@ class UnitController extends Controller
         ]);
 
         $unitCategory = Unit::find($id);
-        $unitCategory->soceity_id = $request->input('soceity_id');
         $unitCategory->unit_code = $request->input('unit_code');
         $unitCategory->unit_name = $request->input('unit_name');
         $unitCategory->project_id = $request->input('project_id');

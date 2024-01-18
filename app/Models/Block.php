@@ -16,6 +16,7 @@ class Block extends Model
      * @var array
      */
     protected $fillable = [
+        'soceity_id',
         'project_id',
         'block_code',
         'block_name',

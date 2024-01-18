@@ -16,6 +16,7 @@ class UnitResident extends Model
      * @var array
      */
     protected $fillable = [
+        'soceity_id',
         'unit_id',
         'resident_name',
         'resident_cnic',

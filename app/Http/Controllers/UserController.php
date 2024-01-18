@@ -26,7 +26,7 @@ class UserController extends Controller
         {
                 $role_list = Role::select('*')->get();
             if ($request->ajax()) {
-                $data = User::select('*');
+                $data = User::where('soceity_id',auth()->user()->soceity_id)->select('*');
                 return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('roles', function($row){
@@ -89,7 +89,7 @@ class UserController extends Controller
 
     public function create()
     {
-        $projects  =  Project::get();
+        $projects  =  Project::where('soceity_id',auth()->user()->soceity_id)->get();
         $data['page_management'] = array(
                 'page_title' => 'Create New User',
                 'slug'=>'Create',
@@ -157,7 +157,7 @@ class UserController extends Controller
                 'slug'=>'Edit',
             );
         
-        return view('users.edit',compact('user','roles','userRole', 'projects','data'));
+        return view('users.create',compact('user','roles','userRole', 'projects','data'));
     }
     
     /**

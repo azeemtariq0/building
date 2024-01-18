@@ -16,6 +16,7 @@ class UnitOwner extends Model
      * @var array
      */
     protected $fillable = [
+        'soceity_id',
         'unit_id',
         'owner_name',
         'owner_cnic',

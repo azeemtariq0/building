@@ -69,7 +69,6 @@ class ReceiptTypeController extends Controller
 
         ReceiptType::create(
             [
-                'soceity_id' => $request->input('soceity_id'),
                 'receipt_code' => $request->input('receipt_code'),
                 'receipt_name' => $request->input('receipt_name'),
                 'description' => $request->input('description')
@@ -107,7 +106,6 @@ class ReceiptTypeController extends Controller
         ]);
 
         $receiptType = ReceiptType::find($id);
-        $receiptType->soceity_id = $request->input('soceity_id');
         $receiptType->receipt_code = $request->input('receipt_code');
         $receiptType->receipt_name = $request->input('receipt_name');
         $receiptType->description = $request->input('description');

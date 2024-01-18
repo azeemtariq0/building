@@ -237,16 +237,10 @@ ALTER TABLE `users`
   ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`,
   ADD COLUMN `block_id` INT(11) NULL AFTER `project_id`;
 
-ALTER TABLE `as_staff_type`   
-  ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
-
 ALTER TABLE `as_projects`   
   ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
 
 ALTER TABLE `as_blocks`   
-  ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
-
-ALTER TABLE `as_unit_categories`   
   ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
 
 ALTER TABLE `as_units`   
@@ -258,13 +252,7 @@ ALTER TABLE `as_unit_owners`
 ALTER TABLE `as_unit_resident`   
   ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
 
-ALTER TABLE `as_expense_categories`   
-  ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
-
 ALTER TABLE `as_expenses`   
-  ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
-
-ALTER TABLE `as_receipt_types`   
   ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
 
 ALTER TABLE `as_receipts`   
@@ -273,9 +261,8 @@ ALTER TABLE `as_receipts`
 ALTER TABLE `as_generate_receivables`   
   ADD COLUMN `soceity_id` INT(11) NULL AFTER `id`;
 
-  //yasir 
 
-  CREATE TABLE construction.Society(  
+CREATE TABLE society(  
   id INT NOT NULL AUTO_INCREMENT,
   Society_code VARCHAR(240),
   society_title VARCHAR(240),
@@ -285,3 +272,5 @@ ALTER TABLE `as_generate_receivables`
   PRIMARY KEY (id)
 );
 
+ALTER TABLE `users`   
+  ADD COLUMN `block_id` INT NULL AFTER `project_id`;

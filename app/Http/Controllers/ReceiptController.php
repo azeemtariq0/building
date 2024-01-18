@@ -28,6 +28,7 @@ class ReceiptController extends Controller
         if ($request->ajax()) {
 
        $data = Receipt::with('project', 'block', 'unit','unit_category','receipt_type');
+       $data->where('soceity_id',auth()->user()->soceity_id);
        if($request->status!=""){
          $data = $data->where('status',$request->status); 
         }
@@ -228,7 +229,7 @@ class ReceiptController extends Controller
         if(empty($request->id)){
             receipt::create(
                     [
-                        'soceity_id' => $request->input('soceity_id'),
+                        'soceity_id' => auth()->user()->soceity_id,
                         'unit_id' => $request->input('unit_id'),
                         'project_id' => $request->input('project_id'),
                         'block_id' => $request->input('block_id'),

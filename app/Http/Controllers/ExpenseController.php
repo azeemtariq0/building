@@ -25,7 +25,7 @@ class ExpenseController extends Controller
 
     public function index(Request $request){
         if ($request->ajax()) {
-            $data = Expense::with('expense_category','expense_detail');
+            $data = Expense::with('expense_category','expense_detail')->where('soceity_id',auth()->user()->soceity_id);
             if(auth()->user()->project_id){
                  $data->where('project_id',auth()->user()->project_id);
             }
@@ -71,7 +71,7 @@ class ExpenseController extends Controller
 
     public function create(){
          $exp_categories  =  ExpenseCategory::get();
-         $projects  = new Project;
+         $projects  = Project::where('soceity_id',auth()->user()->soceity_id);
         if(auth()->user()->project_id){
                $projects =  $projects->where('id',auth()->user()->project_id);
         }
@@ -126,7 +126,7 @@ class ExpenseController extends Controller
 
     public function show($id){
         $exp_categories  =  ExpenseCategory::get();
-        $projects  =  Project::get();
+        $projects  =  Project::where('soceity_id',auth()->user()->soceity_id)->get();
 
         $expense = Expense::with('expense_category','expense_detail')->find($id);
         $data['page_management'] = array(
@@ -140,7 +140,7 @@ class ExpenseController extends Controller
 
     public function edit($id){
          $exp_categories  =  ExpenseCategory::get();
-         $projects  =  Project::get();
+         $projects  =   Project::where('soceity_id',auth()->user()->soceity_id)->get();
 
         $expense = Expense::with('expense_category','expense_detail')->find($id);
          $data['page_management'] = array(
@@ -164,7 +164,6 @@ class ExpenseController extends Controller
 
 
         $expense = Expense::find($id);
-        $expense->soceity_id = $request->soceity_id;
         $expense->project_id = $request->project_id;
         $expense->block_id = $request->block_id;
         $expense->exp_category_id = $request->exp_category_id;

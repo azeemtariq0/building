@@ -11,6 +11,7 @@ class Receipt extends Model
 
     protected $table = 'as_receipts';
     protected $fillable = [
+      'soceity_id',
       'receipt_type_id',
       'receipt_date',
       'project_id',

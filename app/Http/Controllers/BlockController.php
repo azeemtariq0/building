@@ -36,11 +36,11 @@ class BlockController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Block::with('project');
+            $data = Block::with('project')->where('soceity_id',auth()->user()->soceity_id);
             if(auth()->user()->project_id){
-                 $data->where('project_id',auth()->user()->project_id);
+                 $data = $data->where('project_id',auth()->user()->project_id);
             }
-             $data =  $data->select('*');
+             $data =  $data->get();
             
             return Datatables::of($data)
             ->addIndexColumn()
@@ -82,11 +82,11 @@ class BlockController extends Controller
 
         // $permission = Permission::get();
         // return view('permissions.create',compact('permission'));
-         $projects  = new Project;
-        if(auth()->user()->project_id){
+         $projects  = Project::where('soceity_id',auth()->user()->soceity_id);
+         if(auth()->user()->project_id){
                $projects =  $projects->where('id',auth()->user()->project_id);
         }
-        $projects = $projects ->get();
+        $projects = $projects->get();
         $data['page_management'] = array(
             'page_title' => 'Create New Block',
             'slug' => 'Create'
@@ -129,8 +129,14 @@ class BlockController extends Controller
      */
     public function show($id)
     {
-        $block = block::find($id);
-        $projects  =  Project::get();
+
+         $block = Block::with('project')->where('soceity_id',auth()->user()->soceity_id);
+            if(auth()->user()->project_id){
+                 $block = $block->where('project_id',auth()->user()->project_id);
+            }
+        $block = $block->where('id',$id);
+        $block =  $block->first();
+        $projects  =  Project::where('soceity_id',auth()->user()->soceity_id)->get();
         $data['page_management'] = array(
             'page_title' => 'View Block',
             'slug' => 'View'
@@ -147,7 +153,12 @@ class BlockController extends Controller
     public function edit($id)
     {
         $block = block::find($id);
-        $projects  =  Project::get();
+
+        $projects  = Project::where('soceity_id',auth()->user()->soceity_id);
+         if(auth()->user()->project_id){
+               $projects =  $projects->where('id',auth()->user()->project_id);
+        }
+        $projects =  $projects->get();
         $data['page_management'] = array(
             'page_title' => 'Edit Block',
             'slug' => 'Edit'
@@ -187,7 +198,11 @@ class BlockController extends Controller
 
     public function allBlocks($id){
 
-        $blocks = block::where('project_id', $id)->get();
+        $blocks = block::where('project_id', $id);
+        if(auth()->user()->block_id){
+             $blocks = $blocks->where('id', auth()->user()->block_id);
+        }
+        $blocks = $blocks->get();
         return response()->json($blocks);
         
     }

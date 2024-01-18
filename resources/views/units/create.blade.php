@@ -93,7 +93,7 @@
                                                     <select id="project" class=" form-control web-select2" {{$isView}} required name="project_id">
                                                         <option value=""></option>
                                                         @foreach($projects as $value)
-                                                        <option id="projects" {{  $value->id== @$unit->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
+                                                        <option  {{  $value->id== @$unit->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
                                                         @endforeach
 
 
@@ -652,7 +652,7 @@
 </script>
 <script>
     $(document).ready(function() {
-        $('#projects').trigger('change');
+        $('#project').trigger('change');
     });
 </script>
 

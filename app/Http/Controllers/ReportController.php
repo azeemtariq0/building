@@ -20,10 +20,8 @@ class ReportController extends Controller
    
     public function index(Request $request){
 
-
-       $blocks  =  Block::get();
         $unit_categories  =  UnitCategory::get();
-        $projects  =  new Project;
+        $projects  =  Project::where('soceity_id',auth()->user()->soceity_id);
         if(auth()->user()->project_id){
                 $projects = $projects->where('id',auth()->user()->project_id);
         }
@@ -35,7 +33,7 @@ class ReportController extends Controller
             'slug' => 'Report',
             'title' => 'Receivable List Report'
         );
-        return view('reports.receivable', compact('data','blocks','unit_categories','projects'));
+        return view('reports.receivable', compact('data','unit_categories','projects'));
     }
     public function printReportw(Request $request){
         // return view('reports/monthly_print');
@@ -61,15 +59,14 @@ public function defaulter(){
             'title' => 'Defaulter List Report'
         );
 
-       $blocks  =  Block::get();
         $unit_categories  =  UnitCategory::get();
-        $projects  =  new Project;
+        $projects  =  Project::where('soceity_id',auth()->user()->soceity_id);
         if(auth()->user()->project_id){
                 $projects = $projects->where('id',auth()->user()->project_id);
         }
         $projects  = $projects->get();
 
-        return view('reports.defaulter', compact('data','blocks','unit_categories','projects'));
+        return view('reports.defaulter', compact('data','unit_categories','projects'));
 
 }
 public function dayDiff($dateFrom,$dateTo){
@@ -83,7 +80,8 @@ public function dayDiff($dateFrom,$dateTo){
 public function printReport(Request $request){
 
 
-        $units = Unit::with('project','block','unit_category');
+        $units = Unit::with('project','block','unit_category')
+                ->where('soceity_id',auth()->user()->soceity_id);
 
         if(auth()->user()->project_id){
                $units->where('project_id',auth()->user()->project_id);
@@ -91,7 +89,11 @@ public function printReport(Request $request){
         else if(!empty($request->project_id)){
                 $units->where('project_id',$request->project_id);
         }
-        if(!empty($request->block_id)){
+
+        if(auth()->user()->block_id){
+               $units->where('block_id',auth()->user()->block_id);
+        }
+        else if(!empty($request->block_id)){
                 $units->where('block_id',$request->block_id);
         }
         if(!empty($request->unit_category_id)){
@@ -188,13 +190,17 @@ public function printReport(Request $request){
     public function defaulterPrint(Request $request){
 
         $units = Unit::with('project','block','unit_category');
-        if(auth()->user()->project_id){
+         if(auth()->user()->project_id){
                $units->where('project_id',auth()->user()->project_id);
         }
         else if(!empty($request->project_id)){
                 $units->where('project_id',$request->project_id);
         }
-        if(!empty($request->block_id)){
+
+        if(auth()->user()->block_id){
+               $units->where('block_id',auth()->user()->block_id);
+        }
+        else if(!empty($request->block_id)){
                 $units->where('block_id',$request->block_id);
         }
         if(!empty($request->unit_category_id)){ 

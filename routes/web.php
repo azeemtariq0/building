@@ -68,7 +68,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     //  GET ROUTES
     Route::get('get-units', [ReceiptController::class, 'getUnits']);
-    Route::get('/all_block/{id}', [BlockController::class, 'allBlocks']);
+    // Route::get('/all_block/{id}', [BlockController::class, 'allBlocks']);
+    Route::get('/all_block/{id}', [HomeController::class, 'allBlocks']);
     Route::get('/freez-voucher/{id}', [ExpenseController::class, 'feezExpenseVoucher']);
 
 
