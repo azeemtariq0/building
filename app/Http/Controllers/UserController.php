@@ -36,7 +36,7 @@ class UserController extends Controller
                         if($v!="View Only"){
                         $roles.= '<span class="label label-success label-role current_role"> '.$v.' </span> ';
                          }
-                        if (auth()->user()->haspermissionTo('user-edit') )
+                        if (auth()->user()->haspermissionTo('user-edit') && $v!='App Admin')
                         $roles.= ' &nbsp <span class="label label-info label-role assign_role" data-id='.$row->id.'>  Assign Role <i class="fa fa-edit"></> </span>';
                     }
                 }

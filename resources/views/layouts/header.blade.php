@@ -1,3 +1,4 @@
+<?php $society = DB::table('as_society')->where('id',auth()->user()->soceity_id)->first(); ?>
 <!-- HEADER -->
 <header id="header" style="position: fixed;width: 100%;">
 
@@ -12,7 +13,7 @@
     </span>
     <form method="get" action="page-search.html" class="search pull-left hidden-xs">
         <span >
-        <h3> &nbsp&nbsp Apni Society Development Karachi , Pakistan </h3>
+        <h3> &nbsp&nbsp Apni Society Development Karachi , Pakistan / <strong class="text-danger">{{ @$society->society_title }}</strong></h3>
     </span>
     </form>
 

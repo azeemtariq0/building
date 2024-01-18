@@ -65,8 +65,8 @@
                 </div>
                 <div class="col-md-3 mb-2" style="margin-bottom: 10px;margin-top: 20px">
                   <button class="btn btn-success mt-4" onclick="payAmount()"  />Pay Amount</div>
-                </div>
                 @endcan
+             
                   <table class="table table-striped table-bordered table-hover table-responsive data-table" width="100%">
                     <thead>
                       <tr>
