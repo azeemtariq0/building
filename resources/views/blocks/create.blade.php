@@ -3,6 +3,7 @@
 
 @section('content')
 <?php  $isView = (@$block->is_view==1) ? 'readonly' : '';   ?>
+<?php  $isSelectView = (@$block->is_view==1) ? 'pointer-off' : '';   ?>
 @if (count($errors) > 0)
 <div id="content" class="padding-20">
 
@@ -54,7 +55,7 @@
 
                                 <div class="row">
                                     <div class="form-group">
-                                        <div class="col-md-10 col-sm-10">
+                                        <div class="col-md-10 col-sm-10 {{$isSelectView}}">
                                             <label>Project Name<span class="text-danger">*</span></label>
                                            <select class=" form-control web-select2" {{$isView}} id="project_id"  required name="project_id">
                                             <option value="">Selec an option</option>

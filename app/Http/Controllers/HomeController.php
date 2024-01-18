@@ -37,27 +37,37 @@ class HomeController extends Controller
         $expense_categories = ExpenseCategory::get();
         $receipt_type = ReceiptType::get();
 
-        $units = new Unit;
+        $units = Unit::where('soceity_id',auth()->user()->soceity_id);
         if(@auth()->user()->project_id){
             $units  = $units->where('project_id',auth()->user()->project_id);
+        }
+        if(@auth()->user()->block_id){
+            $units  = $units->where('block_id',auth()->user()->block_id);
         }
         $no_of_units = $units->count();
 
 
 
         // Receipt Data
-        $receipts = new Receipt;
+        $receipts = Receipt::where('soceity_id',auth()->user()->soceity_id);
         if(@auth()->user()->project_id){
             $receipts  = $receipts->where('project_id',auth()->user()->project_id);
+        }
+         if(@auth()->user()->block_id){
+            $receipts  = $receipts->where('block_id',auth()->user()->block_id);
         }
         $receipts  = $receipts->select('*')->orderBy('receipt_type_id')->get();
         $receipts  = $this->typeWiseSum($receipts ,'receipt_type_id');
 
 
         // Receipt Data
-        $expenses = Expense::join('as_expense_detail as exd', 'exd.expense_id', '=', 'as_expenses.id');
+        $expenses = Expense::join('as_expense_detail as exd', 'exd.expense_id', '=', 'as_expenses.id')
+        ->where('soceity_id',auth()->user()->soceity_id);
         if(@auth()->user()->project_id){
             $expenses  = $expenses->where('project_id',auth()->user()->project_id);
+        }
+        if(@auth()->user()->block_id){
+            $expenses  = $expenses->where('block_id',auth()->user()->block_id);
         }
         $expenses  = $expenses->select('exd.*','exp_category_id')->orderBy('exp_category_id')->get();
         $expenses  = $this->typeWiseSum($expenses ,'exp_category_id');
@@ -92,7 +102,7 @@ class HomeController extends Controller
 
     }
     public function getonthWiseReceipt(){
-                     return Receipt::select(
+                     $receipt =  Receipt::select(
                             DB::raw("sum(amount) as amount"),
                             DB::raw("sum(if(status=1,1,0)) as approved"),
                             DB::raw("sum(if(status=0,1,0)) as pending"),
@@ -100,21 +110,41 @@ class HomeController extends Controller
                             DB::raw("MONTHNAME(receipt_date) as month_name")
                         )
                         ->whereYear('receipt_date', date('Y'))
-                        ->groupBy('receipt_date')
-                        ->get()
-                        ->toArray();
+                        ->where('soceity_id',auth()->user()->soceity_id);
+
+                        if(@auth()->user()->project_id){
+                            $receipt  = $receipt->where('project_id',auth()->user()->project_id);
+                        }
+                        if(@auth()->user()->block_id){
+                            $receipt  = $receipt->where('block_id',auth()->user()->block_id);
+                        }
+
+                        $receipt = $receipt->groupBy('receipt_date');
+                        $receipt = $receipt->get();
+                        $receipt = $receipt->toArray();
+                         return $receipt;
     }
       public function getonthWiseExpense(){
-                     return Expense::select(
+                      $expense = Expense::select(
                             DB::raw("sum(amount) as amount"),
                             DB::raw("MONTH(exp_date) as month"),
                             DB::raw("MONTHNAME(exp_date) as month_name")
                         )
                         ->leftJoin('as_expense_detail as exd', 'exd.expense_id', '=', 'as_expenses.id')
-                        ->whereYear('exp_date', date('Y'))
-                        ->groupBy('exp_date')
-                        ->get()
-                        ->toArray();
+                        ->where('soceity_id',auth()->user()->soceity_id)
+                        ->whereYear('exp_date', date('Y'));
+
+                         if(@auth()->user()->project_id){
+                            $expense  = $expense->where('project_id',auth()->user()->project_id);
+                        }
+                        if(@auth()->user()->block_id){
+                            $expense  = $expense->where('block_id',auth()->user()->block_id);
+                        }
+
+                        $expense = $expense->groupBy('exp_date');
+                        $expense =  $expense->get();
+                        $expense =  $expense->toArray();
+                        return $expense;
     }
 
     public function typeWiseSum($result,$type){

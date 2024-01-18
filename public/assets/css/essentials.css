@@ -9854,3 +9854,12 @@ table.dataTable tbody td {
      vertical-align: unset !important; 
 
 }
+  .pointer-off {
+        cursor: not-allowed;
+        pointer-events: none;
+        /*text-wrap: nowrap;*/
+        text-overflow: ellipsis;
+    }
+    .pointer-off .select2-container--default .select2-selection--single {
+         background-color: #eeeeee;
+    }

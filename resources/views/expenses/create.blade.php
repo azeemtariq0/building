@@ -4,6 +4,8 @@
 @section('content')
 
 <?php  $isView = (@$expense->is_view==1) ? 'readonly' : '';   ?>
+<?php  $isSelectView = (@$expense->is_view==1) ? 'pointer-off' : '';   ?>
+
 @if (count($errors) > 0)
 <div id="content" class="padding-20">
 
@@ -89,7 +91,7 @@
                                   <div class="col-md-7">
                                     <div class="form-group">
                                             <label class="col-md-3">Exp Category</label>
-                                            <div class="col-md-8">
+                                            <div class="col-md-8 {{$isSelectView}}">
                                             <select class=" form-control web-select2" {{$isView}} required id="exp_category_id" name="exp_category_id">
                                                 <option value="">Select an option</option>
                                                 
@@ -119,7 +121,7 @@
                                   <div class="col-md-7">
                                     <div class="form-group">
                                             <label class="col-md-3">Project Name</label>
-                                            <div class="col-md-8">
+                                            <div class="col-md-8 {{$isSelectView}}">
                                             <select class=" form-control web-select2"  {{$isView}} name="project_id" id="projects">
                                                 <option></option>
                                                 
@@ -135,8 +137,8 @@
                                   </div>
                                   <div class="col-md-5">
                                     <div class="form-group">
-                                            <label class="col-md-2">Block</label>
-                                            <div class="col-md-9">
+                                            <label class="col-md-2 ">Block</label>
+                                            <div class="col-md-9 {{$isSelectView}}">
                                            <select class=" form-control web-select2"  {{$isView}}  name="block_id"  id="block">
                                                 <option value=""></option>
                                             </select>

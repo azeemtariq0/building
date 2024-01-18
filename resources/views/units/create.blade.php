@@ -3,6 +3,7 @@
 
 @section('content')
 <?php  $isView = (@$unit->is_view==1) ? 'readonly' : '';   ?>
+<?php  $isSelectView = (@$unit->is_view==1) ? 'pointer-off' : '';   ?>
 @if (count($errors) > 0)
 <div id="content" class="padding-20">
 
@@ -15,7 +16,6 @@
         </ul>
     </div>
     @endif
-
 
     <div id="content" class="padding-20">
         <div class="tab-content clearfix">
@@ -88,9 +88,9 @@
 
                                         <div class="row">
                                             <div class="form-group">
-                                                <div class="col-md-10 col-sm-10">
+                                                <div class="col-md-10 col-sm-10 {{$isSelectView}}">
                                                     <label>Project Name <span class="text-danger">*</span></label>
-                                                    <select id="project" class=" form-control web-select2" {{$isView}} required name="project_id">
+                                                    <select id="project" class=" form-control web-select2 " {{$isView}} required name="project_id">
                                                         <option value=""></option>
                                                         @foreach($projects as $value)
                                                         <option  {{  $value->id== @$unit->project_id ? 'selected' : '' }} value="{{ $value->id}}">{{ $value->project_name}}</option>
@@ -108,7 +108,7 @@
 
                                         <div class="row">
                                             <div class="form-group">
-                                                <div class="col-md-10 col-sm-10">
+                                                <div class="col-md-10 col-sm-10 {{$isSelectView}}">
                                                     <label>Block <span class="text-danger">*</span></label>
                                                     <select id="block" class="web-select2 form-control" required name="block_id" {{$isView}}>
                                                         <option value="">Select block</option>
@@ -120,7 +120,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="form-group">
-                                                <div class="col-md-10 col-sm-10">
+                                                <div class="col-md-10 col-sm-10 {{$isSelectView}}">
                                                     <label>Unit Category <span class="text-danger">*</span></label>
                                                     <select class=" form-control web-select2" required name="unit_category_id" {{$isView}}>
                                                         <option></option>
@@ -256,8 +256,8 @@
 
 
                                             <div class="row">
-                                                <div class="form-group">
-                                                    <div class="col-md-3" style="padding-right: 0px">
+                                                <div class="form-group {{$isSelectView}}">
+                                                    <div class="col-md-3 " style="padding-right: 0px">
                                                         <label>Identity Type <span class="text-danger">*</span></label>
                                                         <select class="form-control" required name="identity_type" id="identity_type" {{$isView}}>
                                                             <option value="cnic" {{ @$unit_owner->identity_type == 'cnic' ? 'selected' : '' }}>CNIC</option>
@@ -407,7 +407,7 @@
                                     <div class="col-md-6">
                                         <div class="row">
                                             <div class="form-group">
-                                                <div class="col-md-10 col-sm-10">
+                                                <div class="col-md-10 col-sm-10 {{$isSelectView}}">
                                                     <label>Unit Name<span class="text-danger">*</span></label>
                                                     <select readonly class=" form-control" readonly required name="unit_id" id="unit_id">
                                                         <option value=""></option>
@@ -437,9 +437,9 @@
                                 <div class="row">
                                     <div class="form-group">
                                         
-                                        <div class="col-md-3 " style="padding-right: 0px">
+                                        <div class="col-md-3 {{$isSelectView}}" style="padding-right: 0px">
                                             <label>Identity Type <span class="text-danger">*</span></label>
-                                            <select class=" form-control" required name="identity_type" id="identity_type">
+                                            <select {{$isView}} class=" form-control" required name="identity_type" id="identity_type">
                                               <option {{ $value->id== @$unit_resident->identity_type ? 'selected' : '' }} value="cnic">CNIC</option>
                                             <option {{ $value->id== @$unit_resident->identity_type ? 'selected' : '' }} value="nicop">NICOP</option>
                                             

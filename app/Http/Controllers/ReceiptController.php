@@ -148,9 +148,8 @@ class ReceiptController extends Controller
      */
     public function create()
     {
-        $blocks  =  Block::get();
         $unit_categories  =  UnitCategory::get();
-        $projects  =  new Project;
+        $projects  = Project::where('soceity_id',auth()->user()->soceity_id);
         if(auth()->user()->project_id){
                $projects =  $projects->where('id',auth()->user()->project_id);
         }
@@ -162,7 +161,7 @@ class ReceiptController extends Controller
              'title' => 'Manage Receipts',
             'add' => 'Add Receipt',
         );
-        return view('receipt.create', compact('data','blocks','projects','unit_categories','receiptType'));
+        return view('receipt.create', compact('data','projects','unit_categories','receiptType'));
     }
 
     public function getUnits(Request $request){
@@ -206,8 +205,8 @@ class ReceiptController extends Controller
             data-resident ='".(@$row->unit_name.' / '.@$row->project->project_name.' / '.@$owner['current_tenant'])."' 
             data-block_id=".$row->block_id."
             data-unit_category_id=".$row->unit_category_id."
-            data-outstanding_amount=".$row->out_standing_amount."
-            class='btn btn-info btn-sm'> <i class='fa fa-edit'> <span>Create</span></button>";
+            data-outstanding_amount=".($row->out_standing_amount ?? 0)." 
+            class='btn btn-info btn-sm' > <i class='fa fa-edit'> <span>Create</span></button>";
                return $btn;
            })
             ->rawColumns(['action'])
