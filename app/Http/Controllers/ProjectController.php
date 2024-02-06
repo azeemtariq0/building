@@ -93,6 +93,7 @@ class ProjectController extends Controller
                 'project_code' => $request->input('project_code'),
                 'project_name' => $request->input('project_name'),
                 'union_name' => $request->input('union_name'),
+                'description' => $request->input('description'),
                 'union_president' => $request->input('union_president'),
                 'union_vice_president' => $request->input('union_vice_president'),
                 'union_secretary' => $request->input('union_secretary'),
@@ -163,6 +164,7 @@ class ProjectController extends Controller
         $project->soceity_id = auth()->user()->soceity_id;
         $project->project_name = $request->input('project_name');
         $project->union_name = $request->input('union_name');
+        $project->description = $request->input('description');
         $project->union_president = $request->input('union_president');
         $project->union_vice_president = $request->input('union_vice_president');
         $project->union_secretary = $request->input('union_secretary');

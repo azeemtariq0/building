@@ -13,7 +13,7 @@
     </span>
     <form method="get" action="page-search.html" class="search pull-left hidden-xs">
         <span >
-        <h3> &nbsp&nbsp Apni Society Development Karachi , Pakistan / <strong class="text-danger">{{ @$society->society_title }}</strong></h3>
+        <h3> &nbsp&nbsp Apni Society Development / <strong class="text-danger">{{ @$society->society_title }}</strong></h3>
     </span>
     </form>
 

@@ -206,19 +206,26 @@
                                           <textarea rows="1" type="text" required class="form-control" name="description[]" autocomplete="off"></textarea></td>
                                         <td><input type="text"  class="form-control" name="reference_no[]" autocomplete="off"></td>
                                         <td><input type="text"  class="form-control datepicker" placeholder="dd-mm-yyyy" name="reference_date[]" autocomplete="off"></td>
-                                        <td><input type="text" required class="form-control right" name="amount[]" autocomplete="off"></td>
+                                        <td><input type="text" required class="form-control right" name="amount[]" autocomplete="off" onkeyup="calculateAmount()" value="0"></td>
                                         <td><button type="button" class="btn btn-default btn-xs removeBtn"><i class="fa fa-trash"></i></button></td>
                                     </tr>
                                    <?php }  ?>
                                 </tbody>
+                                <tfoot>
+                                  <tr>
+                                    <td colspan="4" class="right">Total Amount:</td>
+                                    <td><input type="text" class="form-control right" id="total_amount" name="total_amount" value="0"></td>
+
+                                  </tr>
+                                </tfoot>
                               </table>
                           </div>
                       
                         @if($isView=="")
                         <div class="row">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-info margin-top-30 pull-right">
-                                   <i class="fa fa-check"></i> Save
+                                <button type="submit" onclick="save()" class="btn btn-info margin-top-30 pull-right">
+                                   <i class="fa fa-check"></i> <?= (!isset($expense->id)) ? "Save" : "Update" ?>
                                </button>
                            </div>
                        </div>
@@ -241,15 +248,23 @@
     SequenceNo();
     removeDiv();
     singleDiv();
+    calculateAmount();
 
 });
 
 
   $('#projects').trigger('change');
-   
+   calculateAmount();
 
 });
 
+function calculateAmount(){
+  var total_amount = 0;
+  $.each($('input[name="amount[]"]'),function(i,elem){
+    total_amount+=parseInt($(elem).val() || 0) || 0;
+  });
+  $('#total_amount').val(total_amount);
+}
 function SequenceNo(){
 $.each($('.count'),function(i,elem){
 $(this).text(i+1);
@@ -269,6 +284,7 @@ $('.removeBtn').on('click',function(){
    $(this).closest('tr').remove();
    singleDiv();
    SequenceNo();
+   calculateAmount();
 });
 }
 removeDiv();

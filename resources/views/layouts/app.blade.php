@@ -34,8 +34,8 @@ if(!empty($data)){
         <link href="{{ asset('assets/plugins/bootstrap.datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
 
         <!-- THEME CSS -->
-        <link href="{{ asset('assets/css/essentials.css?v=1.1') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('assets/css/layout.css?v=1.1') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/css/essentials.css?v=1.2') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/css/layout.css?v=1.2') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/plugins/toastr/toastr.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/css/color_scheme/green.css') }}" rel="stylesheet" type="text/css" id="color_scheme" />
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -117,6 +117,15 @@ if(!empty($data)){
             <!-- /MIDDLE -->
         </section>
 
+
+<!-- overlay -->
+
+<div id="overlay">
+  <div class="cv-spinner">
+    <span class="spinner"></span>
+  </div>
+</div>
+
     </div>
 
 
@@ -142,7 +151,54 @@ if(!empty($data)){
 
         $('.web-select2').select2();
 
+        $(document).ajaxSend(function() {
+           $("#overlay").fadeIn(300);　
+        });
+
+        $(document).ajaxStop(function() {
+          $("#overlay").fadeOut(300);　
+        });
+
         // $('.alert').delay(5000).fadeOut('slow');
+
+
+$.validator.addMethod("noSpace", function(value, element) {
+      return value.trim() !== ""; // Check if the value contains non-space characters.
+}, "This field cannot be blank or contain only spaces.");
+    
+
+function validor(json,msg,form_id){
+   var select2label;
+     $(form_id).validate({
+         rules:json,
+         messages:msg,
+        errorPlacement: function(label, element) {
+      if (element.hasClass('web-select2')) {
+        label.insertAfter(element.next('.select2-container')).addClass('mt-2 text-danger');
+        select2label = label
+      } else {
+        label.addClass('mt-2 text-danger');
+        label.insertAfter(element);
+      }
+      $("#overlay").fadeOut(300);
+      },
+      highlight: function(element) {
+        $(element).parent().addClass('is-invalid')
+        $(element).addClass('form-control-danger');
+         $("#overlay").fadeOut(300);
+      },
+      success: function(label, element) {
+        $(element).parent().removeClass('is-invalid')
+        $(element).removeClass('form-control-danger')
+        label.remove();
+      },
+       
+        submitHandler: function (form) { // for demo
+             $(form_id).submit();  // for demo
+        }
+ });
+}
+
     </script>
     @yield('pagelevelscript')
 </body>

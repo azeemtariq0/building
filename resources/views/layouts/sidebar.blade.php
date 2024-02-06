@@ -54,7 +54,7 @@
                               )) ? 'active' : '' }}">
                                 <a href="#">
                                     <i class="fa fa-menu-arrow pull-right"></i>
-                                    <i class="main-icon fa fa-users"></i> <span>General Setup</span>
+                                    <i class="main-icon fa fa-cogs"></i> <span>General Setup</span>
                                 </a>
                                 <ul><!-- submenus -->
                                     <!-- @can('project') -->
@@ -96,7 +96,7 @@
                               )) ? 'active' : '' }}">
                              <a href="#">
                                     <i class="fa fa-menu-arrow pull-right"></i>
-                                    <i class="main-icon fa fa-users"></i> <span>Transaction</span>
+                                    <i class="main-icon fa fa-money"></i> <span>Transaction</span>
                                 </a>
                              
 
@@ -119,7 +119,7 @@
                               )) ? 'active' : '' }}">
                              <a href="#">
                                     <i class="fa fa-menu-arrow pull-right"></i>
-                                    <i class="main-icon fa fa-users"></i> <span>Reports</span>
+                                    <i class="main-icon fa fa-file"></i> <span>Reports</span>
                                 </a>
                              
 

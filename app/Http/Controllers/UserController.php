@@ -90,10 +90,19 @@ class UserController extends Controller
     public function create()
     {
         $projects  =  Project::where('soceity_id',auth()->user()->soceity_id)->get();
+        // $data['page_management'] = array(
+        //         'page_title' => 'Create New User',
+        //         'slug'=>'Create',
+        //     );
+
+
         $data['page_management'] = array(
-                'page_title' => 'Create New User',
-                'slug'=>'Create',
-            );
+            'page_title' => 'User',
+            'slug' => 'Permission',
+            'title' => 'Add User',
+            'add' => 'Add Unit',
+        );
+     
         $roles = Role::pluck('name','name')->all();
         return view('users.create',compact('roles', 'projects','data'));
     }
@@ -152,10 +161,12 @@ class UserController extends Controller
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
 
-        $data['page_management'] = array(
-                'page_title' => 'Edit New User',
-                'slug'=>'Edit',
-            );
+         $data['page_management'] = array(
+            'page_title' => 'User',
+            'slug' => 'Permission',
+            'title' => 'Edit User',
+            'add' => 'Edit Unit',
+        );
         
         return view('users.create',compact('user','roles','userRole', 'projects','data'));
     }

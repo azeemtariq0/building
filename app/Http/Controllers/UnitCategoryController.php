@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\UnitCategory;
+use App\Models\Unit;
 use DB;
 use DataTables, Form;       
 
@@ -68,7 +69,6 @@ class UnitCategoryController extends Controller
 
         UnitCategory::create(
             [
-                'soceity_id' => $request->input('soceity_id'),
                 'unit_cat_code' => $request->input('unit_cat_code'),
                 'unit_cat_name' => $request->input('unit_cat_name'),
                 'monthly_amount' => $request->input('monthly_amount'),
@@ -107,7 +107,6 @@ class UnitCategoryController extends Controller
         ]);
 
         $unitCategory = UnitCategory::find($id);
-        $unitCategory->soceity_id = $request->input('soceity_id');
         $unitCategory->unit_cat_code = $request->input('unit_cat_code');
         $unitCategory->unit_cat_name = $request->input('unit_cat_name');
         $unitCategory->monthly_amount = $request->input('monthly_amount');
@@ -118,8 +117,18 @@ class UnitCategoryController extends Controller
     }
 
     public function destroy($id){
-        DB::table("as_unit_categories")->where('id',$id)->delete();
-        return redirect()->route('unit_categories.index')
-        ->with('success','Unit Category deleted successfully');
+        
+        $unit = Unit::where('unit_category_id', $id)->count();
+        if($unit == 0)
+        {
+           DB::table("as_unit_categories")->where('id',$id)->delete();
+           return redirect()->route('unit_categories.index')
+           ->with('success','Unit Category deleted successfully');
+        }
+        else{
+            return redirect()->route('unit_categories.index')
+            ->with('error','Unit exist for this Id,Unit Category can not be deleted ');
+        }
+
     }
 }

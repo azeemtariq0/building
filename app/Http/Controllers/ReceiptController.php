@@ -28,7 +28,7 @@ class ReceiptController extends Controller
         if ($request->ajax()) {
 
        $data = Receipt::with('project', 'block', 'unit','unit_category','receipt_type');
-       $data->where('soceity_id',auth()->user()->soceity_id);
+       $data->where('as_receipts.soceity_id',auth()->user()->soceity_id);
        if($request->status!=""){
          $data = $data->where('status',$request->status); 
         }
@@ -167,7 +167,8 @@ class ReceiptController extends Controller
     public function getUnits(Request $request){
 
         if ($request->ajax()) {
-        $units = Unit::with('project','block','unit_category');
+        $units = Unit::with('project','block','unit_category')
+                    ->where('soceity_id',auth()->user()->soceity_id);
         if(auth()->user()->project_id){
                $units->where('project_id',auth()->user()->project_id);
         }

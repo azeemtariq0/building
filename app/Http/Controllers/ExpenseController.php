@@ -25,7 +25,7 @@ class ExpenseController extends Controller
 
     public function index(Request $request){
         if ($request->ajax()) {
-            $data = Expense::with('expense_category','expense_detail')->where('soceity_id',auth()->user()->soceity_id);
+            $data = Expense::with('expense_category','expense_detail')->where('as_expenses.soceity_id',auth()->user()->soceity_id);
             if(auth()->user()->project_id){
                  $data->where('project_id',auth()->user()->project_id);
             }
@@ -102,6 +102,7 @@ class ExpenseController extends Controller
                 'payee' => $request->payee,
                 'exp_date' => date('Y-m-d',strtotime($request->exp_date)),
                 'year' => date('y'),
+                'total_amount' => $request->total_amount,
                 'remarks' => $request->remarks,
                 'created_by' =>  auth()->user()->id
             ]
@@ -169,6 +170,7 @@ class ExpenseController extends Controller
         $expense->exp_category_id = $request->exp_category_id;
         $expense->payee = $request->payee;
         $expense->exp_date = date('Y-m-d',strtotime($request->exp_date));
+        $expense->total_amount = $request->total_amount;
         $expense->remarks = $request->remarks;
         $expense->updated_by =  auth()->user()->id;
         $expense->save();

@@ -18,7 +18,7 @@
     <div id="panel-1" class="panel panel-default">
       <div class="panel-heading">
         <span class="title elipsis">
-          <strong>LIST USERS</strong> <!-- panel title -->
+          <strong>Manage Users</strong> <!-- panel title -->
         </span>
 
         <!-- right options -->

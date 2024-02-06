@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Models\Unit;
 use App\Models\Block;
 use App\Models\Project;
 use DB;
@@ -214,8 +215,19 @@ class BlockController extends Controller
      */
     public function destroy($id)
     {
-        DB::table("as_blocks")->where('id',$id)->delete();
-        return redirect()->route('blocks.index')
-        ->with('success','Block deleted successfully');
+       
+         $unit = Unit::where('block_id', $id)->count();
+        if($unit == 0)
+        {
+            DB::table("as_blocks")->where('id',$id)->delete();
+            return redirect()->route('blocks.index')
+            ->with('success','Block deleted successfully');
+        }
+        else{
+            return redirect()->route('blocks.index')
+            ->with('error','Unit exist for this Id,Block can not be deleted ');
+        }
+        
+
     }
 }

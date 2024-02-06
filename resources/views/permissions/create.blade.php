@@ -26,7 +26,7 @@
             <!-- ------ -->
             <div class="panel panel-default">
                 <div class="panel-heading panel-heading-transparent">
-                    <strong>FORM VALIDATION</strong>
+                    <strong>Add Permission</strong>
                 </div>
 
                 <div class="panel-body">

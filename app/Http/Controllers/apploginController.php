@@ -45,7 +45,8 @@ class ApploginController extends Controller
                     // if (!$token) {
                         // return response()->json(['error' => 'Invalid Login credentials'], 400);
                     // } else {
-                        return response()->json(['success'=>true,'status'=>200,'response' => $email], 200);
+                        // return response()->json(['success'=>true,'status'=>200,'response' => $email], 200);
+                          return response()->json( $email, 200);
                         // return response()->json(['token' => $token], 200);
                     // }
 
@@ -64,8 +65,10 @@ class ApploginController extends Controller
     public function getReceipts(Request $request){
         $data = Receipt::with('project', 'block', 'unit','unit_category','receipt_type');
         $data = $data->where('status',0); 
-        $data = $data->paginate(10); 
-         return response()->json(['success'=>true,'status'=>200,'response' => $data], 200);
+        $data = $data->get();
+        return response()->json($data, 200);
+        //$data = $data->paginate(10); 
+        // return response()->json(['success'=>true,'status'=>200,'response' => $data], 200);
 
 
     }

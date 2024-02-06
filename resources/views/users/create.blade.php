@@ -28,7 +28,7 @@
                 <!-- ------ -->
                 <div class="panel panel-default">
                     <div class="panel-heading panel-heading-transparent">
-                        <strong>Add New User</strong>
+                        <strong>{{ $data['page_management']['title'] ?? "" }}</strong>
                     </div>
 
                     <div class="panel-body">
@@ -119,7 +119,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <button type="submit" class="btn btn-info margin-top-30 pull-right">
-                                   <i class="fa fa-check"></i> Save
+                                   <i class="fa fa-check"></i>  <?= (!isset($user->id)) ? "Save" : "Update" ?>
                                </button>
                            </div>
                        </div>

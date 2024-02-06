@@ -174,7 +174,7 @@
 
                                   <div class="row">
                                     <div class="col-md-12">
-                                        <button type="submit" class="btn btn-info margin-top-30 pull-right">
+                                        <button type="submit" onclick="save()" class="btn btn-info margin-top-30 pull-right">
                                            <i class="fa fa-check"></i> Save
                                        </button>
                                    </div>

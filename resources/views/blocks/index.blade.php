@@ -4,6 +4,9 @@
 @section('content')
   @include('layouts.additionalscripts.adddatatable')
 
+
+
+
   <div id="content" class="padding-20">
 
               @if ($message = Session::get('success'))

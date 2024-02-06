@@ -25,7 +25,7 @@
             <!-- ------ -->
             <div class="panel panel-default">
                 <div class="panel-heading panel-heading-transparent">
-                    <strong>Permission</strong>
+                    <strong>Edit Permission</strong>
                 </div>
 
                 <div class="panel-body">
@@ -51,7 +51,7 @@
                           <div class="row">
                            <div class="col-md-12">
                                 <button type="submit" class="btn btn-info margin-top-30 pull-right">
-                                   <i class="fa fa-check"></i> Save
+                                   <i class="fa fa-check"></i> Update
                                </button>
                            </div>
                        </div>

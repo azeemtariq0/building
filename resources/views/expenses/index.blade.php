@@ -43,6 +43,7 @@
                         <th>Expense Code</th>
                         <th>Expense Category</th>
                         <th>Date</th>
+                        <th>Total Amount</th>
                         <th>Description</th>
                         <th width="20%">Action</th>
                       </tr>
@@ -79,6 +80,7 @@
                 {data: 'exp_code', exp_code: 'name'},
                 {data: 'expense_category.exp_name', exp_code: 'name'},
                 {data: 'exp_date', exp_name: 'name'},
+                {data: 'total_amount', total_amount: 'name'},
                 {data: 'remarks', description: 'name'},
                 {data: 'action', description: 'action', orderable: false, searchable: false},
                 ]

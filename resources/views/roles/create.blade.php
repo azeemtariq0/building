@@ -28,12 +28,7 @@ echo "</pre>";*/
        </ul>
    </div>
    @endif
-   <div class="colm-md-12 row" style="margin-top: 10px;">
-    <div class="col-md-11"></div>
-    <div class="col-md-1  ">
-        <a href="{{ url('roles') }}" class="btn btn-success mt-3">Back</a>
-    </div>
-</div>
+
 
    <div id="content" class="padding-20">
 
@@ -44,7 +39,7 @@ echo "</pre>";*/
             <!-- ------ -->
             <div class="panel panel-default">
                 <div class="panel-heading panel-heading-transparent">
-                    <strong>FORM VALIDATION</strong>
+                    <strong>Add Role</strong>
                 </div>
 
                 <div class="panel-body">

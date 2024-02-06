@@ -34,7 +34,7 @@ class UnitController extends Controller
     public function index(Request $request){
         if ($request->ajax()) {
             $data = Unit::with('project','block','unit_category');
-            $data =  $data->where('soceity_id',auth()->user()->soceity_id);
+            $data =  $data->where('as_units.soceity_id',auth()->user()->soceity_id);
             if(auth()->user()->project_id){
                 $data = $data->where('project_id',auth()->user()->project_id);
             }

@@ -24,6 +24,7 @@ class Expense extends Model
         'exp_date',
         'year',
         'payee',
+        'total_amount',
         'description',
         'created_by',
         'updated_by'
