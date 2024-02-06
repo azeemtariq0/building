@@ -274,3 +274,7 @@ CREATE TABLE society(
 
 ALTER TABLE `users`   
   ADD COLUMN `block_id` INT NULL AFTER `project_id`;
+
+ALTER TABLE `as_expenses`   
+  ADD COLUMN `total_amount` VARCHAR(255) NULL AFTER `year`;
+
