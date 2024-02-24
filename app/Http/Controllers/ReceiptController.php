@@ -199,7 +199,7 @@ class ReceiptController extends Controller
         })->addColumn('action', function($row){
 
             $owner = UnitOwner::where('unit_id',$row->id)->first();
-            $btn= "<button onclick='generateReceipt(this,".$row->id.")' 
+            $btn= "<button type='button' onclick='generateReceipt(this,".$row->id.")' 
             data-monthly_amount=".$row->unit_category->monthly_amount."  
             data-outstanding_amount=".$row->out_standing_amount."
             data-project_id=".$row->project_id."
